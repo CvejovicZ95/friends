@@ -1,8 +1,15 @@
+import { LoginPage } from "./components/loginPage/LoginPage";
+import { RegisterPage } from "./components/registerPage/RegisterPage";
+import { Route, Routes } from "react-router-dom";
+
 function App() {
   return (
-    <div className="App">
-      <h1>Friends</h1>
-    </div>
+    <Routes>
+      <Route path="/" element={<LoginPage/>} />
+
+      <Route path="/register" element={<RegisterPage/>}/>
+
+    </Routes>
   );
 }
 
