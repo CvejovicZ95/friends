@@ -20,7 +20,7 @@ export const registerUser = async (req, res) => {
             await newUser.save()
         }
 
-        logger.info('New user register successfully')
+        logger.info(`${newUser.username} register as new user successfully`)
         res.status(201).json(newUser)
     } catch (error) {
         logger.error('Error in registerUser controller', error.message)
@@ -42,7 +42,7 @@ export const loginUser = async (req, res) => {
 
         const token = generateToken(user._id, res)
 
-        logger.info('User logged in successfully', user.username)
+        logger.info(`${username} logged in successfully`, user.username)
 
         res.status(200).json({token, username:user.username})
     } catch (error) {
@@ -53,8 +53,9 @@ export const loginUser = async (req, res) => {
 
 export const logoutUser = async (req, res) => {
     try {
+        const { username } = req.body
         res.cookie('token', '', { maxAge:0 })
-        logger.info('User loged out successfully')
+        logger.info(`${username} logged out successfully`)
         res.status(200).json({ message: 'Logged out' })
     } catch (error) {
         logger.error('Error in logoutUser controller', error.message)
