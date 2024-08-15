@@ -3,6 +3,10 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
 
+import { connect } from './src/db/connectDB.js'
+
+import { userRouter } from './src/routes/userRoutes.js'
+
 
 const app=express()
 dotenv.config()
@@ -19,6 +23,9 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors(corsOptions))
 
+app.use('/api', userRouter)
+
 app.listen(PORT, () => {
+    connect()
     console.log(`Server is listening on port ${PORT}`)
   })
