@@ -5,7 +5,10 @@ import dotenv from 'dotenv'
 
 import { connect } from './src/db/connectDB.js'
 
+import { errorHandler } from './src/middleware/errorMiddleware.js'
+
 import { userRouter } from './src/routes/userRoutes.js'
+import { tokenRouter } from './src/routes/tokenRoutes.js'
 
 
 const app=express()
@@ -23,7 +26,10 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors(corsOptions))
 
+app.use(errorHandler);
+
 app.use('/api', userRouter)
+app.use('/api', tokenRouter)
 
 app.listen(PORT, () => {
     connect()
