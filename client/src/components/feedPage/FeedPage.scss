@@ -82,6 +82,13 @@
                     font-weight: 500;
                     font-family:Georgia, 'Times New Roman', Times, serif
                 }
+                .user-photo {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    margin-right: 10px;
+                }
             }
 
             .logout-icon {

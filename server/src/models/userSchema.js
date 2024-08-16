@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  profilePhotoImagePath:{
+    type: String,
+    required: false
+  },
 }, {
   timestamps: {
     createdAt: 'created_at',

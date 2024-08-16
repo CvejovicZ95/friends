@@ -2,6 +2,8 @@ import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
+import { fileURLToPath } from 'url'
+import path from 'path'
 
 import { connect } from './src/db/connectDB.js'
 
@@ -9,6 +11,9 @@ import { errorHandler } from './src/middleware/errorMiddleware.js'
 
 import { userRouter } from './src/routes/userRoutes.js'
 import { tokenRouter } from './src/routes/tokenRoutes.js'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 
 const app=express()
@@ -25,6 +30,8 @@ const corsOptions = {
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors(corsOptions))
+
+app.use('/images', express.static(path.join(__dirname, '../server/images')))
 
 app.use(errorHandler);
 

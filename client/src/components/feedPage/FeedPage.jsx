@@ -8,10 +8,11 @@ import { BiMessageSquareDetail } from "react-icons/bi";
 import { useLogoutUser } from "../../hooks/useUserRegisterLoginLogout";
 import { AuthContext } from "../../context/authContext";
 
+
 export const FeedPage = () => {
     const { logoutHandler } = useLogoutUser();
     const { authUser } = useContext(AuthContext);
-
+    
     return (
         <div className="feed-page">
             <nav className="nav-bar">
@@ -28,8 +29,16 @@ export const FeedPage = () => {
                     </div>
                 </div>
                 <div className="nav-right">
-                    <div className="user-info">
-                        <FaUserCircle className="user-icon" />
+                <div className="user-info">
+                        {authUser?.profilePhotoImagePath ? (
+                            <img
+                                src={`${process.env.REACT_APP_API_BASE_URL}/images/${authUser.profilePhotoImagePath}`}
+                                alt="Profile"
+                                className="user-photo"
+                            />
+                        ) : (
+                            <FaUserCircle className="user-icon" />
+                        )}
                         <p>{authUser?.username}</p>
                     </div>
                     <MdLogout className="nav-icon logout-icon" onClick={logoutHandler} title="Logout" />

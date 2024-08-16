@@ -17,8 +17,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setAuthUser(null);
-    document.cookie =
-      "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure; HttpOnly";
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure; HttpOnly";
   };
 
   useEffect(() => {
