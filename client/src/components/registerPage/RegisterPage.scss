@@ -33,7 +33,8 @@
         width: 100%;
     }
 
-    .input-container {
+    .input-container,
+    .file-input-container {
         position: relative;
         margin-bottom: 20px;
 
@@ -43,9 +44,11 @@
             top: 50%;
             transform: translateY(-50%);
             color: #ffffff;
+            font-size: 1.2rem;
         }
 
-        .input {
+        .input,
+        .file-input {
             width: 85%;
             padding: 10px 10px 10px 40px;
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -53,11 +56,25 @@
             background: rgba(255, 255, 255, 0.2);
             color: #ffffff;
             font-size: 1rem;
+            cursor: pointer;
 
             &:focus {
                 outline: none;
                 border-color: #8e97f9;
                 background: rgba(255, 255, 255, 0.3);
+            }
+
+            &::-webkit-file-upload-button {
+                background: transparent;
+                color: #ffffff;
+                border: none;
+                cursor: pointer;
+                font-size: 1rem;
+                transition: color 0.3s ease;
+                
+                &:hover {
+                    color: #8e97f9;
+                }
             }
         }
     }
@@ -94,18 +111,18 @@
     }
 }
 
-/* Media Queries */
 
 @media (max-width: 1024px) {
     .register-page {
         max-width: 350px;
         padding: 30px;
-        
+
         h1 {
             font-size: 1.8rem;
         }
 
-        .input-container .input {
+        .input-container .input,
+        .file-input-container .file-input {
             width: 82%;
         }
     }
@@ -120,7 +137,8 @@
             font-size: 1.5rem;
         }
 
-        .input-container .input {
+        .input-container .input,
+        .file-input-container .file-input {
             width: 80%;
         }
     }
@@ -135,7 +153,8 @@
             font-size: 1.2rem;
         }
 
-        .input-container .input {
+        .input-container .input,
+        .file-input-container .file-input {
             width: 75%;
         }
 

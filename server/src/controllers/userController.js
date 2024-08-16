@@ -29,9 +29,9 @@ export const registerUser = async (req, res) => {
             }
 
             try {
-                const { email, username, password, profilePhotoImagePath } = req.body;
+                const { email, username, password } = req.body;
 
-                //const profilePhotoImagePath = req.file.filename;
+                const profilePhotoImagePath = req.file.filename;
 
                 const existingUser = await User.findOne({ email });
                 if (existingUser) {

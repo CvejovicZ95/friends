@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./RegisterPage.scss";
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
+import { MdAddAPhoto } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import { useRegisterUser } from "../../hooks/useUserRegisterLoginLogout";
 import { toast } from "react-toastify";
@@ -13,26 +14,35 @@ export const RegisterPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [profilePhoto, setProfilePhoto] = useState(null);
 
     const navigate = useNavigate();
-
     const { registerHandler } = useRegisterUser();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         if (password !== confirmPassword) {
             toast.error("Passwords do not match");
             return;
         }
-        const success = await registerHandler(email, username, password); 
+    
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('username', username);
+        formData.append('password', password);
+        if (profilePhoto) {
+            formData.append('profilePhoto', profilePhoto);
+        }
+    
+        const success = await registerHandler(formData);
         if (success) {
-            setTimeout(()=>{
+            setTimeout(() => {
                 navigate("/");
-            },3500)
-            
-        }  
+            }, 3500);
+        }
     };
+    
 
     return (
         <div className="register-page-container">
@@ -83,13 +93,23 @@ export const RegisterPage = () => {
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                     </div>
+                    <div className="file-input-container">
+                        <MdAddAPhoto className="icon"/>
+                        <input
+                            type="file"
+                            name="profilePhoto"
+                            accept="image/*"
+                            className="file-input"
+                            onChange={(e) => setProfilePhoto(e.target.files[0])}
+                        />
+                    </div>
                     <button type="submit">Create Account</button>
                 </form>
                 <p className="login-link">
                     Already have an account? <Link to="/">Login here!</Link>
                 </p>
             </div>
-            <ToastContainer/>
+            <ToastContainer />
         </div>
     );
 };

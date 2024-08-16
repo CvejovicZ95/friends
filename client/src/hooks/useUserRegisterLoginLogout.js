@@ -3,7 +3,7 @@ import { setCookie } from "./useSetCookie";
 import { useAuthContext } from "../context/authContext";
 import { registerUser, loginUser, logoutUser } from "../api/userApi";
 
-const validateRegistration = ({ email, username, password }) => {
+const validateRegistration = ({ email, username, password, profilePhoto }) => {
     if (!email || !username || !password) {
         toast.error("Please fill in all fields");
         return false;
@@ -18,6 +18,11 @@ const validateRegistration = ({ email, username, password }) => {
 
     if (password.length < 6) {
         toast.error("Password must be at least 6 characters long");
+        return false;
+    }
+
+    if (!profilePhoto) {
+        toast.error("Please choose your profile image");
         return false;
     }
 
@@ -39,12 +44,17 @@ const validateLogin = ({ username, password }) => {
 };
 
 export const useRegisterUser = () => {
-    const registerHandler = async (email, username, password) => {
-        const isValid = validateRegistration({ email, username, password });
+    const registerHandler = async (formData) => {
+        const isValid = validateRegistration({
+            email: formData.get('email'),
+            username: formData.get('username'),
+            password: formData.get('password'),
+            profilePhoto: formData.get('profilePhoto')
+        });
         if (!isValid) return;
 
         try {
-            await registerUser(email, username, password);
+            await registerUser(formData);
             toast.success('Registration complete! Please login in')
             return true;
         } catch (error) {

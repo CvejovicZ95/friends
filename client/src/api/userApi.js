@@ -1,11 +1,10 @@
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
-export const registerUser = async (email, username, password) => {
+export const registerUser = async (formData) => {
     try {
         const res = await fetch(`${apiUrl}/api/registerUser`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, username, password }),
+            body: formData,
         })
 
         if (res.ok) {
