@@ -1,0 +1,204 @@
+.create-post {
+    max-width: 1000px;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 200px;
+    width: 92%;
+
+    .user-photo-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+
+        .user-photo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+        }
+
+        .user-icon {
+            font-size: 40px;
+            color: #ccc;
+            margin-right: 12px;
+        }
+    }
+
+    .post-input {
+        width: 97%;
+        min-height: 80px;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        resize: none;
+
+        &:focus {
+            outline: none;
+            border-color: #aaa;
+        }
+    }
+
+    .post-options {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 12px;
+
+        .post-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: #555;
+
+            &:hover {
+                color: #000;
+            }
+        }
+
+        .post-button {
+            display: flex;
+            align-items: center;
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+
+            .send-icon {
+                margin-right: 8px;
+                font-size: 20px;
+            }
+
+            &:hover {
+                background-color: #0056b3;
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (max-width: 991px) {
+    .create-post {
+        width: 85%;
+        padding: 12px;
+
+        .user-photo-container {
+            .user-photo {
+                width: 35px;
+                height: 35px;
+            }
+
+            .user-icon {
+                font-size: 35px;
+            }
+        }
+
+        .post-input {
+            font-size: 14px;
+            min-height: 70px;
+        }
+
+        .post-options {
+            .post-icon {
+                font-size: 20px;
+            }
+
+            .post-button {
+                padding: 6px 12px;
+
+                .send-icon {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 767px) {
+    .create-post {
+        width: 90%;
+        padding: 8px;
+
+        .user-photo-container {
+            .user-photo {
+                width: 30px;
+                height: 30px;
+            }
+
+            .user-icon {
+                font-size: 30px;
+            }
+        }
+
+        .post-input {
+            width: 95%;
+            font-size: 13px;
+            min-height: 60px;
+        }
+
+        .post-options {
+            .post-icon {
+                font-size: 18px;
+            }
+
+            .post-button {
+                padding: 5px 10px;
+
+                .send-icon {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575px) {
+    .create-post {
+        width: 90%;
+        padding: 4px;
+
+        .user-photo-container {
+            .user-photo {
+                width: 25px;
+                height: 25px;
+            }
+
+            .user-icon {
+                font-size: 25px;
+            }
+        }
+
+        .post-input {
+            width: 92%;
+            font-size: 12px;
+            min-height: 50px;
+        }
+
+        .post-options {
+            .post-icon {
+                font-size: 16px;
+            }
+
+            .post-button {
+                padding: 4px 8px;
+
+                .send-icon {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
