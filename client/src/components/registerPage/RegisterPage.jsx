@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./RegisterPage.scss";
+import { Logo } from "../logo/Logo"
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import { MdAddAPhoto } from "react-icons/md";
@@ -47,6 +48,7 @@ export const RegisterPage = () => {
     return (
         <div className="register-page-container">
             <div className="register-page">
+                <Logo/>
                 <h1>Create an Account</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="input-container">

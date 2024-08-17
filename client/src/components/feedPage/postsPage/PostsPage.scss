@@ -7,7 +7,7 @@
 
     .posts-feed {
         width: 100%;
-        max-width: 1030px; /* Smanjena širina feed-a za bolje uklapanje sa strane */
+        max-width: 1030px;
 
         .post-item {
             background-color: #fff;
@@ -114,9 +114,10 @@
                             color: #555;
                             margin-right: 5px;
                             transition: color 0.3s ease;
+                            color: #007bff;
 
                             &:hover {
-                                color: #007bff;
+                                color: #0057b4;
                             }
                         }
 
@@ -136,7 +137,6 @@
     }
 }
 
-/* Medium devices (tablets, 768px and up) */
 @media (max-width: 991px) {
     .posts-page {
         width: 90%;
@@ -190,7 +190,6 @@
     }
 
 
-/* Small devices (landscape phones, 576px and up) */
 @media (max-width: 767px) {
     .posts-page {
         margin: 20px auto;
@@ -247,7 +246,6 @@
     }
 }
 
-/* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575px) {
     .posts-page {
         margin: 10px auto;

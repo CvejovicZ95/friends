@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./LoginPage.scss";
+import { Logo } from "../logo/Logo"
 import { FaUser } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Link } from 'react-router-dom';
@@ -20,6 +21,7 @@ export const LoginPage = () => {
     return (
         <div className="login-page-container">
             <div className="login-page">
+                <Logo/>
                 <p>Have an account?</p>
                 <h1>Login</h1>
                 <form onSubmit={handleSubmit}>

@@ -2,6 +2,7 @@ import { User } from '../models/userSchema.js'
 import { logger } from '../../logger.js'
 import { generateToken } from '../utils/generateToken.js'
 import { sendOrderConfirmation } from '../../mailgun.js'
+import { getAllUsers, getUserById } from '../service/usersService.js'
 import bcrypt from 'bcrypt'
 import multer from 'multer'
 
@@ -123,3 +124,23 @@ export const logoutUser = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
+
+
+export const getAllUsersController = async (req, res) => {
+    try {
+        const allUsers = await getAllUsers()
+        res.status(200).json(allUsers)
+    } catch (error) {
+        res.status(500).json({ error: 'Server error'})
+    }
+}
+
+export const getUserByIdController = async (req, res) => {
+    try {
+        const singleUserId = req.params.id
+        const singleUser = await getUserById(singleUserId)
+        res.status(200).json(singleUser)
+    } catch (error) {
+        res.status(500).json({ error: 'Server error'})
+    }
+}

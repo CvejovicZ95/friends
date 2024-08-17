@@ -55,3 +55,26 @@ export const logoutUser = async () => {
         throw new Error(error.message);
     }
 }
+
+export const getAllUsers = async () => {
+    try {
+        const res = await fetch(`${apiUrl}/api/users`)
+        const data = await res.json()
+        if (data.error) {
+            throw new Error(data.error)
+        }
+        return data;
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}
+
+export const getSingleUser = async (id) => {
+    try {
+        const res = await fetch (`${apiUrl}/api/user/${id}`)
+        const data = await res.json()
+        return data
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}

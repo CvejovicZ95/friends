@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from 'react-router-dom'
 
 export const Logo = () => {
     return (
-        <img src="/friends.png" alt="logo" width={"80px"}/>
+        <Link to={"/feed"}><img src="/friends.png" alt="logo" width={"80px"}/></Link>
     )
 }

@@ -5,6 +5,7 @@ import { MdFeed, MdLogout } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { FaSearch, FaUserCircle } from "react-icons/fa";
 import { BiMessageSquareDetail } from "react-icons/bi";
+import { Link } from "react-router-dom";
 import { useLogoutUser } from "../../../hooks/useUserRegisterLoginLogout";
 import { AuthContext } from "../../../context/authContext";
 
@@ -14,15 +15,12 @@ export const NavBar = () => {
     const { authUser } = useContext(AuthContext);
     
     return (
-        <div className="feed-page">
-            <nav className="nav-bar">
+        <div className="nav">
+            <div className="nav-bar">
                 <div className="nav-left">
                     <Logo />
                 </div>
                 <div className="nav-center">
-                    <MdFeed className="nav-icon" title="Feed" />
-                    <BiMessageSquareDetail className="nav-icon" title="Inbox" />
-                    <CgProfile className="nav-icon" title="Profile" />
                     <div className="search-container">
                         <FaSearch className="nav-icon search-icon" title="Search" />
                         <input type="text" className="search-input" placeholder="Search..." />
@@ -43,7 +41,12 @@ export const NavBar = () => {
                     </div>
                     <MdLogout className="nav-icon logout-icon" onClick={logoutHandler} title="Logout" />
                 </div>
-            </nav>
+            </div>
+            <div className="nav-section-two">
+                <Link to={"/feed"}><MdFeed className="nav-icon" title="Feed" /></Link>
+                <Link to={"/inbox"}><BiMessageSquareDetail className="nav-icon" title="Inbox" /></Link>
+                <Link to={"/profile"}><CgProfile className="nav-icon" title="Profile" /></Link>
+            </div>
         </div>
     );
 };
