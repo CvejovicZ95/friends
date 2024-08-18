@@ -49,6 +49,7 @@
 
                 .post-menu {
                     position: relative;
+                    cursor: pointer;
                     .dropdown-menu {
                         display: none;
                         position: absolute;
@@ -58,6 +59,7 @@
                         border-radius: 4px;
                         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
                         z-index: 1;
+                        
 
                         span {
                             display: block;
@@ -86,7 +88,7 @@
                 }
 
                 .post-image {
-                    width: 100%;
+                    width: 180px;
                     border-radius: 8px;
                     object-fit: cover;
                 }
