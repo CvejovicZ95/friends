@@ -3,19 +3,31 @@ import { useGetAllPosts } from '../../../hooks/usePosts';
 import "./PostsPage.scss";
 import { FaThumbsUp, FaComment, FaEllipsisV } from 'react-icons/fa';
 import { AuthContext } from "../../../context/authContext";
+import { toast } from "react-toastify";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const PostsPage = () => {
-    const { posts, loading } = useGetAllPosts();
+    const { posts, loading, handleDeletePost } = useGetAllPosts();
     const { authUser } = useContext(AuthContext);
-    console.log(authUser)
     
-
     if (loading) {
         return <div>Loading...</div>;
     }
 
-   
     const sortedPosts = [...posts].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+    const handleDelete = async (id) => {
+        const confirmed = window.confirm('Delete post?');
+        if (confirmed) {
+            try {
+                await handleDeletePost(id);
+                toast.success('Post deleted');
+            } catch (error) {
+                toast.error(error.message);
+            }
+        }
+    };
 
     return (
         <div className="posts-page">
@@ -37,7 +49,7 @@ export const PostsPage = () => {
                                         <FaEllipsisV className="menu-icon" />
                                         <div className="dropdown-menu">
                                             <span>Edit</span>
-                                            <span>Delete</span>
+                                            <span onClick={() => handleDelete(post._id)}>Delete</span>
                                         </div>
                                     </>
                                 )}
@@ -71,6 +83,7 @@ export const PostsPage = () => {
                     </div>
                 ))}
             </div>
+            <ToastContainer/>
         </div>
     );
 };

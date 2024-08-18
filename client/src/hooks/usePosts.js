@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { getAllPosts } from '../api/postsApi'
+import { getAllPosts, deletePost } from '../api/postsApi'
 
 export const useGetAllPosts = () => {
     const [posts, setPosts] = useState([])
@@ -21,5 +21,17 @@ export const useGetAllPosts = () => {
         fetchPosts()
     },[])
 
-    return { posts, loading}
+    const handleDeletePost = async (id) => {
+        try {
+            await deletePost(id);
+            setPosts((prevPosts) => {
+                const updatedPosts = prevPosts.filter((post) => post._id !==id);
+                return updatedPosts
+            })
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
+    return { posts, loading, handleDeletePost}
 }
