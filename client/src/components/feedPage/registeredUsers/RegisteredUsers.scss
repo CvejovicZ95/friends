@@ -1,20 +1,18 @@
 .registered-users {
     width: 300px;
-    background-color: #f8f9fa;
+    
     padding: 16px;
-    border-radius: 0 0 8px 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-left: 2px solid #007bff; 
 
     h2 {
         margin-top: 20px;
         margin-bottom: 12px;
         font-size: 18px;
-        color: #333;
+        color: black;
         position: relative;
         padding: 10px;
         border-bottom: 2px solid #007bff; 
-        background-color: #e9ecef; 
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     ul {
@@ -36,6 +34,7 @@
                 object-fit: cover;
                 margin-right: 12px;
                 cursor: pointer;
+                border: 1px solid #333;
             }
 
             .user-icon {
@@ -46,7 +45,7 @@
             p {
                 margin: 0;
                 font-size: 16px;
-                color: #333;
+                color: black;
                 cursor: pointer;
             }
         }
