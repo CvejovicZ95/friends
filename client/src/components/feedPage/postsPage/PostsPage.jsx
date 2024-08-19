@@ -10,10 +10,11 @@ import 'react-toastify/dist/ReactToastify.css';
 export const PostsPage = () => {
     const { posts, loading, handleDeletePost } = useGetAllPosts();
     const { authUser } = useContext(AuthContext);
-    
+
     if (loading) {
         return <div>Loading...</div>;
     }
+    
 
     const sortedPosts = [...posts].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 

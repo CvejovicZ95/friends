@@ -36,10 +36,10 @@ export const addPost = async (userId, text, imageUrl = null) => {
         });
 
         await newPost.save();
-        logger.info('New post added')
+        logger.info('New post added');
         return newPost;
     } catch (error) {
-        logger.error('Error adding a new post', error.message);
+        logger.error('Error adding a new post:', error);
         throw new Error('Error adding a new post');
     }
 }

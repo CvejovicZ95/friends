@@ -37,3 +37,23 @@ export const deletePost = async (id) => {
         throw new Error(error.message);
     }
 };
+
+export const addPost = async (formData) => {
+    try {
+        const res = await fetch(`${apiUrl}/api/newPost`, {
+            method: "POST",
+            body: formData,
+            credentials:'include'
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || "Error while creating post");
+        }
+
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        throw new Error(error.message || "Error while creating post");
+    }
+};

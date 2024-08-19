@@ -5,6 +5,6 @@ import { getAllPostsController, addPostController, updatePostController, deleteP
 export const postsRouter = express.Router()
 
 postsRouter.get('/posts', getAllPostsController )
-postsRouter.post('/newPost', addPostController)
+postsRouter.post('/newPost', authenticateToken, addPostController)
 postsRouter.put('/post/:id',  updatePostController)
 postsRouter.delete('/post/:id', authenticateToken, deletePostController)
