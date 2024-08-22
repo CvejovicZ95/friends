@@ -1,5 +1,6 @@
 import { Post } from "../models/postsSchema.js";
 import { logger } from "../../logger.js";
+import { User } from "../models/userSchema.js"
 
 export const getAllPosts = async () => {
     try {
@@ -77,5 +78,25 @@ export const deletePost = async (postId) => {
     } catch (error) {
         logger.error('Error deleting post', error.message);
         throw new Error('Error deleting post');
+    }
+}
+
+export const getPostsByUsername = async (username) => {
+    try {
+        const user = await User.findOne({ username });
+        if (!user) {
+            return { message: "User not found" };
+        }
+
+        const posts = await Post.find({ user: user._id }).populate('user', 'username');
+
+        if (!posts || posts.length === 0) {
+            return { message: "This user hasn't posted any status" };
+        }
+
+        return posts;
+    } catch (error) {
+        logger.error('Error fetching posts by username:', error.message);
+        throw new Error('Error fetching posts by username');
     }
 }

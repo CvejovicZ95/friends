@@ -57,3 +57,16 @@ export const addPost = async (formData) => {
         throw new Error(error.message || "Error while creating post");
     }
 };
+
+export const getPostsByUser = async (username) => {
+    try {
+        const res = await fetch(`${apiUrl}/api/posts/user/${username}`);
+        const data = await res.json();
+        if (data.error) {
+            throw new Error(data.error);
+        }
+        return data;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}

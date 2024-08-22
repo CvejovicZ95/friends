@@ -1,4 +1,4 @@
-import { getAllPosts, addPost, updatePost, deletePost } from "../service/postsService.js";
+import { getAllPosts, addPost, updatePost, deletePost, getPostsByUsername } from "../service/postsService.js";
 import { logger } from "../../logger.js";
 import multer from 'multer';
 
@@ -84,3 +84,23 @@ export const deletePostController = async (req, res) => {
         }
     }
 }
+
+export const getPostsByUserController = async (req, res) => {
+    try {
+        const username = req.params.username;
+
+        if (!username) {
+            return res.status(400).json({ message: "Username is required" });
+        }
+
+        const postsByUser = await getPostsByUsername(username);
+
+        if (postsByUser.message) {
+            return res.status(404).json({ message: postsByUser.message });
+        }
+
+        res.status(200).json(postsByUser);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+};

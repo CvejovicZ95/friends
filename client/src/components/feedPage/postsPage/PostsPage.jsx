@@ -64,6 +64,7 @@ export const PostsPage = () => {
                                     alt="Post" 
                                     className="post-image" 
                                 />
+                                
                             )}
                         </div>
                         <div className="post-footer">

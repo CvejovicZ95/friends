@@ -17,7 +17,7 @@ function App() {
 
       <Route path="/inbox" element={<InboxPage/>}/>
 
-      <Route path="/profile" element={<UserProfile/>}/>
+      <Route path="/profile"  element={!authUser ? <Navigate to={"/"} /> : <UserProfile/>} />
 
       <Route path="/register" element={<RegisterPage/>}/>
       

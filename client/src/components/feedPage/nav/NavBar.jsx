@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import { useLogoutUser } from "../../../hooks/useUserRegisterLoginLogout";
 import { AuthContext } from "../../../context/authContext";
 
-
 export const NavBar = () => {
     const { logoutHandler } = useLogoutUser();
     const { authUser } = useContext(AuthContext);
@@ -27,7 +26,7 @@ export const NavBar = () => {
                     </div>
                 </div>
                 <div className="nav-right">
-                <div className="user-info">
+                <Link to={'/profile'}><div className="user-info">
                         {authUser?.profilePhotoImagePath ? (
                             <img
                                 src={`${process.env.REACT_APP_API_BASE_URL}/images/${authUser.profilePhotoImagePath}`}
@@ -38,7 +37,7 @@ export const NavBar = () => {
                             <FaUserCircle className="user-icon" />
                         )}
                         <p>{authUser?.username}</p>
-                    </div>
+                    </div></Link>
                     <MdLogout className="nav-icon logout-icon" onClick={logoutHandler} title="Logout" />
                 </div>
             </div>
