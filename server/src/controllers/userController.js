@@ -1,4 +1,5 @@
 import { User } from '../models/userSchema.js'
+import { Post } from "../models/postsSchema.js"
 import { logger } from '../../logger.js'
 import { generateToken } from '../utils/generateToken.js'
 import { sendOrderConfirmation } from '../../mailgun.js'
@@ -144,3 +145,30 @@ export const getUserByIdController = async (req, res) => {
         res.status(500).json({ error: 'Server error'})
     }
 }
+
+export const getUserProfileWithPosts = async (req, res) => {
+    try {
+        const username = req.params.username;
+
+        if (!username) {
+            return res.status(400).json({ message: "Username is required" });
+        }
+
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const posts = await Post.find({ user: user._id }).populate('user', 'username profilePhotoImagePath');
+
+        const userProfile = {
+            ...user.toObject(),
+            posts
+        };
+
+        res.status(200).json(userProfile);
+    } catch (error) {
+        logger.error('Error fetching user profile with posts:', error.message);
+        res.status(500).json({ message: 'Server error' });
+    }
+};

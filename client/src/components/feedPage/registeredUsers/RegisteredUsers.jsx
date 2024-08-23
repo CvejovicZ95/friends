@@ -3,6 +3,7 @@ import "./RegisteredUsers.scss";
 import { FaUserCircle } from "react-icons/fa";
 import { useGetUsers } from "../../../hooks/useUsers";
 import { useAuthContext } from "../../../context/authContext";
+import { Link } from "react-router-dom";
 
 export const RegisteredUsers = () => {
     const { users, loading } = useGetUsers();
@@ -20,7 +21,7 @@ export const RegisteredUsers = () => {
             <h2>Users</h2>
             <ul>
                 {filteredUsers.map(user => (
-                    <li key={user._id} className="user-item">
+                    <Link to={`/profile/${user.username}`} key={user._id}><li className="user-item">
                         {user.profilePhotoImagePath ? (
                             <img
                                 src={`${process.env.REACT_APP_API_BASE_URL}/images/${user.profilePhotoImagePath}`}
@@ -31,7 +32,7 @@ export const RegisteredUsers = () => {
                             <FaUserCircle className="user-icon" />
                         )}
                         <p>{user.username}</p>
-                    </li>
+                    </li></Link>
                 ))}
             </ul>
         </div>

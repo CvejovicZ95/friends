@@ -7,5 +7,5 @@ export const postsRouter = express.Router()
 postsRouter.get('/posts', getAllPostsController )
 postsRouter.get('/posts/user/:username', getPostsByUserController);
 postsRouter.post('/newPost', authenticateToken, addPostController)
-postsRouter.put('/post/:id',  updatePostController)
+postsRouter.put('/post/:id', authenticateToken,  updatePostController)
 postsRouter.delete('/post/:id', authenticateToken, deletePostController)

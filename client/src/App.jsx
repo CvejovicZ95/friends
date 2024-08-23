@@ -3,6 +3,7 @@ import { RegisterPage } from "./components/registerPage/RegisterPage";
 import { FeedPage } from "./components/feedPage/FeedPage";
 import { InboxPage } from "./components/feedPage/inboxPage/InboxPage"
 import { UserProfile } from "./components/feedPage/userProfile/UserProfile"
+import { OtherUserProfile } from "./components/feedPage/otherUserProfile/OtherUserProfile";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuthContext } from "./context/authContext";
 
@@ -18,6 +19,9 @@ function App() {
       <Route path="/inbox" element={<InboxPage/>}/>
 
       <Route path="/profile"  element={!authUser ? <Navigate to={"/"} /> : <UserProfile/>} />
+
+      <Route path="/profile/:username" element={!authUser ? <Navigate to={"/"} /> : <OtherUserProfile />} />
+
 
       <Route path="/register" element={<RegisterPage/>}/>
       

@@ -2,16 +2,6 @@ import { getAllPosts, addPost, updatePost, deletePost, getPostsByUsername, getPo
 import { logger } from "../../logger.js";
 import multer from 'multer';
 
-
-export const getAllPostsController = async (req, res) => {
-    try {
-        const allPosts = await getAllPosts()
-        res.status(200).json(allPosts)
-    } catch (error) {
-        res.status(500).json({ error: 'Server error'})
-    }
-}
-
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, '../server/images'); 
@@ -23,6 +13,16 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage }).single('image');
+
+
+export const getAllPostsController = async (req, res) => {
+    try {
+        const allPosts = await getAllPosts()
+        res.status(200).json(allPosts)
+    } catch (error) {
+        res.status(500).json({ error: 'Server error'})
+    }
+}
 
 export const addPostController = async (req, res) => {
     try {
