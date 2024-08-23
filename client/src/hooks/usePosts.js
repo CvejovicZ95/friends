@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { getAllPosts, deletePost, addPost } from '../api/postsApi';
+import { getAllPosts, deletePost, addPost, updatePost } from '../api/postsApi';
 
 export const useGetAllPosts = () => {
     const [posts, setPosts] = useState([]);
@@ -44,5 +44,21 @@ export const useGetAllPosts = () => {
         }
     };
 
-    return { posts, loading, handleDeletePost, handleAddPost };
+    const handleUpdatePost = async (postId, formData) => {
+        try {
+            const updatedPost = await updatePost(postId, formData);
+            setPosts((prevPosts) =>
+                prevPosts.map((post) =>
+                    post._id === updatedPost._id ? updatedPost : post
+                )
+            );
+            return true;
+        } catch (error) {
+            toast.error(`Failed to update post: ${error.message}`);
+            console.error(error);
+            return false;
+        }
+    };
+
+    return { posts, loading, handleDeletePost, handleAddPost, handleUpdatePost };
 };

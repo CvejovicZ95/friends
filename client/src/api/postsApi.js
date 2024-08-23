@@ -70,3 +70,23 @@ export const getPostsByUser = async (username) => {
         throw new Error(error.message);
     }
 }
+
+export const updatePost = async (id, formData) => {
+    try {
+        const res = await fetch(`${apiUrl}/api/post/${id}`, {
+            method: "PUT",
+            body: formData,
+            credentials: 'include',
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || "Error while updating post");
+        }
+
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        throw new Error(error.message || "Error while updating post");
+    }
+};

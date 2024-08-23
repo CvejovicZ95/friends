@@ -67,8 +67,8 @@ export const updatePostController = async (req, res) => {
 
             try {
                 const postId = req.params.id;
-                const { text, imageUrl } = req.body;
-                //const imageUrl = req.file ? req.file.filename : null;
+                const { text } = req.body;
+                const imageUrl = req.file ? req.file.filename : null;
 
                 const newData = {
                     content: {
