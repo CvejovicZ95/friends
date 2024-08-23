@@ -36,7 +36,7 @@ export const addPostController = async (req, res) => {
             }
 
             try {
-                const {  text } = req.body;
+                const { text } = req.body;
                 const imageUrl = req.file ? req.file.filename : null;
                 const userId = req.user._id;
         
@@ -56,18 +56,42 @@ export const addPostController = async (req, res) => {
 
 export const updatePostController = async (req, res) => {
     try {
-        const postId = req.params.id;
-        const newData = req.body;
-        
-        logger.info('Update request received for post ID:', postId, 'New Data:', newData);
-        
-        const updatedPost = await updatePost(postId, newData);
-        res.status(200).json(updatedPost);
+        upload(req, res, async (err) => {
+            if (err instanceof multer.MulterError) {
+                logger.error('Error uploading image');
+                return res.status(400).json({ message: 'Error uploading image' });
+            } else if (err) {
+                logger.error('Server error uploading image');
+                return res.status(500).json({ message: 'Server error uploading image' });
+            }
+
+            try {
+                const postId = req.params.id;
+                const { text, imageUrl } = req.body;
+                //const imageUrl = req.file ? req.file.filename : null;
+
+                const newData = {
+                    content: {
+                        text,
+                        imageUrl
+                    }
+                };
+
+                logger.info('Update request received for post ID:', postId, 'New Data:', newData);
+
+                const updatedPost = await updatePost(postId, newData);
+                res.status(200).json(updatedPost);
+            } catch (error) {
+                logger.error('Error updating post', error.message);
+                res.status(500).json({ error: 'Server error' });
+            }
+        });
     } catch (error) {
         logger.error('Error in updatePostController', error.message);
-        res.status(500).json('Server error');
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 }
+
 
 export const deletePostController = async (req, res) => {
     try {

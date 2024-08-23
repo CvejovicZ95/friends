@@ -47,16 +47,21 @@ export const addPost = async (userId, text, imageUrl = null) => {
 
 export const updatePost = async (postId, newData) => {
     try {
-        logger.info('Updating post with ID:', postId, 'New Data:', newData);
-        
-        const updatedPost = await Post.findByIdAndUpdate(postId, { $set: newData }, { new: true});
-        
+        logger.info('Updating post with ID:', postId);
+        logger.info('New Data:', newData);
+
+        const updateFields = {
+            content: newData.content
+        };
+
+        const updatedPost = await Post.findByIdAndUpdate(postId, updateFields, { new: true });
+
         if (!updatedPost) {
             logger.error('Post not found with ID:', postId);
             throw new Error('Post not found');
         }
 
-        logger.info('Post updated successfully', updatedPost);
+        logger.info('Post updated successfully', updatedPost._id);
         return updatedPost;
     } catch (error) {
         logger.error('Error updating post', error.message);
