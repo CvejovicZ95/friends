@@ -26,7 +26,7 @@ export const UpdatePostForm = ({ post, onClose }) => {
             formData.append('image', image);
         }
         if (removeImage) {
-            formData.append('removeImage', true); // Indikator da se slika treba obrisati
+            formData.append('removeImage', true);
         }
         try {
             await handleUpdatePost(post._id, formData);
