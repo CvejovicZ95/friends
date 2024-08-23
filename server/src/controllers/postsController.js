@@ -1,4 +1,4 @@
-import { getAllPosts, addPost, updatePost, deletePost, getPostsByUsername } from "../service/postsService.js";
+import { getAllPosts, addPost, updatePost, deletePost, getPostsByUsername, getPostById } from "../service/postsService.js";
 import { logger } from "../../logger.js";
 import multer from 'multer';
 
@@ -67,8 +67,21 @@ export const updatePostController = async (req, res) => {
 
             try {
                 const postId = req.params.id;
-                const { text } = req.body;
-                const imageUrl = req.file ? req.file.filename : null;
+                const { text, removeImage } = req.body;
+
+                const existingPost = await getPostById(postId);
+                if (!existingPost) {
+                    return res.status(404).json({ message: 'Post not found' });
+                }
+
+        
+                let imageUrl = existingPost.content.imageUrl;
+                if (req.file) {
+                    imageUrl = req.file.filename;
+                }
+                if (removeImage === 'true') {
+                    imageUrl = null; 
+                }
 
                 const newData = {
                     content: {
@@ -76,8 +89,6 @@ export const updatePostController = async (req, res) => {
                         imageUrl
                     }
                 };
-
-                logger.info('Update request received for post ID:', postId, 'New Data:', newData);
 
                 const updatedPost = await updatePost(postId, newData);
                 res.status(200).json(updatedPost);

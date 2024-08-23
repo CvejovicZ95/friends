@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import { useGetAllPosts } from '../../../hooks/usePosts'; 
 import "./PostsPage.scss";
-import { UpdatePostForm } from "./UpdatePostForm"
+import { UpdatePostForm } from "./UpdatePostForm";
+import { ModalOverlay } from "../../ModalOverlay";
 import { FaThumbsUp, FaComment, FaEllipsisV } from 'react-icons/fa';
 import { AuthContext } from "../../../context/authContext";
 import { toast } from "react-toastify";
@@ -11,13 +12,12 @@ import 'react-toastify/dist/ReactToastify.css';
 export const PostsPage = () => {
     const { posts, loading, handleDeletePost } = useGetAllPosts();
     const { authUser } = useContext(AuthContext);
-    const [editingPostId, setEditingPostId] = useState(null);
+    const [editingPost, setEditingPost] = useState(null);
 
     if (loading) {
         return <div>Loading...</div>;
     }
     
-
     const sortedPosts = [...posts].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
     const handleDelete = async (id) => {
@@ -30,14 +30,6 @@ export const PostsPage = () => {
                 toast.error(error.message);
             }
         }
-    };
-
-    const handleEditClick = (id) => {
-        setEditingPostId(id);
-    };
-
-    const handleCloseEdit = () => {
-        setEditingPostId(null);
     };
 
     return (
@@ -59,7 +51,7 @@ export const PostsPage = () => {
                                     <>
                                         <FaEllipsisV className="menu-icon" />
                                         <div className="dropdown-menu">
-                                            <span onClick={() => handleEditClick(post._id)}>Edit</span>
+                                            <span onClick={() => setEditingPost(post)}>Edit</span>
                                             <span onClick={() => handleDelete(post._id)}>Delete</span>
                                         </div>
                                     </>
@@ -94,11 +86,13 @@ export const PostsPage = () => {
                     </div>
                 ))}
             </div>
-            {editingPostId && (
-                <UpdatePostForm
-                    postId={editingPostId}
-                    onClose={handleCloseEdit}
-                />
+            {editingPost && (
+                <ModalOverlay onClose={() => setEditingPost(null)}>
+                    <UpdatePostForm
+                        post={editingPost}
+                        onClose={() => setEditingPost(null)}
+                    />
+                </ModalOverlay>
             )}
             <ToastContainer />
         </div>

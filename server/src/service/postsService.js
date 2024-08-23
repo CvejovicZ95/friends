@@ -105,3 +105,19 @@ export const getPostsByUsername = async (username) => {
         throw new Error('Error fetching posts by username');
     }
 }
+
+export const getPostById = async (postId) => {
+    try {
+        const post = await Post.findById(postId).populate('user', 'username profilePhotoImagePath');
+
+        if (!post) {
+            logger.error('Post not found with ID:', postId);
+            throw new Error('Post not found');
+        }
+
+        return post;
+    } catch (error) {
+        logger.error('Error fetching post by ID:', error.message);
+        throw new Error('Error fetching post by ID');
+    }
+}

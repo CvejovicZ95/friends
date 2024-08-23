@@ -8,10 +8,14 @@ import { FaThumbsUp, FaComment, FaUserCircle, FaEllipsisV } from "react-icons/fa
 import { toast } from "react-toastify";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { UpdatePostForm } from "../postsPage/UpdatePostForm"; 
+import { ModalOverlay } from "../../ModalOverlay";
 
 export const UserProfile = () => {
     const { authUser } = useContext(AuthContext);
     const [username, setUsername] = useState(authUser ? authUser.username : '');
+    const [selectedPost, setSelectedPost] = useState(null);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         if (authUser) {
@@ -20,7 +24,7 @@ export const UserProfile = () => {
     }, [authUser]);
 
     const { posts, loading } = useGetUserPosts(username);
-    const { handleDeletePost } = useGetAllPosts()
+    const { handleDeletePost } = useGetAllPosts();
 
     if (loading) {
         return <div>Loading...</div>;
@@ -38,6 +42,11 @@ export const UserProfile = () => {
                 toast.error(error.message);
             }
         }
+    };
+
+    const handleEdit = (post) => {
+        setSelectedPost(post);
+        setShowModal(true);
     };
 
     return (
@@ -73,18 +82,18 @@ export const UserProfile = () => {
                                             <FaUserCircle className="user-icon" />
                                         )}
                                         <span className="post-username">{post.user.username}</span>
-                                        </div>
-                                            <div className="post-menu">
-                                            {authUser && authUser.username === post.user.username && (
-                                                <>
+                                    </div>
+                                    <div className="post-menu">
+                                        {authUser && authUser.username === post.user.username && (
+                                            <>
                                                 <FaEllipsisV className="menu-icon" />
                                                 <div className="dropdown-menu">
-                                                    <span>Edit</span>
+                                                    <span onClick={() => handleEdit(post)}>Edit</span>
                                                     <span onClick={() => handleDelete(post._id)}>Delete</span>
                                                 </div>
-                                                </>
-                                                )}
-                                            </div>                                
+                                            </>
+                                        )}
+                                    </div>
                                 </div>
                                 <div className="post-content">
                                     <p>{post.content.text}</p>
@@ -117,8 +126,16 @@ export const UserProfile = () => {
                         <p>No posts found</p>
                     )}
                 </div>
+                {showModal && (
+                    <ModalOverlay onClose={() => setShowModal(false)}>
+                        <UpdatePostForm
+                            post={selectedPost}
+                            onClose={() => setShowModal(false)}
+                        />
+                    </ModalOverlay>
+                )}
             </div>
-            <ToastContainer/>
+            <ToastContainer />
         </div>
     );
 };

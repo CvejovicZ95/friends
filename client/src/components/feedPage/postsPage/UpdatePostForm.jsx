@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGetAllPosts } from '../../../hooks/usePosts'; 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './UpdatePostForm.scss';
 
-export const UpdatePostForm = ({ postId, onClose }) => {
+export const UpdatePostForm = ({ post, onClose }) => {
     const { handleUpdatePost } = useGetAllPosts();
     const [text, setText] = useState('');
     const [image, setImage] = useState(null);
+    const [imagePreview, setImagePreview] = useState('');
+    const [removeImage, setRemoveImage] = useState(false);
+
+    useEffect(() => {
+        if (post) {
+            setText(post.content.text || '');
+            setImagePreview(post.content.imageUrl ? `${process.env.REACT_APP_API_BASE_URL}/images/${post.content.imageUrl}` : '');
+        }
+    }, [post]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,13 +25,21 @@ export const UpdatePostForm = ({ postId, onClose }) => {
         if (image) {
             formData.append('image', image);
         }
+        if (removeImage) {
+            formData.append('removeImage', true); // Indikator da se slika treba obrisati
+        }
         try {
-            await handleUpdatePost(postId, formData);
+            await handleUpdatePost(post._id, formData);
             toast.success('Post updated successfully');
             onClose();
         } catch (error) {
             toast.error(`Failed to update post: ${error.message}`);
         }
+    };
+
+    const handleRemoveImage = () => {
+        setImagePreview('');
+        setRemoveImage(true);
     };
 
     return (
@@ -33,6 +50,18 @@ export const UpdatePostForm = ({ postId, onClose }) => {
                     onChange={(e) => setText(e.target.value)}
                     placeholder="Update your post"
                 />
+                {imagePreview && (
+                    <div className="image-preview">
+                        <img src={imagePreview} alt="Post preview" />
+                        <button
+                            type="button"
+                            className="remove-image-button"
+                            onClick={handleRemoveImage}
+                        >
+                            
+                        </button>
+                    </div>
+                )}
                 <input
                     type="file"
                     onChange={(e) => setImage(e.target.files[0])}
