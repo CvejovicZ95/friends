@@ -23,7 +23,9 @@ export const useGetUserPosts = (username) => {
         if (username) {
             fetchUserPosts();
         }
-    }, [username]);
+    }, [username, /*posts*/]);
+
+    //if add posts to useEffect infinte loop
 
     return { posts, loading };
 };

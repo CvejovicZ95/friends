@@ -20,7 +20,7 @@ export const useGetAllPosts = () => {
             }
         };
         fetchPosts();
-    }, []);
+    }, [])
     
 
     const handleDeletePost = async (id) => {
@@ -64,7 +64,6 @@ export const useGetAllPosts = () => {
     const handleLikePost = async (postId) => {
         try {
             const updatedPost = await likePost(postId)
-            console.log("Updated Post:", updatedPost);
             setPosts((prevPosts) => 
                 prevPosts.map((post) =>
                     post._id === updatedPost._id ? updatedPost : post)
@@ -72,7 +71,7 @@ export const useGetAllPosts = () => {
         return true
         } catch (error) {
             toast.error(`Failed to like post: ${error.message}`)
-            console.log(error)
+            console.error(error)
             return false
         }
     }

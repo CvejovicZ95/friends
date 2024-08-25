@@ -26,6 +26,7 @@ export const useUserProfile = (username) => {
             fetchUser();
         }
     }, [username]);
+    
 
     return { user, loading, error };
 };

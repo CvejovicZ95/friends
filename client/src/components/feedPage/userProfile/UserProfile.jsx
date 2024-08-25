@@ -30,6 +30,8 @@ export const UserProfile = () => {
         return <div>Loading...</div>;
     }
 
+    //uncoment loading for render (problem infinite loop)
+
     const sortedPosts = [...posts].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
     const handleDelete = async (id) => {
