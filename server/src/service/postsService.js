@@ -121,3 +121,42 @@ export const getPostById = async (postId) => {
         throw new Error('Error fetching post by ID');
     }
 }
+
+export const toggleLike = async (postId, userId) => {
+    try {
+        const post = await Post.findById(postId);
+        if (!post) {
+            console.log('Post not found');
+            throw new Error('Post not found');
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+            console.log('User not found');
+            throw new Error('User not found');
+        }
+
+        const isUserLikingPost = post.actions.likes.users.includes(userId);
+
+        if (!isUserLikingPost) {
+            post.actions.likes.users.push(userId);
+            post.actions.likes.count += 1;
+            user.likedPosts.push(postId);
+            console.log('Like status toggled successfully');
+        } else {
+            post.actions.likes.users.pull(userId);
+            post.actions.likes.count -= 1;
+            user.likedPosts.pull(postId);
+            console.log('Unlike status toggled successfully');
+        }
+
+        await post.save();
+        await user.save();
+
+       
+        return post; 
+    } catch (error) {
+        console.error(`Error toggling like: ${error.message}`, { error });
+        throw new Error('Error toggling like');
+    }
+}

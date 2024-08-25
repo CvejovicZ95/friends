@@ -1,4 +1,4 @@
-import { getAllPosts, addPost, updatePost, deletePost, getPostsByUsername, getPostById } from "../service/postsService.js";
+import { getAllPosts, addPost, updatePost, deletePost, getPostsByUsername, getPostById, toggleLike } from "../service/postsService.js";
 import { logger } from "../../logger.js";
 import multer from 'multer';
 
@@ -139,3 +139,17 @@ export const getPostsByUserController = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+export const toggleLikeController = async (req,res) => {
+    try {
+        const postId = req.params.id;
+        const userId = req.user._id;
+       
+        await toggleLike(postId, userId)
+
+        res.status(200).json({ message: 'Like status toggled successfully'})
+    } catch (error) {
+        logger.error(`Error toggling like: ${error.message}`, { error });
+        res.status(500).json({ error:'Server error' })
+    }
+}

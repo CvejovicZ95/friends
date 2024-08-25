@@ -90,3 +90,21 @@ export const updatePost = async (id, formData) => {
         throw new Error(error.message || "Error while updating post");
     }
 };
+
+export const likePost = async (id) => {
+    try {
+        const res = await fetch(`${apiUrl}/api/post/like/${id}` , {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+        })
+        const data = await res.json()
+
+        if (data.error) {
+            throw new Error(data.error)
+        }
+        return data;
+    } catch (error) {
+        throw new Error(error.message || 'Error in like post');
+    }
+}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { getAllPosts, deletePost, addPost, updatePost } from '../api/postsApi';
+import { getAllPosts, deletePost, addPost, updatePost, likePost } from '../api/postsApi';
 
 export const useGetAllPosts = () => {
     const [posts, setPosts] = useState([]);
@@ -21,6 +21,7 @@ export const useGetAllPosts = () => {
         };
         fetchPosts();
     }, []);
+    
 
     const handleDeletePost = async (id) => {
         try {
@@ -60,5 +61,21 @@ export const useGetAllPosts = () => {
         }
     };
 
-    return { posts, loading, handleDeletePost, handleAddPost, handleUpdatePost };
+    const handleLikePost = async (postId) => {
+        try {
+            const updatedPost = await likePost(postId)
+            console.log("Updated Post:", updatedPost);
+            setPosts((prevPosts) => 
+                prevPosts.map((post) =>
+                    post._id === updatedPost._id ? updatedPost : post)
+        );
+        return true
+        } catch (error) {
+            toast.error(`Failed to like post: ${error.message}`)
+            console.log(error)
+            return false
+        }
+    }
+
+    return { posts, loading, handleDeletePost, handleAddPost, handleUpdatePost, handleLikePost };
 };

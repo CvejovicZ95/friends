@@ -2,10 +2,23 @@ import React from "react";
 import { FaThumbsUp, FaComment, FaEllipsisV } from 'react-icons/fa';
 import { useContext } from "react";
 import { AuthContext } from "../../../context/authContext";
+import { useGetAllPosts } from "../../../hooks/usePosts";
 import "./PostItem.scss"
 
 export const PostItem = ({ post, onEdit, onDelete }) => {
     const { authUser } = useContext(AuthContext);
+    const { handleLikePost } = useGetAllPosts()
+
+    const handleLikeClick = async () => {
+        try {
+            if (authUser) {
+                await handleLikePost(post._id, authUser.username);
+            }
+        } catch (error) {
+            console.error("Failed to like post:", error);
+        }
+    };
+
 
     return (
         <div key={post._id} className="post-item">
@@ -40,7 +53,7 @@ export const PostItem = ({ post, onEdit, onDelete }) => {
             </div>
             <div className="post-footer">
                 <div className="post-actions">
-                    <div className="like-action">
+                    <div className="like-action" onClick={handleLikeClick}>
                         <FaThumbsUp className="action-icon" />
                         <span className="like-count">{post.actions.likes.count}</span>
                     </div>

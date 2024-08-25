@@ -9,13 +9,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const PostsPage = () => {
-    const { posts, loading, handleDeletePost } = useGetAllPosts();
+    const { posts, handleDeletePost } = useGetAllPosts();
     const [editingPost, setEditingPost] = useState(null);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-    
     const sortedPosts = [...posts].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
     const handleDelete = async (id) => {
