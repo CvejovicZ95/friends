@@ -1,15 +1,17 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { FaThumbsUp, FaComment, FaEllipsisV } from 'react-icons/fa';
 import { useContext } from "react";
 import { AuthContext } from "../../../context/authContext";
 import { useGetAllPosts } from "../../../hooks/usePosts";
 import { CommentsList } from "../comments/Comments";
-import "./PostItem.scss"
+import { useLocation } from "react-router-dom";
+import "./PostItem.scss";
 
 export const PostItem = ({ post, onEdit, onDelete }) => {
     const { authUser } = useContext(AuthContext);
-    const { handleLikePost } = useGetAllPosts()
+    const { handleLikePost } = useGetAllPosts();
     const [commentsVisible, setCommentsVisible] = useState(false);
+    const location = useLocation();
 
     const handleLikeClick = async () => {
         try {
@@ -25,12 +27,16 @@ export const PostItem = ({ post, onEdit, onDelete }) => {
         setCommentsVisible(prevState => !prevState);
     };
 
+    const isProfilePage = location.pathname === '/profile';
+    
     return (
         <div key={post._id} className="post-item">
             <div className="post-header">
                 <div className="post-user-info">
                     <img
-                        src={`${process.env.REACT_APP_API_BASE_URL}/images/${post.user.profilePhotoImagePath}`}
+                        src={isProfilePage 
+                            ? `${process.env.REACT_APP_API_BASE_URL}/images/${authUser.profilePhotoImagePath}`
+                            : `${process.env.REACT_APP_API_BASE_URL}/images/${post.user.profilePhotoImagePath}`}
                         alt={post.user.username}
                         className="post-user-photo"
                     />
