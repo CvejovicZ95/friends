@@ -20,8 +20,8 @@ export const useGetAllPosts = () => {
             }
         };
         fetchPosts();
-    }, [])
-    
+    }, [/*posts*/])
+    //posts infinite loop
 
     const handleDeletePost = async (id) => {
         try {
