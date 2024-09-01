@@ -58,7 +58,8 @@ export const PostStatus = () => {
                     <input 
                         type="file" 
                         accept="image/*" 
-                        onChange={handleImageChange} 
+                        onChange={handleImageChange}
+                        //style={{ display: 'none' }}
                     />
                 </label>
                 <FaRegSmile className="post-icon" title="Add emoji" />
