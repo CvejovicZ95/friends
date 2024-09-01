@@ -10,6 +10,7 @@ import { connect } from './src/db/connectDB.js'
 import { userRouter } from './src/routes/userRoutes.js'
 import { tokenRouter } from './src/routes/tokenRoutes.js'
 import { postsRouter } from './src/routes/postsRoutes.js'
+import { commentsRouter } from './src/routes/commentsRoutes.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -35,6 +36,7 @@ app.use('/images', express.static(path.join(__dirname, '../server/images')))
 app.use('/api', userRouter)
 app.use('/api', tokenRouter)
 app.use('/api', postsRouter)
+app.use('/api', commentsRouter)
 
 app.listen(PORT, () => {
     connect()

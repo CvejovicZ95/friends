@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState} from "react";
 import { FaThumbsUp, FaComment, FaEllipsisV } from 'react-icons/fa';
 import { useContext } from "react";
 import { AuthContext } from "../../../context/authContext";
 import { useGetAllPosts } from "../../../hooks/usePosts";
+import { CommentsList } from "../comments/Comments";
 import "./PostItem.scss"
 
 export const PostItem = ({ post, onEdit, onDelete }) => {
     const { authUser } = useContext(AuthContext);
     const { handleLikePost } = useGetAllPosts()
+    const [commentsVisible, setCommentsVisible] = useState(false);
 
     const handleLikeClick = async () => {
         try {
@@ -19,6 +21,9 @@ export const PostItem = ({ post, onEdit, onDelete }) => {
         }
     };
 
+    const toggleComments = () => {
+        setCommentsVisible(prevState => !prevState);
+    };
 
     return (
         <div key={post._id} className="post-item">
@@ -57,7 +62,7 @@ export const PostItem = ({ post, onEdit, onDelete }) => {
                         <FaThumbsUp className="action-icon" />
                         <span className="like-count">{post.actions.likes.count}</span>
                     </div>
-                    <div className="comment-action">
+                    <div className="comment-action" onClick={toggleComments}>
                         <FaComment className="action-icon" />
                         <span className="comment-count">{post.actions.comments.count}</span>
                     </div>
@@ -66,6 +71,7 @@ export const PostItem = ({ post, onEdit, onDelete }) => {
                     {new Date(post.timestamp).toLocaleString()}
                 </span>
             </div>
+            {commentsVisible && <CommentsList postId={post._id} />}
         </div>
     );
 };

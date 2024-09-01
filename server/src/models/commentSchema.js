@@ -12,8 +12,10 @@ const commentSchema = new mongoose.Schema({
     required: true
   },
   content: {
-    type: String,
-    required: true          
+    text: {
+      type: String,
+      required: true          
+    }
   },
   likes: {
     count: {
