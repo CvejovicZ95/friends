@@ -159,7 +159,10 @@ export const getUserProfileWithPosts = async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        const posts = await Post.find({ user: user._id }).populate('user', 'username profilePhotoImagePath');
+        const posts = await Post.find({ user: user._id })
+        .populate('user', 'username profilePhotoImagePath')
+        .sort({ created_at: -1 });
+
 
         const userProfile = {
             ...user.toObject(),
