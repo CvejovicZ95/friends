@@ -16,9 +16,9 @@ export const getCommentsByPostId = async (postId) => {
 };;
 
 
-export const addComment = async (userId, postId, text) => {
+export const addComment = async (username, postId, text) => {
     try {
-        const user = await User.findById(userId);
+        const user = await User.findOne({ username });
         if (!user) {
             throw new Error('User not found');
         }
@@ -28,9 +28,8 @@ export const addComment = async (userId, postId, text) => {
             throw new Error('Post not found');
         }
 
-        
         const newComment = new Comment({
-            user: userId,
+            user: user._id,
             post: postId,
             content: { text }
         });
@@ -47,6 +46,7 @@ export const addComment = async (userId, postId, text) => {
         throw new Error('Error adding new comment');
     }
 };
+
 
 export const deleteCommentById = async (commentId) => {
     try {
