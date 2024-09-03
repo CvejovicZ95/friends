@@ -35,3 +35,23 @@ export const addComment = async (commentData) => {
         throw new Error(error.message);
     }
 };
+
+export const deleteComment = async (id) => {
+    try {
+        const res = await fetch(`${apiUrl}/api/comments/${id}`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+        })
+
+        if (!res.ok) {
+            const errorData = await res.json()
+            throw new Error(errorData || 'Failed to delete comment')
+        }
+
+        const result = await res.json()
+        return result;
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}

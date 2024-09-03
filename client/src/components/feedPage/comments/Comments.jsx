@@ -6,7 +6,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa'; // Import the icons
 import "./Comments.scss";
 
 export const CommentsList = ({ postId }) => {
-    const { comments, loading } = useGetAllComments(postId);
+    const { comments, loading, handleDeleteComment } = useGetAllComments(postId);
     const { authUser } = useContext(AuthContext);
 
     if (loading) {
@@ -17,9 +17,6 @@ export const CommentsList = ({ postId }) => {
         // Implement your edit comment logic here
     };
 
-    const handleDeleteComment = (commentId) => {
-        // Implement your delete comment logic here
-    };
 
     return (
         <div className='comments-list'>
@@ -46,7 +43,10 @@ export const CommentsList = ({ postId }) => {
                                         <button onClick={() => handleEditComment(comment._id)} className="edit-button">
                                             <FaEdit />
                                         </button>
-                                        <button onClick={() => handleDeleteComment(comment._id)} className="delete-button">
+                                        <button
+                                            onClick={() => handleDeleteComment(comment._id)}
+                                            className="delete-button"
+                                        >
                                             <FaTrash />
                                         </button>
                                     </div>

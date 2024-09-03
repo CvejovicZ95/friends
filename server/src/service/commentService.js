@@ -77,12 +77,11 @@ export const deleteCommentById = async (commentId) => {
         logger.info('Comment deleted and post updated');
         return { message: 'Comment deleted successfully' };
     } catch (error) {
-        logger.error('Error adding new comment', {
+        logger.error('Error deleting comment', {
             message: error.message,
-            stack: error.stack,
-            requestBody: req.body
+            stack: error.stack
         });
-        res.status(500).json({ message: 'Server error' });
+        throw error; 
     }
 };
 
