@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useGetAllComments } from '../../../hooks/useComments';
+import { AuthContext } from '../../../context/authContext';
 import { AddComment } from './AddComment';
+import { FaEdit, FaTrash } from 'react-icons/fa'; // Import the icons
 import "./Comments.scss";
 
 export const CommentsList = ({ postId }) => {
     const { comments, loading } = useGetAllComments(postId);
+    const { authUser } = useContext(AuthContext);
 
     if (loading) {
         return <div>Loading...</div>;
     }
+
+    const handleEditComment = (commentId) => {
+        // Implement your edit comment logic here
+    };
+
+    const handleDeleteComment = (commentId) => {
+        // Implement your delete comment logic here
+    };
 
     return (
         <div className='comments-list'>
@@ -22,10 +33,24 @@ export const CommentsList = ({ postId }) => {
                                     alt={comment.user.username}
                                     className="comment-user-photo"
                                 />
-                                <p className="comment-username"><strong>{comment.user.username}</strong>:{comment.content.text}</p>
-                                <span className="comment-timestamp">
+                                <div className="comment-content">
+                                    <p className="comment-username">
+                                        <strong>{comment.user.username}</strong>: {comment.content.text}
+                                    </p>
+                                    <span className="comment-timestamp">
                                         {new Date(comment.timestamp).toLocaleString()}
-                                </span>
+                                    </span>
+                                </div>
+                                {authUser.username === comment.user.username && (
+                                    <div className="comment-actions">
+                                        <button onClick={() => handleEditComment(comment._id)} className="edit-button">
+                                            <FaEdit />
+                                        </button>
+                                        <button onClick={() => handleDeleteComment(comment._id)} className="delete-button">
+                                            <FaTrash />
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </li>
                     ))}
@@ -37,4 +62,3 @@ export const CommentsList = ({ postId }) => {
         </div>
     );
 };
-

@@ -1,7 +1,8 @@
 .comments-list {
-    border-top: 1px solid #ccc; 
+    border-top: 1px solid #ccc;
     padding-top: 10px;
-    margin-top: 10px; 
+    margin-top: 10px;
+
     ul {
         list-style: none;
         padding: 0;
@@ -15,7 +16,7 @@
         margin: 10px;
         padding: 5px;
         display: flex;
-        align-items: center;
+        align-items: flex-start; 
         transition: background-color 0.3s ease, box-shadow 0.3s ease;
         position: relative; 
 
@@ -27,7 +28,9 @@
         .comment-user-info {
             display: flex;
             align-items: center;
+            flex: 1; 
             margin-right: 15px;
+            position: relative; 
 
             .comment-user-photo {
                 width: 35px;
@@ -59,7 +62,36 @@
             color: #888;
             position: absolute;
             bottom: 5px;
-            right: 10px;
+            right: 5px; 
+        }
+
+        .comment-actions {
+            position: absolute;
+            top: 14px; 
+            right: 120px; 
+            display: flex;
+            gap: 5px;
+            align-items: center;
+
+            button {
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 14px; 
+                transition: color 0.2s ease;
+
+                &:hover {
+                    color: #007bff; 
+                }
+            }
+
+            .delete-button {
+                color: #dc3545; 
+
+                &:hover {
+                    color: #ce0216; 
+                }
+            }
         }
     }
 
@@ -84,6 +116,13 @@
 
             .comment-timestamp {
                 font-size: 11px;
+                right: 5px;
+                top: 15px;
+            }
+
+            .comment-actions {
+                top: 12px; 
+                right: 120px;
             }
         }
     }
@@ -109,6 +148,12 @@
 
             .comment-timestamp {
                 font-size: 10px;
+                right: 5px;
+            }
+
+            .comment-actions {
+                top: 10px; 
+                right: 100px;
             }
         }
     }
@@ -134,6 +179,16 @@
 
             .comment-timestamp {
                 font-size: 9px;
+                right: 5px;
+                top: 10px;
+            }
+
+            .comment-actions {
+                top: 7px; 
+                right: 100px;
+                button {
+                    font-size: 11px;
+                }
             }
         }
     }
