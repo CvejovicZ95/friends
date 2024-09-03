@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { getAllComments } from '../api/commentsApi';
+import { getAllComments, addComment } from '../api/commentsApi';
 
 export const useGetAllComments = (postId) => {
     const [comments, setComments] = useState([]);
@@ -23,5 +23,25 @@ export const useGetAllComments = (postId) => {
         fetchComments();
     }, [postId]);
 
-    return { comments, loading };
+    const handleAddComment = async (commentData) => {
+        try {
+            const formattedCommentData = {
+                content: {
+                    text: commentData.text
+                },
+                postId: commentData.postId,
+                username: commentData.username
+            };
+    
+            const newComment = await addComment(formattedCommentData);
+            setComments((prevComments) => [...prevComments, newComment]);
+            toast.success('Comment added successfully!');
+        } catch (error) {
+            toast.error(`Failed to add comment: ${error.message}`);
+            console.error(error);
+        }
+    };
+    
+
+    return { comments, loading, handleAddComment };
 };

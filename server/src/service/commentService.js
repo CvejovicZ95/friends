@@ -7,7 +7,6 @@ export const getCommentsByPostId = async (postId) => {
     try {
         const allCommentsInPost = await Comment.find({ post: postId })
             .populate('user', 'username profilePhotoImagePath')
-            .sort({ created_at: -1 });
         return allCommentsInPost;
     } catch (error) {
         logger.error('Error fetching all comments', error.message);
@@ -39,13 +38,20 @@ export const addComment = async (username, postId, text) => {
         post.actions.comments.commentIds.push(newComment._id);
         await post.save();
 
-        logger.info('New comment added');
+        logger.info('New comment added', { commentId: newComment._id, postId, username });
         return newComment;
     } catch (error) {
-        logger.error('Error adding new comment', error.message);
+        logger.error('Error adding new comment', {
+            message: error.message,
+            stack: error.stack,
+            username,
+            postId,
+            text
+        });
         throw new Error('Error adding new comment');
     }
 };
+
 
 
 export const deleteCommentById = async (commentId) => {
@@ -71,8 +77,12 @@ export const deleteCommentById = async (commentId) => {
         logger.info('Comment deleted and post updated');
         return { message: 'Comment deleted successfully' };
     } catch (error) {
-        logger.error('Error deleting comment', error.message);
-        throw new Error('Error deleting comment');
+        logger.error('Error adding new comment', {
+            message: error.message,
+            stack: error.stack,
+            requestBody: req.body
+        });
+        res.status(500).json({ message: 'Server error' });
     }
 };
 

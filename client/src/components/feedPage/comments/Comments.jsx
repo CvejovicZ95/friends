@@ -1,5 +1,6 @@
 import React from 'react';
 import { useGetAllComments } from '../../../hooks/useComments';
+import { AddComment } from './AddComment';
 import "./Comments.scss";
 
 export const CommentsList = ({ postId }) => {
@@ -32,6 +33,7 @@ export const CommentsList = ({ postId }) => {
             ) : (
                 <p>No comments yet</p>
             )}
+            <AddComment postId={postId} />
         </div>
     );
 };

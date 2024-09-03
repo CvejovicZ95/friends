@@ -28,8 +28,11 @@ export const addCommentController = async (req, res) => {
         const newComment = await addComment(username, postId, text);
         res.status(201).json(newComment);
     } catch (error) {
-        logger.error('Error adding new comment', error.message);
-        res.status(500).json({ message: 'Server error' });
+       logger.error('Error adding new comment', {
+            message: error.message,
+            stack: error.stack,
+            requestBody: req.body
+        });
     }
 };
 

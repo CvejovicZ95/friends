@@ -26,7 +26,7 @@ export const addComment = async (commentData) => {
 
         if (!res.ok) {
             const errorData = await res.json();
-            throw new Error(errorData.error);
+            throw new Error(errorData.error || 'Failed to add comment');
         }
 
         const data = await res.json();
