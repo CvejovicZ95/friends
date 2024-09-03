@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { getAllComments, addComment, deleteComment } from '../api/commentsApi';
+import { getAllComments, addComment, deleteComment, updateComment } from '../api/commentsApi';
 
 export const useGetAllComments = (postId) => {
     const [comments, setComments] = useState([]);
@@ -52,7 +52,21 @@ export const useGetAllComments = (postId) => {
             console.log(error)
         }
     }
-    
 
-    return { comments, loading, handleAddComment, handleDeleteComment };
+    const handleUpdateComment = async (id, newText) => {
+        try {
+            await updateComment(id, newText);
+            setComments((prevComments) =>
+                prevComments.map((comment) =>
+                    comment._id === id ? { ...comment, content: { text: newText } } : comment
+                )
+            );
+            toast.success('Comment updated successfully!');
+        } catch (error) {
+            toast.error(`Failed to update comment: ${error.message}`);
+            console.log(error);
+        }
+    };
+
+    return { comments, loading, handleAddComment, handleDeleteComment, handleUpdateComment };
 };

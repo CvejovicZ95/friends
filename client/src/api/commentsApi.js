@@ -55,3 +55,26 @@ export const deleteComment = async (id) => {
         throw new Error(error.message)
     }
 }
+
+export const updateComment = async (id, text) => {
+    try {
+        const res = await fetch(`${apiUrl}/api/comments/${id}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ text }), 
+            credentials: 'include',
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || "Error while updating comment");
+        }
+
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        throw new Error(error.message || "Error while updating comment");
+    }
+};
