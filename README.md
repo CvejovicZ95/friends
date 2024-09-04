@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Friends is an application in development designed to enable users to connect with and follow their friends. The application will allow users to create and manage posts, interact with others through comments and likes, and view profiles. It will also include real-time chat functionality for seamless communication between users.
+Friends is an application **in development** designed to enable users to connect with and follow their friends. The application will allow users to create and manage posts, interact with others through comments and likes, and view profiles. It will also include real-time chat functionality for seamless communication between users.
 
 ## Features
 
@@ -50,7 +50,7 @@ Friends is an application in development designed to enable users to connect wit
 ## Environment Variables (Client Folder)
 
 - `REACT_APP_API_BASE_URL`: Base URL for API requests
--
+
 - **Server**:
   - `nodemon server`
 - **Client:**
