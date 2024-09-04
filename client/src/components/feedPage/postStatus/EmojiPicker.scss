@@ -14,10 +14,10 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     padding: 8px;
     z-index: 1000;
-    width: 350px; /* Default width */
-    top: 100%; /* Position below the button */
- /* Align with the button */
+    width: 350px;
+    top: 100%;
     transform: translateY(8px); /* Adjust vertical spacing */
+    transform: translateX(-170px);
 }
 
 .emoji {
@@ -35,6 +35,7 @@
 @media (max-width: 991px) {
     .emoji-picker {
         width: 250px; /* Adjust width for medium screens */
+        transform: translateX(-120px);
     }
     .emoji {
         font-size: 16px;
@@ -44,6 +45,7 @@
 @media (max-width: 767px) {
     .emoji-picker {
         width: 190px; /* Adjust width for smaller screens */
+        transform: translateX(-90px);
     }
     .emoji {
         font-size: 13px;
