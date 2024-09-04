@@ -1,4 +1,57 @@
-h1{
-    text-align: center;
-    font-size: 44px;
-}
+  .inbox-page {
+    padding: 20px;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+  }
+  
+  .message-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 800px;
+    margin: auto;
+  }
+  .message-list ul{
+    list-style-type: none;
+  }
+  .message-list ul li{
+    margin: 10px;
+  }
+  
+  .message-item {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+    .message-user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  
+    .message-user-photo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+  
+    .message-content {
+      flex: 1;
+  
+      .message-text {
+        margin-bottom: 10px;
+  
+        .message-sender {
+          font-size: 0.9em;
+          margin-bottom: 5px;
+        }
+      }
+  
+      .message-timestamp {
+        font-size: 0.9em;
+        color: #999;
+      }
+    }
+  }
+  

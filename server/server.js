@@ -11,6 +11,7 @@ import { userRouter } from './src/routes/userRoutes.js'
 import { tokenRouter } from './src/routes/tokenRoutes.js'
 import { postsRouter } from './src/routes/postsRoutes.js'
 import { commentsRouter } from './src/routes/commentsRoutes.js'
+import { messageRouter } from './src/routes/messageRoutes.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -37,6 +38,7 @@ app.use('/api', userRouter)
 app.use('/api', tokenRouter)
 app.use('/api', postsRouter)
 app.use('/api', commentsRouter)
+app.use('/api', messageRouter)
 
 app.listen(PORT, () => {
     connect()
