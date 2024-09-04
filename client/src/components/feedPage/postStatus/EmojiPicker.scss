@@ -1,0 +1,63 @@
+/* EmojiPicker.scss */
+.emoji-picker-container {
+    position: relative;
+    display: inline-block;
+}
+
+.emoji-picker {
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 8px;
+    z-index: 1000;
+    width: 350px; /* Default width */
+    top: 100%; /* Position below the button */
+ /* Align with the button */
+    transform: translateY(8px); /* Adjust vertical spacing */
+}
+
+.emoji {
+    font-size: 17px;
+    margin: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.emoji:hover {
+    background: #f0f0f0;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 991px) {
+    .emoji-picker {
+        width: 250px; /* Adjust width for medium screens */
+    }
+    .emoji {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 767px) {
+    .emoji-picker {
+        width: 190px; /* Adjust width for smaller screens */
+    }
+    .emoji {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 575px) {
+    .emoji-picker {
+        width: 180px; /* Adjust width for very small screens */
+    }
+    .emoji {
+        font-size: 12px;
+    }
+}
+
+
+

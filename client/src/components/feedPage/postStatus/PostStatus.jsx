@@ -1,15 +1,18 @@
+// PostStatus.js
 import React, { useState, useContext } from "react";
 import "./PostStatus.scss";
 import { FaImage, FaRegSmile, FaUserCircle } from "react-icons/fa";
 import { MdSend } from "react-icons/md";
 import { AuthContext } from "../../../context/authContext";
 import { useGetAllPosts } from "../../../hooks/usePosts";
+import { EmojiPicker } from "./EmojiPicker"; // Import the EmojiPicker component
 
 export const PostStatus = () => {
     const { authUser } = useContext(AuthContext);
     const { handleAddPost } = useGetAllPosts();
     const [text, setText] = useState("");
     const [selectedImage, setSelectedImage] = useState(null);
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
     const handleImageChange = (e) => {
         if (e.target.files && e.target.files[0]) {
@@ -31,6 +34,11 @@ export const PostStatus = () => {
             setText("");
             setSelectedImage(null);
         }
+    };
+
+    const handleEmojiSelect = (emoji) => {
+        setText(text + emoji);
+        setShowEmojiPicker(false);
     };
 
     return (
@@ -59,10 +67,17 @@ export const PostStatus = () => {
                         type="file" 
                         accept="image/*" 
                         onChange={handleImageChange}
-                        //style={{ display: 'none' }}
+                        style={{display:'none'}}
                     />
                 </label>
-                <FaRegSmile className="post-icon" title="Add emoji" />
+                <div className="emoji-picker-container">
+                    <FaRegSmile 
+                        className="post-icon" 
+                        title="Add emoji" 
+                        onClick={() => setShowEmojiPicker(!showEmojiPicker)} 
+                    />
+                    {showEmojiPicker && <EmojiPicker onSelect={handleEmojiSelect} />}
+                </div>
                 <button type="submit" className="post-button">
                     <MdSend className="send-icon" />
                     Post
