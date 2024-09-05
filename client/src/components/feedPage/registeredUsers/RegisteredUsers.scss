@@ -1,6 +1,5 @@
 .registered-users {
     width: 300px;
-    
     padding: 16px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-left: 2px solid #007bff; 
@@ -47,6 +46,18 @@
                 font-size: 16px;
                 color: black;
                 cursor: pointer;
+                flex-grow: 1;
+            }
+
+            .user-chat-icon {
+                color: #007bff;
+                font-size: 24px;
+                cursor: pointer;
+                transition: color 0.3s ease;
+
+                &:hover {
+                    color: #0056b3;
+                }
             }
         }
     }
@@ -66,6 +77,10 @@
             p {
                 font-size: 14px;
             }
+
+            .user-chat-icon {
+                font-size: 20px;
+            }
         }
     }
 }
@@ -84,13 +99,17 @@
             p {
                 font-size: 13px;
             }
+
+            .user-chat-icon {
+                font-size: 18px;
+            }
         }
     }
 }
 
 @media (max-width: 575px) {
     .registered-users {
-       display: none;
+        display: none;
 
         .user-item {
             .user-photo,
@@ -101,6 +120,10 @@
 
             p {
                 font-size: 12px;
+            }
+
+            .user-chat-icon {
+                font-size: 16px;
             }
         }
     }

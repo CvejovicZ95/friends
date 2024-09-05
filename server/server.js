@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
 import { fileURLToPath } from 'url'
 import path from 'path'
+import http from 'http'
 
 import { connect } from './src/db/connectDB.js'
 
@@ -12,6 +13,9 @@ import { tokenRouter } from './src/routes/tokenRoutes.js'
 import { postsRouter } from './src/routes/postsRoutes.js'
 import { commentsRouter } from './src/routes/commentsRoutes.js'
 import { messageRouter } from './src/routes/messageRoutes.js'
+
+import { initializeSocket } from './src/socket/socket.js'
+
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -29,6 +33,7 @@ const corsOptions = {
 }
 
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
 app.use(cors(corsOptions))
 
@@ -40,7 +45,11 @@ app.use('/api', postsRouter)
 app.use('/api', commentsRouter)
 app.use('/api', messageRouter)
 
-app.listen(PORT, () => {
+const server = http.createServer(app)
+const io = initializeSocket(server)
+
+
+server.listen(PORT, () => {
     connect()
     console.log(`Server is listening on port ${PORT}`)
   })

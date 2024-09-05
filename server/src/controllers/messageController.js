@@ -1,40 +1,46 @@
-import { sendMessage, getMessagesBetweenUsers } from "../service/messageService.js";
+import { createMessage, getMessages } from "../service/messageService.js";
 import { logger } from "../../logger.js";
 
-export const sendMessageController = async (req, res) => {
-    try {
-        const senderUsername = req.body.senderUsername; // Sada se uzima iz tela zahteva
-        const receiverUsername = req.body.receiverUsername;
-        const content = req.body.content;
+export const createMessageController = async (req, res) => {
+  try {
+    const { sender, receiver, content } = req.body;
 
-        if (!senderUsername || !receiverUsername || !content) {
-            return res.status(400).json({ message: 'Sender username, receiver username, and content are required' });
-        }
-
-        const newMessage = await sendMessage(senderUsername, receiverUsername, content);
-        res.status(201).json(newMessage);
-    } catch (error) {
-        console.error('Detailed error sending message:', error);
-        res.status(500).json({ error: 'Error sending message', details: error.message });
+    if (!sender || !receiver || !content) {
+      return res.status(400).json({ message: 'Missing required fields' });
     }
+
+    const message = await createMessage(sender, receiver, content);
+
+    res.status(201).json(message);
+  } catch (error) {
+    logger.error('Error creating message', {
+      message: error.message,
+      stack: error.stack,
+      requestBody: req.body
+    });
+
+    res.status(500).json({ message: 'Server error' });
+  }
 };
 
 
 export const getMessagesController = async (req, res) => {
-    try {
-        const user1Username = req.params.user1Username;
-        const user2Username = req.params.user2Username;
+  try {
+    const { id: conversationId } = req.params;
 
-        if (!user1Username || !user2Username) {
-            return res.status(400).json({ message: 'Both user usernames are required' });
-        }
-
-        const messages = await getMessagesBetweenUsers(user1Username, user2Username);
-        res.status(200).json(messages);
-    } catch (error) {
-        console.error('Detailed error fetching messages:', error);
-        res.status(500).json({ error: 'Error fetching messages', details: error.message });
+    if (!conversationId) {
+      return res.status(400).json({ message: 'Conversation ID is required' });
     }
+
+    const messages = await getMessages(conversationId);
+    res.status(200).json(messages);
+  } catch (error) {
+    logger.error('Error retrieving messages', {
+      message: error.message,
+      stack: error.stack,
+      conversationId
+    });
+    
+    res.status(500).json({ message: 'Server error' });
+  }
 };
-
-

@@ -1,6 +1,7 @@
 import React from "react";
 import "./RegisteredUsers.scss";
 import { FaUserCircle } from "react-icons/fa";
+import { CiChat1 } from "react-icons/ci";
 import { useGetUsers } from "../../../hooks/useUsers";
 import { useAuthContext } from "../../../context/authContext";
 import { Link } from "react-router-dom";
@@ -21,18 +22,19 @@ export const RegisteredUsers = () => {
             <h2>Users</h2>
             <ul>
                 {filteredUsers.map(user => (
-                    <Link to={`/profile/${user.username}`} key={user._id}><li className="user-item">
+                   <li className="user-item">
                         {user.profilePhotoImagePath ? (
-                            <img
+                             <Link to={`/profile/${user.username}`} key={user._id}><img
                                 src={`${process.env.REACT_APP_API_BASE_URL}/images/${user.profilePhotoImagePath}`}
                                 alt={user.username}
                                 className="user-photo"
-                            />
+                            /></Link>
                         ) : (
                             <FaUserCircle className="user-icon" />
                         )}
                         <p>{user.username}</p>
-                    </li></Link>
+                        <Link to={`/conversation/${user.username}`}><CiChat1 className="user-chat-icon"/></Link>
+                    </li>
                 ))}
             </ul>
         </div>
