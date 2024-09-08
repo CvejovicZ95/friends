@@ -22,9 +22,9 @@ export const RegisteredUsers = () => {
             <h2>Users</h2>
             <ul>
                 {filteredUsers.map(user => (
-                   <li className="user-item">
+                   <li className="user-item" key={user._id}>
                         {user.profilePhotoImagePath ? (
-                             <Link to={`/profile/${user.username}`} key={user._id}><img
+                             <Link to={`/profile/${user.username}`}><img
                                 src={`${process.env.REACT_APP_API_BASE_URL}/images/${user.profilePhotoImagePath}`}
                                 alt={user.username}
                                 className="user-photo"

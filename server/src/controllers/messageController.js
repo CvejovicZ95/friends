@@ -10,8 +10,8 @@ export const createMessageController = async (req, res) => {
     }
 
     const message = await createMessage(sender, receiver, content);
-
     res.status(201).json(message);
+
   } catch (error) {
     logger.error('Error creating message', {
       message: error.message,
@@ -23,7 +23,6 @@ export const createMessageController = async (req, res) => {
   }
 };
 
-
 export const getMessagesController = async (req, res) => {
   try {
     const { id: conversationId } = req.params;
@@ -34,6 +33,7 @@ export const getMessagesController = async (req, res) => {
 
     const messages = await getMessages(conversationId);
     res.status(200).json(messages);
+
   } catch (error) {
     logger.error('Error retrieving messages', {
       message: error.message,

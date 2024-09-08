@@ -1,16 +1,13 @@
-import mongoose from 'mongoose';
 import { Message } from "../models/messageSchema.js";
 import { Conversation } from "../models/conversationSchema.js";
 import { logger } from "../../logger.js";
 
 export const createMessage = async (sender, receiver, content) => {
   try {
-    // Pronađi konverzaciju između pošiljaoca i primaoca
     let conversation = await Conversation.findOne({
       participants: { $all: [sender, receiver] }
     });
 
-    // Ako konverzacija ne postoji, kreiraj novu
     if (!conversation) {
       conversation = new Conversation({
         participants: [sender, receiver]
@@ -18,7 +15,6 @@ export const createMessage = async (sender, receiver, content) => {
       await conversation.save();
     }
 
-    // Kreiraj novu poruku
     const message = new Message({
       sender,
       receiver,
@@ -26,11 +22,10 @@ export const createMessage = async (sender, receiver, content) => {
       timestamp: new Date(),
     });
 
-    await message.save();
-
-    // Dodaj poruku u konverzaciju
-    conversation.messages.push(message._id);
-    await conversation.save();
+    await Promise.all([
+      message.save(),
+      conversation.updateOne({ $push: { messages: message._id } })
+    ]);
 
     return message;
 
@@ -38,8 +33,8 @@ export const createMessage = async (sender, receiver, content) => {
     logger.error('Error creating message', {
       message: error.message,
       stack: error.stack,
+      conversationId,
       sender,
-      receiver,
       content
     });
 
@@ -66,3 +61,4 @@ export const getMessages = async (conversationId) => {
     throw new Error('Error retrieving messages');
   }
 };
+

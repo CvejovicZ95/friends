@@ -13,6 +13,7 @@ import { tokenRouter } from './src/routes/tokenRoutes.js'
 import { postsRouter } from './src/routes/postsRoutes.js'
 import { commentsRouter } from './src/routes/commentsRoutes.js'
 import { messageRouter } from './src/routes/messageRoutes.js'
+import { conversationRouter } from './src/routes/conversationRoutes.js'
 
 import { initializeSocket } from './src/socket/socket.js'
 
@@ -44,6 +45,7 @@ app.use('/api', tokenRouter)
 app.use('/api', postsRouter)
 app.use('/api', commentsRouter)
 app.use('/api', messageRouter)
+app.use('/api', conversationRouter)
 
 const server = http.createServer(app)
 const io = initializeSocket(server)
