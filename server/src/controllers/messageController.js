@@ -24,9 +24,9 @@ export const createMessageController = async (req, res) => {
 };
 
 export const getMessagesController = async (req, res) => {
-  try {
-    const { id: conversationId } = req.params;
+  const conversationId = req.params.id;
 
+  try {
     if (!conversationId) {
       return res.status(400).json({ message: 'Conversation ID is required' });
     }

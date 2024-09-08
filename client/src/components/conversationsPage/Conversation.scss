@@ -1,8 +1,7 @@
 .conversation-container {
     display: flex;
     flex-direction: column;
-    height: 400px;
-    width: 800px;
+    width: 1200px;
     margin: auto;
 }
 
@@ -25,6 +24,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    max-width: 70%;
 }
 
 .message-avatar {
@@ -36,10 +36,25 @@
 
 .sent {
     justify-content: flex-end;
+    align-self: flex-end; 
+    text-align: right; 
 }
 
 .received {
     justify-content: flex-start;
+    align-self: flex-start; 
+    text-align: left; 
+}
+
+.message-content {
+    background-color: #f1f1f1;
+    padding: 3px;
+    border-radius: 8px;
+}
+
+.sent .message-content {
+    background-color: #007bff;
+    color: white;
 }
 
 .message-form {
