@@ -1,82 +1,170 @@
 .conversation-container {
     display: flex;
     flex-direction: column;
-    width: 1200px;
-    margin: auto;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 12px;
+
+    h1 {
+        display: flex;
+        align-items: center;
+        justify-content: center; // Optional if you want centered text
+        font-family: 'Trebuchet MS', Arial, sans-serif;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #333;
+        font-weight: bold;
+    
+        .profile-photo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px; // Space between the name and the image
+            object-fit: cover; // Ensures the image is properly fitted inside the circle
+        }
+    }
 }
 
 .chat-window {
     flex: 1;
     display: flex;
     flex-direction: column;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: white;
+    padding: 10px;
+    max-height: 80vh;
+    overflow: hidden;
 }
 
 .messages {
     flex: 1;
     overflow-y: auto;
-    padding: 10px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
-}
+    gap: 15px; // Adds space between messages
 
-.message {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    max-width: 70%;
-}
+    .message {
+        display: flex;
+        align-items: center;
+        max-width: 50%;
+        word-wrap: break-word;
 
-.message-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
+        &.sent {
+            justify-content: flex-end;
+            align-self: flex-end;
+            .message-content {
+                background-color: #007bff;
+                color: white;
+            }
+        }
 
-.sent {
-    justify-content: flex-end;
-    align-self: flex-end; 
-    text-align: right; 
-}
+        &.received {
+            justify-content: flex-start;
+            align-self: flex-start;
+            .message-content {
+                background-color: #f1f1f1;
+                color: #333;
+            }
+        }
 
-.received {
-    justify-content: flex-start;
-    align-self: flex-start; 
-    text-align: left; 
-}
+        .user-photo {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
 
-.message-content {
-    background-color: #f1f1f1;
-    padding: 3px;
-    border-radius: 8px;
-}
-
-.sent .message-content {
-    background-color: #007bff;
-    color: white;
+        .message-content {
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            max-width: 100%;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+        }
+    }
 }
 
 .message-form {
     display: flex;
-    padding: 10px;
+    align-items: center;
+    padding: 15px;
     border-top: 1px solid #ccc;
-    background: #f9f9f9;
+    background-color: #f9f9f9;
+    border-radius: 0 0 10px 10px;
+
+    input {
+        flex: 1;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        margin-right: 10px;
+        transition: border-color 0.2s;
+
+        &:focus {
+            border-color: #007bff;
+        }
+    }
+
+    button {
+        padding: 12px 20px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background-color: #0056b3;
+        }
+
+        svg {
+            vertical-align: middle;
+            font-size: 1.5rem;
+        }
+    }
 }
 
-.message-form input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .messages .message.sent .message-content {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
 
-.message-form button {
-    margin-left: 10px;
-    padding: 10px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
+    .messages .message.received .message-content {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    .message-form {
+        padding: 10px;
+        border-top: none; // Ukloni granicu na manjim ekranima
+
+        input {
+            padding: 10px;
+            margin-right: 8px;
+        }
+
+        button {
+            padding: 6px 10px;
+            font-size: 0.8rem;
+
+            svg {
+                font-size: 1.3rem;
+            }
+        }
+    }
+
+    // Sakrij .user-photo na ekranima širine do 768px
+    .messages .message .user-photo {
+        display: none;
+    }
 }

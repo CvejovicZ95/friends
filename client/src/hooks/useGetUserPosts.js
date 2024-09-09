@@ -3,29 +3,29 @@ import { toast } from 'react-toastify';
 import { getPostsByUser } from '../api/postsApi';
 
 export const useGetUserPosts = (username) => {
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState([]);  // Initialize as empty array
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchUserPosts = async () => {
+            if (!username) return;  // Ensure username is defined before making the request
             setLoading(true);
             try {
                 const data = await getPostsByUser(username);
-                setPosts(data);
+                // Ensure that the data is always an array
+                setPosts(Array.isArray(data) ? data : []);
             } catch (error) {
                 toast.error(`Failed to load user's posts: ${error.message}`);
                 console.error(error);
+                setPosts([]);  // Set to empty array in case of an error
             } finally {
                 setLoading(false);
             }
         };
 
-        if (username) {
-            fetchUserPosts();
-        }
-    }, [username, /*posts*/]);
+        fetchUserPosts();  // Fetch posts when username is available
 
-    //if add posts to useEffect infinte loop
+    }, [username, /*posts*/]);
 
     return { posts, loading };
 };

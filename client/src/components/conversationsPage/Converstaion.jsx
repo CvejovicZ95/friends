@@ -5,6 +5,7 @@ import { useAuthContext } from "../../context/authContext";
 import { useParams } from "react-router-dom";
 import { useMessages } from "../../hooks/useMessages";
 import { useUserConversations } from "../../hooks/useConversations";
+import { IoSend } from "react-icons/io5";
 import "./Conversation.scss";
 
 export const Conversation = () => {
@@ -39,6 +40,7 @@ export const Conversation = () => {
     }
 
     const selectedUser = users.find(user => user.username === username);
+    console.log(selectedUser)
 
     if (!selectedUser) {
         return <p>User not found.</p>;
@@ -56,7 +58,10 @@ export const Conversation = () => {
         <>
             <NavBar />
             <div className="conversation-container">
-                <h1>Conversation between {authUser.username} and {selectedUser.username}</h1>
+            <h1>
+                Chat with <img src={`${process.env.REACT_APP_API_BASE_URL}/images/${selectedUser.profilePhotoImagePath}`} alt={selectedUser.username} className="profile-photo" />
+            </h1>
+
                 <div className="chat-window">
                     <div className="messages">
                         {Array.isArray(messages) && messages.length > 0 ? (
@@ -71,7 +76,7 @@ export const Conversation = () => {
                                         <img
                                             src={`${process.env.REACT_APP_API_BASE_URL}/images/${senderUser?.profilePhotoImagePath}`}
                                             alt={senderUser?.username}
-                                            className="message-avatar"
+                                            className="user-photo"
                                         />
                                         <div className="message-content">
                                             <p>{msg.content}</p>
@@ -90,7 +95,7 @@ export const Conversation = () => {
                             onChange={(e) => setNewMessage(e.target.value)}
                             placeholder="Type your message here..."
                         />
-                        <button type="submit">Send</button>
+                        <button type="submit"><IoSend/></button>
                     </form>
                 </div>
             </div>
