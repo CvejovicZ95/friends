@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useGetAllComments } from '../../../hooks/useComments';
 import { AuthContext } from '../../../context/authContext';
 import { AddComment } from './AddComment';
-import { FaEdit, FaTrash, FaCheck, FaTimes } from 'react-icons/fa'; // Import the new icons
+import { FaEdit, FaTrash, FaCheck, FaTimes } from 'react-icons/fa';
 import "./Comments.scss";
 
 export const CommentsList = ({ postId }) => {

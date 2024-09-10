@@ -49,7 +49,7 @@ export const useGetAllComments = (postId) => {
             toast.success('Comment deleted')
         } catch (error) {
             toast.error(`Failed to delete comment: ${error.message}`)
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -64,7 +64,7 @@ export const useGetAllComments = (postId) => {
             toast.success('Comment updated successfully!');
         } catch (error) {
             toast.error(`Failed to update comment: ${error.message}`);
-            console.log(error);
+            console.error(error);
         }
     };
 

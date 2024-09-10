@@ -1,4 +1,3 @@
-// EmojiPicker.js
 import React from 'react';
 import './EmojiPicker.scss';
 

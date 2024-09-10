@@ -40,10 +40,11 @@ function App() {
         element={!authUser ? <Navigate to={"/"}></Navigate> : <FeedPage/>}
       />
 
-      <Route 
-        path="/conversation/:username" 
-        element={!authUser ? <Navigate to={"/"}></Navigate> : <Conversation/>}
-      />
+<Route 
+    path="/conversation/:username" 
+    element={!authUser ? <Navigate to={"/"} /> : <Conversation />} 
+/>
+
 
     </Routes>
   );

@@ -6,7 +6,6 @@ import { AuthContext } from "../../../context/authContext";
 export const InboxPage = () => {
 
     const { authUser } = useContext(AuthContext);
-    console.log(authUser)
 
     const messages = [
         { id: 1, sender: 'Zoki', body: 'Don\'t forget about our meeting tomorrow at 10 AM.' },

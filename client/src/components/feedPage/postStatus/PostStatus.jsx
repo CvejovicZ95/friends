@@ -1,11 +1,10 @@
-// PostStatus.js
 import React, { useState, useContext } from "react";
 import "./PostStatus.scss";
 import { FaImage, FaRegSmile, FaUserCircle } from "react-icons/fa";
 import { MdSend } from "react-icons/md";
 import { AuthContext } from "../../../context/authContext";
 import { useGetAllPosts } from "../../../hooks/usePosts";
-import { EmojiPicker } from "./EmojiPicker"; // Import the EmojiPicker component
+import { EmojiPicker } from "./EmojiPicker"; 
 
 export const PostStatus = () => {
     const { authUser } = useContext(AuthContext);

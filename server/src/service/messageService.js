@@ -10,7 +10,6 @@ export const createMessage = async (sender, receiver, content) => {
     });
 
     if (!conversation) {
-      console.log("No conversation found, creating new one.");
       conversation = new Conversation({
         participants: [sender, receiver]
       });
@@ -32,7 +31,7 @@ export const createMessage = async (sender, receiver, content) => {
     return message;
 
   } catch (error) {
-    console.error("Error creating message:", error); // Dodaj log greške
+    console.error("Error creating message:", error);
     throw new Error('Error creating message');
   }
 };

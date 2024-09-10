@@ -25,7 +25,7 @@ export const initializeSocket = (server) => {
       const { conversationId, sender, receiver, content } = messageData;
 
       try {
-        // Dodaj poruku u bazu
+  
         const conversation = await Conversation.findById(conversationId);
         if (!conversation) {
           throw new Error('Conversation not found');
@@ -38,7 +38,6 @@ export const initializeSocket = (server) => {
           timestamp: new Date(),
         };
 
-        // Pretpostavljam da imaš metod za dodavanje poruka u konverzaciju
         conversation.messages.push(message);
         await conversation.save();
 
@@ -54,8 +53,7 @@ export const initializeSocket = (server) => {
         if (participants.length < 2) {
           throw new Error('Participants must be an array with at least two users.');
         }
-
-        // Kreiraj novu konverzaciju
+        
         const newConversation = new Conversation({ participants });
         await newConversation.save();
 
