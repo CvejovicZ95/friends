@@ -1,4 +1,4 @@
-import { getAllPosts, addPost, updatePost, deletePost, getPostsByUsername, getPostById, toggleLike } from "../service/postsService.js";
+import { getAllPosts, addPost, updatePost, deletePost, getPostsByUserId, getPostById, toggleLike } from "../service/postsService.js";
 import { logger } from "../../logger.js";
 import multer from 'multer';
 
@@ -122,13 +122,13 @@ export const deletePostController = async (req, res) => {
 
 export const getPostsByUserController = async (req, res) => {
     try {
-        const username = req.params.username;
+        const userId = req.params.id;
 
-        if (!username) {
-            return res.status(400).json({ message: "Username is required" });
+        if (!userId) {
+            return res.status(400).json({ message: "User ID is required" });
         }
 
-        const postsByUser = await getPostsByUsername(username);
+        const postsByUser = await getPostsByUserId(userId);
 
         if (postsByUser.message) {
             return res.status(404).json({ message: postsByUser.message });
@@ -139,6 +139,7 @@ export const getPostsByUserController = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
 
 export const toggleLikeController = async (req,res) => {
     try {

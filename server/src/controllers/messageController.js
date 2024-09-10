@@ -3,22 +3,25 @@ import { logger } from "../../logger.js";
 
 export const createMessageController = async (req, res) => {
   try {
+    console.log("CreateMessageController hit", req.body);
     const { sender, receiver, content } = req.body;
+
+    // Loguj zahteve koje dobijaš
+    console.log("Request body:", req.body);
 
     if (!sender || !receiver || !content) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
     const message = await createMessage(sender, receiver, content);
+    
+    // Loguj rezultat pre slanja odgovora
+    console.log("Message created:", message);
+
     res.status(201).json(message);
 
   } catch (error) {
-    logger.error('Error creating message', {
-      message: error.message,
-      stack: error.stack,
-      requestBody: req.body
-    });
-
+    console.error("Error in createMessageController:", error); // Loguj grešku
     res.status(500).json({ message: 'Server error' });
   }
 };

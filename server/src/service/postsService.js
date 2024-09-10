@@ -86,14 +86,9 @@ export const deletePost = async (postId) => {
     }
 }
 
-export const getPostsByUsername = async (username) => {
+export const getPostsByUserId = async (userId) => {
     try {
-        const user = await User.findOne({ username });
-        if (!user) {
-            return { message: "User not found" };
-        }
-
-        const posts = await Post.find({ user: user._id }).populate('user', 'username');
+        const posts = await Post.find({ user: userId }).populate('user', 'username profilePhotoImagePath');
 
         if (!posts || posts.length === 0) {
             return { message: "This user hasn't posted any status" };
@@ -101,8 +96,8 @@ export const getPostsByUsername = async (username) => {
 
         return posts;
     } catch (error) {
-        logger.error('Error fetching posts by username:', error.message);
-        throw new Error('Error fetching posts by username');
+        logger.error('Error fetching posts by userId:', error.message);
+        throw new Error('Error fetching posts by userId');
     }
 }
 

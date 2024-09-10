@@ -1,11 +1,8 @@
 import { create } from 'zustand';
 
-// Definišemo globalno stanje za chat
 export const useConversation = create((set) => ({
   selectedConversation: null,
   messages: [],
-  
-  // Metode za ažuriranje stanja
-  setSelectedConversation: (conversation) => set({ selectedConversation: conversation }),
+  setSelectedConversation: (conversation) => set({ selectedConversation: conversation, messages: conversation.messages }),
   setMessages: (messages) => set({ messages }),
 }));

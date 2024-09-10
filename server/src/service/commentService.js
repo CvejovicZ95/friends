@@ -15,9 +15,9 @@ export const getCommentsByPostId = async (postId) => {
 };;
 
 
-export const addComment = async (username, postId, text) => {
+export const addComment = async (userId, postId, text) => {
     try {
-        const user = await User.findOne({ username });
+        const user = await User.findById(userId);
         if (!user) {
             throw new Error('User not found');
         }
@@ -38,19 +38,20 @@ export const addComment = async (username, postId, text) => {
         post.actions.comments.commentIds.push(newComment._id);
         await post.save();
 
-        logger.info('New comment added', { commentId: newComment._id, postId, username });
+        logger.info('New comment added', { commentId: newComment._id, postId, userId });
         return newComment;
     } catch (error) {
         logger.error('Error adding new comment', {
             message: error.message,
             stack: error.stack,
-            username,
+            userId,
             postId,
             text
         });
         throw new Error('Error adding new comment');
     }
 };
+
 
 
 

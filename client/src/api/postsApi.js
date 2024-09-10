@@ -58,9 +58,9 @@ export const addPost = async (formData) => {
     }
 };
 
-export const getPostsByUser = async (username) => {
+export const getPostsByUser = async (userId) => {
     try {
-        const res = await fetch(`${apiUrl}/api/posts/user/${username}`);
+        const res = await fetch(`${apiUrl}/api/posts/user/${userId}`);
         const data = await res.json();
         if (data.error) {
             throw new Error(data.error);
@@ -70,6 +70,7 @@ export const getPostsByUser = async (username) => {
         throw new Error(error.message);
     }
 }
+
 
 export const updatePost = async (id, formData) => {
     try {

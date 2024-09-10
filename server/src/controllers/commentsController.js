@@ -18,14 +18,15 @@ export const getAllCommentsInPostController = async (req, res) => {
 
 export const addCommentController = async (req, res) => {
     try {
-        const { content, postId, username } = req.body;
+        const { content, postId } = req.body;
         const text = content.text;
+        const userId = req.user._id; 
 
-        if (!text || !postId || !username) {
+        if (!text || !postId || !userId) {
             return res.status(400).json({ message: 'Missing required fields' });
         }
 
-        const newComment = await addComment(username, postId, text);
+        const newComment = await addComment(userId, postId, text);
         res.status(201).json(newComment);
     } catch (error) {
        logger.error('Error adding new comment', {
@@ -33,8 +34,10 @@ export const addCommentController = async (req, res) => {
             stack: error.stack,
             requestBody: req.body
         });
+        res.status(500).json({ error: 'Error adding new comment' });
     }
 };
+
 
 
 export const deleteCommentController = async (req, res) => {

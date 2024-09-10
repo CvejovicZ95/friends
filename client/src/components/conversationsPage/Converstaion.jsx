@@ -3,8 +3,10 @@ import { NavBar } from "../feedPage/nav/NavBar";
 import { useGetUsers } from "../../hooks/useUsers";
 import { useAuthContext } from "../../context/authContext";
 import { useParams } from "react-router-dom";
-import { useMessages } from "../../hooks/useMessages";
 import { useUserConversations } from "../../hooks/useConversations";
+import { useMessages } from "../../hooks/useMessages";
+import { useSendMessage } from "../../hooks/useSendMessages";
+import { useConversation } from "../../zustand/useConversation";
 import { IoSend } from "react-icons/io5";
 import "./Conversation.scss";
 
@@ -15,52 +17,72 @@ export const Conversation = () => {
     const { conversations, loading: conversationsLoading } = useUserConversations(authUser?.id);
 
     const [currentConversationId, setCurrentConversationId] = useState(null);
-    const { messages, loading: messagesLoading, error: messagesError } = useMessages(currentConversationId);
+    const { loading: messagesLoading, error: messagesError, messages } = useMessages(currentConversationId);
 
-    useEffect(() => {
-        if (conversations.length > 0) {
-            const selectedConversation = conversations.find(convo => 
-                convo.participants.some(participant => participant.username === username)
-            );
-
-            if (selectedConversation) {
-                setCurrentConversationId(selectedConversation._id);
-            }
-        }
-    }, [conversations, username]);
+    const { handleSendMessage } = useSendMessage();
+    const { selectedConversation, setSelectedConversation } = useConversation();
 
     const [newMessage, setNewMessage] = useState("");
 
-    if (usersLoading || conversationsLoading || messagesLoading) {
+    useEffect(() => {
+        if (conversations.length > 0) {
+            let selectedConversation = conversations.find(convo => 
+                convo.participants.some(participant => participant.username === username)
+            );
+            console.log(selectedConversation)
+            
+            if (!selectedConversation) {
+                // If no conversation found, you might want to create one or handle it accordingly
+                selectedConversation = {
+                    _id: null,
+                    participants: [{ username: username }],
+                    messages: []
+                };
+            }
+
+            setSelectedConversation(selectedConversation);
+            setCurrentConversationId(selectedConversation._id);
+        } else {
+            console.log('No conversations available');
+        }
+    }, [conversations, username, setSelectedConversation]);
+
+    useEffect(() => { 
+        // Handle scroll to bottom or any other updates when messages change
+        /*const chatWindow = document.querySelector('.chat-window');
+        chatWindow.scrollTop = chatWindow.scrollHeight;*/
+    }, [messages]);
+
+    if (usersLoading || conversationsLoading) {
         return <p>Loading...</p>;
     }
 
-    if (messagesError) {
-        return <p>Error loading messages: {messagesError}</p>;
-    }
-
     const selectedUser = users.find(user => user.username === username);
-    console.log(selectedUser)
 
     if (!selectedUser) {
         return <p>User not found.</p>;
     }
 
-    const handleSendMessage = (e) => {
+    const handleSubmitMessage = async (e) => {
         e.preventDefault();
+      
         if (newMessage.trim() === "") return;
-
-        // TODO: Implement message sending functionality
-        setNewMessage("");
+      
+        try {
+            await handleSendMessage(newMessage, authUser.id);
+            setNewMessage("");
+        } catch (error) {
+            console.error('Error sending message:', error);
+        }
     };
 
     return (
         <>
             <NavBar />
             <div className="conversation-container">
-            <h1>
-                Chat with <img src={`${process.env.REACT_APP_API_BASE_URL}/images/${selectedUser.profilePhotoImagePath}`} alt={selectedUser.username} className="profile-photo" />
-            </h1>
+                <h1>
+                    Chat with <img src={`${process.env.REACT_APP_API_BASE_URL}/images/${selectedUser.profilePhotoImagePath}`} alt={selectedUser.username} className="profile-photo" />
+                </h1>
 
                 <div className="chat-window">
                     <div className="messages">
@@ -68,8 +90,6 @@ export const Conversation = () => {
                             messages.map((msg) => {
                                 const isSentByAuthUser = msg.sender === authUser.id;  
                                 const senderUser = users.find(user => user._id === msg.sender);
-                                // eslint-disable-next-line 
-                                const receiverUser = users.find(user => user._id === msg.receiver);  
 
                                 return (
                                     <div key={msg._id} className={`message ${isSentByAuthUser ? "sent" : "received"}`}>
@@ -88,7 +108,7 @@ export const Conversation = () => {
                             <p>No messages available.</p>
                         )}
                     </div>
-                    <form onSubmit={handleSendMessage} className="message-form">
+                    <form onSubmit={handleSubmitMessage} className="message-form">
                         <input
                             type="text"
                             value={newMessage}

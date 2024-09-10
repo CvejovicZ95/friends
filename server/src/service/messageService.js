@@ -4,11 +4,13 @@ import { logger } from "../../logger.js";
 
 export const createMessage = async (sender, receiver, content) => {
   try {
+    
     let conversation = await Conversation.findOne({
       participants: { $all: [sender, receiver] }
     });
 
     if (!conversation) {
+      console.log("No conversation found, creating new one.");
       conversation = new Conversation({
         participants: [sender, receiver]
       });
@@ -30,14 +32,7 @@ export const createMessage = async (sender, receiver, content) => {
     return message;
 
   } catch (error) {
-    logger.error('Error creating message', {
-      message: error.message,
-      stack: error.stack,
-      conversationId,
-      sender,
-      content
-    });
-
+    console.error("Error creating message:", error); // Dodaj log greške
     throw new Error('Error creating message');
   }
 };
