@@ -14,17 +14,11 @@ import { PostItem } from "../postItem/PostItem";
 
 export const UserProfile = () => {
     const { authUser } = useContext(AuthContext);
-    const [username, setUsername] = useState(authUser ? authUser.username : '');
     const [selectedPost, setSelectedPost] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    console.log(authUser)
 
-    useEffect(() => {
-        if (authUser) {
-            setUsername(authUser.username);
-        }
-    }, [authUser]);
-
-    const { posts, loading } = useGetUserPosts(username);
+    const { posts, loading } = useGetUserPosts(authUser?.id);
     const { handleDeletePost } = useGetAllPosts();
 
     if (loading) {

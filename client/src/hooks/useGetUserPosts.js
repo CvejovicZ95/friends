@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { getPostsByUser } from '../api/postsApi';
 
-export const useGetUserPosts = (userId) => {
+export const useGetUserPosts = (userId) => {  // Koristite userId
     const [posts, setPosts] = useState([]);  // Initialize as empty array
     const [loading, setLoading] = useState(false);
 

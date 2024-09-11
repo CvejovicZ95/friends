@@ -122,7 +122,7 @@ export const deletePostController = async (req, res) => {
 
 export const getPostsByUserController = async (req, res) => {
     try {
-        const userId = req.params.id;
+        const userId = req.params.userId
 
         if (!userId) {
             return res.status(400).json({ message: "User ID is required" });
