@@ -25,7 +25,6 @@ export const initializeSocket = (server) => {
       const { conversationId, sender, receiver, content } = messageData;
 
       try {
-  
         const conversation = await Conversation.findById(conversationId);
         if (!conversation) {
           throw new Error('Conversation not found');
@@ -45,22 +44,6 @@ export const initializeSocket = (server) => {
       } catch (error) {
         console.error('Error sending message:', error.message);
         socket.emit('error', { message: 'Failed to send message' });
-      }
-    });
-
-    socket.on('createConversation', async (participants) => {
-      try {
-        if (participants.length < 2) {
-          throw new Error('Participants must be an array with at least two users.');
-        }
-        
-        const newConversation = new Conversation({ participants });
-        await newConversation.save();
-
-        io.emit('ConversationCreated', newConversation);
-      } catch (error) {
-        console.error('Error creating conversation:', error.message);
-        socket.emit('error', { message: 'Failed to create conversation' });
       }
     });
 
