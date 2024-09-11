@@ -17,12 +17,9 @@ export const Conversation = () => {
   const { conversations, loading: conversationsLoading } = useUserConversations(authUser?.id);
 
   const [currentConversationId, setCurrentConversationId] = useState(null);
-  const {  messages } = useMessages(currentConversationId);
-
+  const { messages } = useMessages(currentConversationId);
   const { handleSendMessage } = useSendMessage();
-  // eslint-disable-next-line
   const { selectedConversation, setSelectedConversation } = useConversation();
-
   const [newMessage, setNewMessage] = useState("");
 
   useEffect(() => {
@@ -44,10 +41,6 @@ export const Conversation = () => {
     }
   }, [conversations, username, setSelectedConversation]);
 
-  useEffect(() => { 
-    // Optional: Handle scroll to bottom or other updates when messages change
-  }, [messages]);
-
   if (usersLoading || conversationsLoading) {
     return <p>Loading...</p>;
   }
@@ -58,13 +51,13 @@ export const Conversation = () => {
     return <p>User not found.</p>;
   }
 
-  const handleSubmitMessage = async (e) => {
+  const handleSubmitMessage = (e) => {
     e.preventDefault();
   
     if (newMessage.trim() === "") return;
   
     try {
-      await handleSendMessage(newMessage, authUser.id);
+      handleSendMessage(newMessage, authUser.id);
       setNewMessage("");
     } catch (error) {
       console.error('Error sending message:', error);

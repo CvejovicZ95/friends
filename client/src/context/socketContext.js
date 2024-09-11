@@ -1,34 +1,29 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
-import { useAuthContext } from "./authContext"; // Pretpostavljam da je AuthContext u istom folderu
 
-const SOCKET_URL = "http://localhost:4500"; // Promenite URL na vaš server
+const SocketContext = createContext();
 
-export const SocketContext = createContext();
-
-export const useSocketContext = () => {
-  return useContext(SocketContext);
-};
+export const useSocketContext = () => useContext(SocketContext);
 
 export const SocketProvider = ({ children }) => {
-  const { authUser } = useAuthContext();
   const [socket, setSocket] = useState(null);
+  const [handlers, setHandlers] = useState({});
 
   useEffect(() => {
-    if (authUser) {
-      const socketInstance = io(SOCKET_URL, {
-        query: { userId: authUser.id },
-        transports: ["websocket"], // Podesite prevoz ako je potrebno
-      });
+    const socketIo = io("http://localhost:4500"); // Zameni sa vašom URL adresom servera
+    setSocket(socketIo);
 
-      setSocket(socketInstance);
+    // Prijavite se za `receiveMessage` događaj i prosledite sve funkcije
+    socketIo.on('receiveMessage', (message) => {
+      if (handlers.receiveMessage) {
+        handlers.receiveMessage(message);
+      }
+    });
 
-      return () => {
-        socketInstance.disconnect();
-      };
-    }
-  }, [authUser]);
+    return () => {
+      socketIo.disconnect();
+    };
+  }, [handlers]);
 
   const sendMessage = (messageData) => {
     if (socket) {
@@ -36,25 +31,13 @@ export const SocketProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    if (socket) {
-      socket.on("receiveMessage", (message) => {
-        // Obradite primljenu poruku
-        console.log("New message received:", message);
-      });
-
-      // Opcionalno: Povezivanje sa serverom radi obrade poruka
-      socket.on("connect_error", (error) => {
-        console.error("Socket connection error:", error);
-      });
-    }
-  }, [socket]);
+  const onReceiveMessage = (callback) => {
+    setHandlers(prev => ({ ...prev, receiveMessage: callback }));
+  };
 
   return (
-    <SocketContext.Provider value={{ sendMessage }}>
+    <SocketContext.Provider value={{ sendMessage, onReceiveMessage }}>
       {children}
     </SocketContext.Provider>
   );
 };
-
-SocketProvider.propTypes = { children: PropTypes.any };
