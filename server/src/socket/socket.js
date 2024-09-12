@@ -9,22 +9,34 @@ export const initializeSocket = (server) => {
     },
   });
 
+  const userSockets = {}; 
+
   io.on('connection', (socket) => {
-    
-  
+
     socket.on('sendMessage', (message) => {
-      io.to(message.conversationId).emit('newMessage', message);
+      const { conversationId, senderId } = message;
+
+      const room = io.sockets.adapter.rooms.get(conversationId);
+
+      if (room) {
+        room.forEach(clientSocketId => {
+          if (clientSocketId !== socket.id) {
+            io.to(clientSocketId).emit('newMessage', message);
+          }
+        });
+      }
     });
-  
+
     socket.on('joinConversation', (conversationId) => {
       socket.join(conversationId);
+
+      userSockets[socket.id] = conversationId;
     });
-  
+
     socket.on('disconnect', () => {
-      
+      delete userSockets[socket.id];
     });
   });
-  
 
   return io;
 };

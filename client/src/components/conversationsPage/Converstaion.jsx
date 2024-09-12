@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useUserConversations } from "../../hooks/useConversations";
 import { useSendMessage } from "../../hooks/useSendMessages";
 import { useConversation } from "../../zustand/useConversation";
+import notificationSound from '../../assets/sounds/notification.mp3';
 import { IoSend } from "react-icons/io5";
 import { socket } from "../../socket";
 import "./Conversation.scss";
@@ -22,9 +23,12 @@ export const Conversation = () => {
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef(null);
 
-  
   useEffect(() => {
     const handleNewMessage = (message) => {
+      if (message.sender !== authUser.id) {
+        const sound = new Audio(notificationSound);
+        sound.play();
+      }
       setMessages(prevMessages => {
         if (!message._id || prevMessages.some(msg => msg._id === message._id)) {
           return prevMessages;
@@ -32,16 +36,14 @@ export const Conversation = () => {
         return [...prevMessages, message];
       });
     };
-  
-    socket.on('newMessage', handleNewMessage);
-  
-    return () => {
 
+    socket.on('newMessage', handleNewMessage);
+      
+    return () => {
       socket.off('newMessage', handleNewMessage);
     };
-  }, [setMessages]);
-  
-  
+  }, [authUser.id, setMessages]);
+
   useEffect(() => {
     if (currentConversationId) {
       socket.emit('joinConversation', currentConversationId);
@@ -67,8 +69,7 @@ export const Conversation = () => {
     }
   }, [conversations, username, setSelectedConversation]);
 
-   useEffect(() => {
-    // Automatski skroluj na dno kad se poruke promene
+  useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
