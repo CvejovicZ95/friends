@@ -13,18 +13,17 @@ export const getMessagesFromConversation = async (conversationId) => {
     }
 };
 
-export const sendMessageToConversation = async (sender, receiver, content) => {
+export const sendMessageToConversation = async (conversationId, sender, receiver, content) => {
   try {
-    const res = await fetch(`${apiUrl}/api/send`, {
+    const res = await fetch(`${apiUrl}/api/send/${conversationId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ sender, receiver, content })
     });
-    
+
     const data = await res.json();
-    
 
     if (!res.ok) {
       throw new Error(data.message || 'Error sending message');
@@ -36,3 +35,5 @@ export const sendMessageToConversation = async (sender, receiver, content) => {
     throw new Error(error.message);
   }
 };
+
+

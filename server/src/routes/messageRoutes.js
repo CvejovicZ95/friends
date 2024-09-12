@@ -5,4 +5,4 @@ import { createMessageController, getMessagesController } from '../controllers/m
 export const messageRouter = express.Router()
 
 messageRouter.get("/:id", getMessagesController)
-messageRouter.post('/send', createMessageController);
+messageRouter.post('/send/:conversationId', createMessageController);

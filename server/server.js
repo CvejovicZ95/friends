@@ -40,6 +40,11 @@ app.use(cors(corsOptions))
 
 app.use('/images', express.static(path.join(__dirname, '../server/images')))
 
+app.use((req, res, next) => {
+    req.io = io;
+    next();
+  })
+
 app.use('/api', userRouter)
 app.use('/api', tokenRouter)
 app.use('/api', postsRouter)
@@ -49,6 +54,8 @@ app.use('/api', conversationRouter)
 
 const server = http.createServer(app)
 const io = initializeSocket(server)
+
+
 
 
 server.listen(PORT, () => {

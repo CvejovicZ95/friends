@@ -2,18 +2,26 @@ import { Message } from "../models/messageSchema.js";
 import { Conversation } from "../models/conversationSchema.js";
 import { logger } from "../../logger.js";
 
-export const createMessage = async (sender, receiver, content) => {
+export const createMessage = async (sender, receiver, content, conversationId) => {
   try {
-    
-    let conversation = await Conversation.findOne({
-      participants: { $all: [sender, receiver] }
-    });
+    let conversation;
 
-    if (!conversation) {
-      conversation = new Conversation({
-        participants: [sender, receiver]
+    if (conversationId) {
+      conversation = await Conversation.findById(conversationId);
+      if (!conversation) {
+        throw new Error('Conversation not found');
+      }
+    } else {
+      conversation = await Conversation.findOne({
+        participants: { $all: [sender, receiver] }
       });
-      await conversation.save();
+
+      if (!conversation) {
+        conversation = new Conversation({
+          participants: [sender, receiver]
+        });
+        await conversation.save();
+      }
     }
 
     const message = new Message({
@@ -23,10 +31,14 @@ export const createMessage = async (sender, receiver, content) => {
       timestamp: new Date(),
     });
 
-    await Promise.all([
-      message.save(),
-      conversation.updateOne({ $push: { messages: message._id } })
-    ]);
+    await message.save();
+
+    // Ažuriraj Conversation da uključuje novu poruku
+    await Conversation.findByIdAndUpdate(
+      conversation._id,
+      { $push: { messages: message._id } },
+      { new: true }
+    );
 
     return message;
 
@@ -35,6 +47,7 @@ export const createMessage = async (sender, receiver, content) => {
     throw new Error('Error creating message');
   }
 };
+
 
 export const getMessages = async (conversationId) => {
   try {
