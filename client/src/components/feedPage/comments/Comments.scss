@@ -74,10 +74,10 @@
                         display: flex;
                         align-items: center;
                         gap: 5px;
-                        position: absolute; // Position actions absolutely within the parent
-                        right: 10px; // Align actions to the right edge
-                        top: 60%; // Center actions vertically
-                        transform: translateY(-50%); // Adjust vertical centering
+                        position: absolute;  
+                        right: 10px; 
+                        top: 60%; 
+                        transform: translateY(-50%);
                         
                         button {
                             background: none;

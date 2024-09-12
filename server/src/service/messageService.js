@@ -33,7 +33,6 @@ export const createMessage = async (sender, receiver, content, conversationId) =
 
     await message.save();
 
-    // Ažuriraj Conversation da uključuje novu poruku
     await Conversation.findByIdAndUpdate(
       conversation._id,
       { $push: { messages: message._id } },

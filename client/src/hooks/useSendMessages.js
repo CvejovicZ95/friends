@@ -3,7 +3,7 @@ import { sendMessageToConversation } from "../api/messagesApi";
 import { socket } from "../socket";
 
 export const useSendMessage = () => {
-  const { selectedConversation, setMessages } = useConversation();
+  const { selectedConversation } = useConversation();
 
   const handleSendMessage = async (messageContent, senderId) => {
     if (messageContent) {
@@ -12,17 +12,9 @@ export const useSendMessage = () => {
 
         if (!receiverId) throw new Error("Receiver ID not found");
 
-        const message = await sendMessageToConversation(selectedConversation._id, senderId, receiverId, messageContent);
+        await sendMessageToConversation(selectedConversation._id, senderId, receiverId, messageContent);
 
-        console.log("Message sent:", message);
-
-        // Emituj novu poruku preko socket.io
-        console.log("Emitting message to socket:", {
-          sender: senderId,
-          receiver: receiverId,
-          content: messageContent,
-          conversationId: selectedConversation._id,
-        });
+      
         socket.emit("sendMessage", {
           sender: senderId,
           receiver: receiverId,

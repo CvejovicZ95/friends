@@ -7,9 +7,9 @@ export const socket = io(SOCKET_URL, {
 });
 
 socket.on('connect', () => {
-  console.log('Connected to socket server');
+  
 });
 
 socket.on('disconnect', () => {
-  console.log('Disconnected from socket server');
+  
 });

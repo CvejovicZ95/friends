@@ -12,7 +12,7 @@ export const getUserConversationsController = async (req, res) => {
 
 export const createConversationController = async (req, res) => {
     try {
-      const { senderId, receiverId } = req.body;  // Preuzimanje sender i receiver ID-a iz body-ja zahteva
+      const { senderId, receiverId } = req.body;
   
       if (!senderId || !receiverId) {
         return res.status(400).json({ error: 'Sender and receiver IDs are required' });
@@ -20,7 +20,7 @@ export const createConversationController = async (req, res) => {
   
       const conversation = await createConversation(senderId, receiverId);
       
-      res.status(201).json(conversation);  // Vraćanje kreirane (ili postojeće) konverzacije
+      res.status(201).json(conversation); 
     } catch (error) {
       res.status(500).json({ error: `Server error: ${error.message}` });
     }

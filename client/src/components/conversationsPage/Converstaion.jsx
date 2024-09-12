@@ -7,7 +7,7 @@ import { useUserConversations } from "../../hooks/useConversations";
 import { useSendMessage } from "../../hooks/useSendMessages";
 import { useConversation } from "../../zustand/useConversation";
 import { IoSend } from "react-icons/io5";
-import { socket } from "../../socket"; // Import socket
+import { socket } from "../../socket";
 import "./Conversation.scss";
 
 export const Conversation = () => {
@@ -17,17 +17,17 @@ export const Conversation = () => {
   const { conversations, loading: conversationsLoading } = useUserConversations(authUser?.id);
 
   const [currentConversationId, setCurrentConversationId] = useState(null);
-  const { messages, setMessages, setSelectedConversation } = useConversation(); // Use Zustand store
+  const { messages, setMessages, setSelectedConversation } = useConversation(); 
   const { handleSendMessage } = useSendMessage();
   const [newMessage, setNewMessage] = useState("");
 
-  console.log("Messages in conversation:", messages);
-
+  
   useEffect(() => {
     const handleNewMessage = (message) => {
-      console.log('New message received:', message);
       setMessages(prevMessages => {
-        console.log("Previous messages:", prevMessages);
+        if (!message._id || prevMessages.some(msg => msg._id === message._id)) {
+          return prevMessages;
+        }
         return [...prevMessages, message];
       });
     };
@@ -35,16 +35,18 @@ export const Conversation = () => {
     socket.on('newMessage', handleNewMessage);
   
     return () => {
-      console.log('Cleaning up socket.on for newMessage');
+
       socket.off('newMessage', handleNewMessage);
     };
   }, [setMessages]);
+  
+  
+  
   
 
   useEffect(() => {
     if (currentConversationId) {
       socket.emit('joinConversation', currentConversationId);
-      console.log(`Joined conversation: ${currentConversationId}`);
     }
   }, [currentConversationId]);
 
@@ -62,7 +64,6 @@ export const Conversation = () => {
         };
       }
 
-      console.log("Setting selected conversation in Zustand:", selectedConversation);
       setSelectedConversation(selectedConversation);
       setCurrentConversationId(selectedConversation._id);
     }
@@ -80,9 +81,9 @@ export const Conversation = () => {
 
   const handleSubmitMessage = (e) => {
     e.preventDefault();
-
+  
     if (newMessage.trim() === "") return;
-
+  
     try {
       handleSendMessage(newMessage, authUser.id);
       setNewMessage("");
@@ -90,6 +91,8 @@ export const Conversation = () => {
       console.error('Error sending message:', error);
     }
   };
+  
+  
 
   return (
     <>
@@ -105,8 +108,6 @@ export const Conversation = () => {
               messages.map((msg) => {
                 const isSentByAuthUser = msg.sender === authUser.id;
                 const senderUser = users.find(user => user._id === msg.sender);
-
-                console.log("Rendering message:", msg);
 
                 return (
                   <div key={msg._id} className={`message ${isSentByAuthUser ? "sent" : "received"}`}>

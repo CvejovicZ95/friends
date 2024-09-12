@@ -1,4 +1,3 @@
-/* EmojiPicker.scss */
 .emoji-picker-container {
     position: relative;
     display: inline-block;
@@ -16,7 +15,7 @@
     z-index: 1000;
     width: 350px;
     top: 100%;
-    transform: translateY(8px); /* Adjust vertical spacing */
+    transform: translateY(8px); 
     transform: translateX(-170px);
 }
 
@@ -31,10 +30,9 @@
     background: #f0f0f0;
 }
 
-/* Media queries for responsiveness */
 @media (max-width: 991px) {
     .emoji-picker {
-        width: 250px; /* Adjust width for medium screens */
+        width: 250px; 
         transform: translateX(-120px);
     }
     .emoji {
@@ -44,7 +42,7 @@
 
 @media (max-width: 767px) {
     .emoji-picker {
-        width: 190px; /* Adjust width for smaller screens */
+        width: 190px; 
         transform: translateX(-90px);
     }
     .emoji {
@@ -54,7 +52,7 @@
 
 @media (max-width: 575px) {
     .emoji-picker {
-        width: 180px; /* Adjust width for very small screens */
+        width: 180px;
     }
     .emoji {
         font-size: 12px;

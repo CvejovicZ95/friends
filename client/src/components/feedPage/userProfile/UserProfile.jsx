@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import "./UserProfile.scss";
 import { NavBar } from "../nav/NavBar";
 import { useGetUserPosts } from "../../../hooks/useGetUserPosts";
@@ -16,7 +16,7 @@ export const UserProfile = () => {
     const { authUser } = useContext(AuthContext);
     const [selectedPost, setSelectedPost] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    console.log(authUser)
+    
 
     const { posts, loading } = useGetUserPosts(authUser?.id);
     const { handleDeletePost } = useGetAllPosts();
