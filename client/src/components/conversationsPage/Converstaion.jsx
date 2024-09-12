@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavBar } from "../feedPage/nav/NavBar";
 import { useGetUsers } from "../../hooks/useUsers";
 import { useAuthContext } from "../../context/authContext";
@@ -20,6 +20,7 @@ export const Conversation = () => {
   const { messages, setMessages, setSelectedConversation } = useConversation(); 
   const { handleSendMessage } = useSendMessage();
   const [newMessage, setNewMessage] = useState("");
+  const messagesEndRef = useRef(null);
 
   
   useEffect(() => {
@@ -41,9 +42,6 @@ export const Conversation = () => {
   }, [setMessages]);
   
   
-  
-  
-
   useEffect(() => {
     if (currentConversationId) {
       socket.emit('joinConversation', currentConversationId);
@@ -69,6 +67,11 @@ export const Conversation = () => {
     }
   }, [conversations, username, setSelectedConversation]);
 
+   useEffect(() => {
+    // Automatski skroluj na dno kad se poruke promene
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   if (usersLoading || conversationsLoading) {
     return <p>Loading...</p>;
   }
@@ -92,8 +95,6 @@ export const Conversation = () => {
     }
   };
   
-  
-
   return (
     <>
       <NavBar />
@@ -125,6 +126,7 @@ export const Conversation = () => {
             ) : (
               <p>No messages available.</p>
             )}
+            <div ref={messagesEndRef} />
           </div>
 
           <form onSubmit={handleSubmitMessage} className="message-form">
