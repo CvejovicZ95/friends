@@ -1,3 +1,4 @@
+import React, {useEffect} from "react";
 import { LoginPage } from "./components/loginPage/LoginPage";
 import { RegisterPage } from "./components/registerPage/RegisterPage";
 import { FeedPage } from "./components/feedPage/FeedPage";
@@ -7,9 +8,12 @@ import { OtherUserProfile } from "./components/feedPage/otherUserProfile/OtherUs
 import { Conversation } from "./components/conversationsPage/Converstaion";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuthContext } from "./context/authContext";
+import { useGlobalMessageListener } from "./hooks/useGlobalMessageListener";
 
 function App() {
   const { authUser } = useAuthContext();
+  useGlobalMessageListener();
+  
   return (
     <Routes>
       <Route 

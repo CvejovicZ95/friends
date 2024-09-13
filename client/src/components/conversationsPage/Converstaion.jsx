@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 import { useUserConversations } from "../../hooks/useConversations";
 import { useSendMessage } from "../../hooks/useSendMessages";
 import { useConversation } from "../../zustand/useConversation";
-import notificationSound from '../../assets/sounds/notification.mp3';
 import { IoSend } from "react-icons/io5";
 import { socket } from "../../socket";
 import "./Conversation.scss";
@@ -25,10 +24,6 @@ export const Conversation = () => {
 
   useEffect(() => {
     const handleNewMessage = (message) => {
-      if (message.sender !== authUser.id) {
-        const sound = new Audio(notificationSound);
-        sound.play();
-      }
       setMessages(prevMessages => {
         if (!message._id || prevMessages.some(msg => msg._id === message._id)) {
           return prevMessages;
