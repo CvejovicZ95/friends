@@ -6,6 +6,11 @@
     margin: 0 auto;
     background-color: #f9f9f9;
 
+    button{
+        border: none;
+        background-color: transparent;
+    }
+
     h1 {
         font-size: 24px;
         color: #333;
@@ -36,6 +41,17 @@
         font-size: 18px;
         color: #555;
         margin-bottom: 10px;
+    }
+
+    .user-chat-icon {
+        color: #007bff;
+        font-size: 48px;
+        cursor: pointer;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: #0056b3;
+        }
     }
 
     .user-posts {

@@ -1,8 +1,7 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { LoginPage } from "./components/loginPage/LoginPage";
 import { RegisterPage } from "./components/registerPage/RegisterPage";
 import { FeedPage } from "./components/feedPage/FeedPage";
-import { InboxPage } from "./components/feedPage/inboxPage/InboxPage"
 import { UserProfile } from "./components/feedPage/userProfile/UserProfile"
 import { OtherUserProfile } from "./components/feedPage/otherUserProfile/OtherUserProfile";
 import { Conversation } from "./components/conversationsPage/Converstaion";
@@ -20,12 +19,7 @@ function App() {
         path="/"
         element={authUser ? <Navigate to={"/feed"} /> : <LoginPage/>}
       />
-
-      <Route 
-        path="/inbox"
-        element={!authUser ? <Navigate to={"/"} /> : <InboxPage/>}
-      />
-
+      
       <Route 
         path="/profile"  
         element={!authUser ? <Navigate to={"/"} /> : <UserProfile/>} 

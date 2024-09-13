@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./PostStatus.scss";
 import { FaImage, FaRegSmile, FaUserCircle } from "react-icons/fa";
 import { MdSend } from "react-icons/md";
@@ -12,6 +12,15 @@ export const PostStatus = () => {
     const [text, setText] = useState("");
     const [selectedImage, setSelectedImage] = useState(null);
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+    useEffect(() => {
+        if (text.trim() || selectedImage) {
+            setIsButtonDisabled(false);
+        } else {
+            setIsButtonDisabled(true);
+        }
+    }, [text, selectedImage]);
 
     const handleImageChange = (e) => {
         if (e.target.files && e.target.files[0]) {
@@ -77,7 +86,7 @@ export const PostStatus = () => {
                     />
                     {showEmojiPicker && <EmojiPicker onSelect={handleEmojiSelect} />}
                 </div>
-                <button type="submit" className="post-button">
+                <button type="submit" className="post-button" disabled={isButtonDisabled}>
                     <MdSend className="send-icon" />
                     Post
                 </button>

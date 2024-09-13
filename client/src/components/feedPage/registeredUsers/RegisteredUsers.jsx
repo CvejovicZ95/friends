@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 export const RegisteredUsers = () => {
     const { users, loading } = useGetUsers();
     const { authUser } = useAuthContext();
-    const { handleCreateConversation, creating, createError } = useUserConversations(authUser?.id);
+    const { handleCreateConversation } = useUserConversations(authUser?.id);
 
     if (loading) {
         return <p>Loading...</p>;
@@ -50,8 +50,6 @@ export const RegisteredUsers = () => {
                     </li>
                 ))}
             </ul>
-            {creating && <p></p>}
-            {createError && <p>Error: {createError}</p>}
         </div>
     );
 };

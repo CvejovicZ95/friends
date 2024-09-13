@@ -16,42 +16,6 @@
             flex: 1;
         }
 
-        .nav-center {
-            flex: 2;
-            display: flex;
-            justify-content: space-around; 
-            align-items: center;
-
-            .search-container {
-                display: flex;
-                align-items: center;
-                background-color: #f1f1f1;
-                padding: 5px;
-                border-radius: 20px;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-                
-                .search-icon {
-                    margin-right: 5px;
-                }
-
-                .search-input {
-                    border: none;
-                    background: none;
-                    outline: none;
-                    padding: 5px;
-                    width: 400px;
-                    font-size: 14px;
-                    color: #333;
-                    border-radius: 20px;
-                    transition: width 0.3s ease;
-
-                    &:focus {
-                        width: 600px;
-                    }
-                }
-            }
-        }
-
         .nav-right {
             flex: 1;
             display: flex;
@@ -117,20 +81,6 @@
         .nav-bar {
             padding: 8px 16px;
 
-            .nav-center {
-                .search-container {
-                    width: 50%;
-
-                    .search-input {
-                        width: 100px;
-
-                        &:focus {
-                            width: 150px;
-                        }
-                    }
-                }
-            }
-
             .nav-right {
                 .user-info {
                     p {
@@ -156,24 +106,6 @@
                 justify-content: center;
             }
 
-            .nav-center {
-                margin-top: 10px;
-                width: 100%;
-                justify-content: space-around;
-
-                .search-container {
-                    width: 50%;
-
-                    .search-input {
-                        width: 100px;
-
-                        &:focus {
-                            width: 150px;
-                        }
-                    }
-                }
-            }
-
             .nav-right {
                 width: 100%;
                 display: flex;
@@ -193,22 +125,6 @@
         .nav-bar {
             .nav-left {
                 justify-content: center;
-            }
-
-            .nav-center {
-                .nav-icon {
-                    font-size: 20px;
-                }
-
-                .search-container {
-                    .search-input {
-                        width: 80px;
-
-                        &:focus {
-                            width: 120px;
-                        }
-                    }
-                }
             }
 
             .nav-right {
