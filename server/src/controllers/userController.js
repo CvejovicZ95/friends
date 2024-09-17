@@ -3,7 +3,7 @@ import { Post } from "../models/postsSchema.js"
 import { logger } from '../../logger.js'
 import { generateToken } from '../utils/generateToken.js'
 import { sendOrderConfirmation } from '../../mailgun.js'
-import { getAllUsers, getUserById } from '../service/usersService.js'
+import { getAllUsers, getUserById, getUnreadNotificationsCountByUserId } from '../service/usersService.js'
 import bcrypt from 'bcrypt'
 import multer from 'multer'
 
@@ -35,10 +35,10 @@ export const registerUser = async (req, res) => {
 
                 const profilePhotoImagePath = req.file.filename;
 
-                const existingUser = await User.findOne({ email });
+                /*const existingUser = await User.findOne({ email });
                 if (existingUser) {
                     return res.status(400).json({ error: 'Email is already taken' });
-                }
+                }*/
 
                 const existingUsername = await User.findOne({ username });
                 if (existingUsername) {
@@ -173,5 +173,16 @@ export const getUserProfileWithPosts = async (req, res) => {
     } catch (error) {
         logger.error('Error fetching user profile with posts:', error.message);
         res.status(500).json({ message: 'Server error' });
+    }
+};
+
+export const getUnreadNotificationsCount = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const unreadCount = await getUnreadNotificationsCountByUserId(userId);
+        res.status(200).json({ unreadCount });
+    } catch (error) {
+        console.error("Error fetching unread notifications count:", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 };

@@ -1,5 +1,6 @@
 import { Message } from "../models/messageSchema.js";
 import { Conversation } from "../models/conversationSchema.js";
+import { User } from "../models/userSchema.js"
 import { logger } from "../../logger.js";
 
 export const createMessage = async (sender, receiver, content, conversationId) => {
@@ -39,6 +40,15 @@ export const createMessage = async (sender, receiver, content, conversationId) =
       { new: true }
     );
 
+    // Add notification for the receiver
+    await User.findByIdAndUpdate(
+      receiver,
+      { 
+        $push: { unreadNotifications: { senderId: sender, content: content, timestamp: new Date() } }
+      },
+      { new: true }
+    );
+
     return message;
 
   } catch (error) {
@@ -68,3 +78,20 @@ export const getMessages = async (conversationId) => {
   }
 };
 
+export const clearNotifications = async (userId) => {
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    user.unreadNotifications = [];
+    await user.save();
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error clearing notifications:", error);
+    throw new Error('Error clearing notifications');
+  }
+};

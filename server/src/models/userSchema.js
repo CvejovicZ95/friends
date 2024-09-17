@@ -26,7 +26,13 @@ const userSchema = new mongoose.Schema({
   likedPosts: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Post'
-  }]
+  }],
+  unreadNotifications: [
+    {
+      senderId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+      count: { type: Number, default: 0 }
+    }
+  ],
 }, {
   timestamps: {
     createdAt: 'created_at',
