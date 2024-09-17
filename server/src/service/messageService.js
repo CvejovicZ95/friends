@@ -40,14 +40,26 @@ export const createMessage = async (sender, receiver, content, conversationId) =
       { new: true }
     );
 
-    // Add notification for the receiver
-    await User.findByIdAndUpdate(
-      receiver,
-      { 
-        $push: { unreadNotifications: { senderId: sender, content: content, timestamp: new Date() } }
-      },
-      { new: true }
-    );
+    // Provera da li već postoji notifikacija za ovog pošiljaoca
+    const receiverUser = await User.findById(receiver);
+    const existingNotification = receiverUser.unreadNotifications.find(notification => notification.senderId.toString() === sender.toString());
+
+    if (existingNotification) {
+      // Ako notifikacija postoji, povećavamo count
+      await User.updateOne(
+        { _id: receiver, 'unreadNotifications.senderId': sender },
+        { $inc: { 'unreadNotifications.$.count': 1 } }
+      );
+    } else {
+      // Ako notifikacija ne postoji, dodajemo novu
+      await User.findByIdAndUpdate(
+        receiver,
+        {
+          $push: { unreadNotifications: { senderId: sender, count: 1, timestamp: new Date() } }
+        },
+        { new: true }
+      );
+    }
 
     return message;
 
@@ -56,6 +68,8 @@ export const createMessage = async (sender, receiver, content, conversationId) =
     throw new Error('Error creating message');
   }
 };
+
+
 
 
 export const getMessages = async (conversationId) => {
@@ -78,7 +92,28 @@ export const getMessages = async (conversationId) => {
   }
 };
 
-export const clearNotifications = async (userId) => {
+export const clearSenderNotifications = async (userId, senderId) => {
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    // Clear notifications only from specific sender
+    user.unreadNotifications = user.unreadNotifications.filter(
+      notification => notification.senderId.toString() !== senderId
+    );
+
+    await user.save();
+    return { success: true };
+  } catch (error) {
+    console.error("Error clearing sender notifications:", error);
+    throw new Error('Error clearing sender notifications');
+  }
+};
+
+export const clearAllNotifications = async (userId) => {
   try {
     const user = await User.findById(userId);
 

@@ -17,12 +17,21 @@ export const RegisteredUsers = () => {
         return <p>Loading...</p>;
     }
 
+    // Filter out the current user from the list
     const filteredUsers = users.filter(user => user.username !== authUser?.username);
+
+    // Helper function to get unread notifications count for a specific user
+    const getUnreadNotificationCount = (userId) => {
+        const notification = authUser.unreadNotifications.find(
+            notif => notif.senderId === userId
+        );
+        return notification ? notification.count : 0;
+    };
 
     const handleChatClick = async (receiverId, username) => {
         try {
             await handleCreateConversation(receiverId);
-            navigate(`/conversation/${username}`); // Navigacija nakon što je konverzacija kreirana
+            navigate(`/conversation/${username}`); // Navigate after conversation is created
         } catch (error) {
             console.error("Error creating conversation:", error);
         }
@@ -46,9 +55,17 @@ export const RegisteredUsers = () => {
                             <FaUserCircle className="user-icon" />
                         )}
                         <p>{user.username}</p>
-                        <button onClick={() => handleChatClick(user._id, user.username)}>
-                            <CiChat1 className="user-chat-icon"/>
-                        </button>
+                        <div className="chat-button-container">
+                            <button onClick={() => handleChatClick(user._id, user.username)}>
+                                <CiChat1 className="user-chat-icon"/>
+                            </button>
+                            {/* Display unread notifications count for each user */}
+                            {getUnreadNotificationCount(user._id) > 0 && (
+                                <span className="notification-count">
+                                    {getUnreadNotificationCount(user._id)}
+                                </span>
+                            )}
+                        </div>
                     </li>
                 ))}
             </ul>

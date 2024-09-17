@@ -107,7 +107,7 @@ export const loginUser = async (req, res) => {
         const token = generateToken(user._id, res);
 
         logger.info(`${username} logged in successfully`);
-        res.status(200).json({ token, username: user.username, profilePhotoImagePath: user.profilePhotoImagePath, id:user._id });
+        res.status(200).json({ token, username: user.username, profilePhotoImagePath: user.profilePhotoImagePath, id:user._id, unreadNotifications:user.unreadNotifications });
         
     } catch (error) {
         logger.error('Error in loginUser controller', error.message);

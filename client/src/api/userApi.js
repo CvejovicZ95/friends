@@ -63,7 +63,10 @@ export const getAllUsers = async () => {
         if (data.error) {
             throw new Error(data.error)
         }
-        return data;
+        return data.map(user => ({
+            ...user,
+            unreadNotificationsCount: user.unreadNotifications?.reduce((total, notif) => total + notif.count, 0) || 0
+        }));
     } catch (error) {
         throw new Error(error.message)
     }
