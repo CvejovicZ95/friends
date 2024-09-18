@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./RegisteredUsers.scss";
 import { FaUserCircle } from "react-icons/fa";
 import { CiChat1 } from "react-icons/ci";
@@ -12,6 +12,21 @@ export const RegisteredUsers = () => {
     const { authUser } = useAuthContext();
     const { handleCreateConversation } = useUserConversations(authUser?.id);
     const navigate = useNavigate();
+    const [notificationCounts, setNotificationCounts] = useState({});
+
+    useEffect(() => {
+        if (authUser && authUser.unreadNotifications) {
+            const counts = {};
+            authUser.unreadNotifications.forEach(notif => {
+                counts[notif.senderId] = notif.count;
+            });
+            setNotificationCounts(counts);
+        }
+    }, [authUser]);
+
+    const getUnreadNotificationCount = (userId) => {
+        return notificationCounts[userId] || 0;
+    };
 
     if (loading) {
         return <p>Loading...</p>;
@@ -20,18 +35,10 @@ export const RegisteredUsers = () => {
     // Filter out the current user from the list
     const filteredUsers = users.filter(user => user.username !== authUser?.username);
 
-    // Helper function to get unread notifications count for a specific user
-    const getUnreadNotificationCount = (userId) => {
-        const notification = authUser.unreadNotifications.find(
-            notif => notif.senderId === userId
-        );
-        return notification ? notification.count : 0;
-    };
-
     const handleChatClick = async (receiverId, username) => {
         try {
             await handleCreateConversation(receiverId);
-            navigate(`/conversation/${username}`); // Navigate after conversation is created
+            navigate(`/conversation/${username}`);
         } catch (error) {
             console.error("Error creating conversation:", error);
         }
@@ -60,11 +67,9 @@ export const RegisteredUsers = () => {
                                 <CiChat1 className="user-chat-icon"/>
                             </button>
                             {/* Display unread notifications count for each user */}
-                            {getUnreadNotificationCount(user._id) > 0 && (
-                                <span className="notification-count">
-                                    {getUnreadNotificationCount(user._id)}
-                                </span>
-                            )}
+                            <span className="notification-count">
+                                {getUnreadNotificationCount(user._id)}
+                            </span>
                         </div>
                     </li>
                 ))}

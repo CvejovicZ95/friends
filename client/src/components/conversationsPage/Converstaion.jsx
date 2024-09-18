@@ -17,27 +17,11 @@ export const Conversation = () => {
   const { conversations, loading: conversationsLoading } = useUserConversations(authUser?.id);
 
   const [currentConversationId, setCurrentConversationId] = useState(null);
-  const { messages, setMessages, setSelectedConversation } = useConversation(); 
+  const { messages, setSelectedConversation } = useConversation(); 
   const { handleSendMessage } = useSendMessage();
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef(null);
 
-  useEffect(() => {
-    const handleNewMessage = (message) => {
-      setMessages(prevMessages => {
-        if (!message._id || prevMessages.some(msg => msg._id === message._id)) {
-          return prevMessages;
-        }
-        return [...prevMessages, message];
-      });
-    };
-
-    socket.on('newMessage', handleNewMessage);
-      
-    return () => {
-      socket.off('newMessage', handleNewMessage);
-    };
-  }, [authUser.id, setMessages]);
 
   useEffect(() => {
     if (currentConversationId) {
