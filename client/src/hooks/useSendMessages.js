@@ -17,7 +17,7 @@ export const useSendMessage = () => {
 
       
         socket.emit("sendMessage", {
-          sender: senderId,
+          senderId: senderId,
           receiver: receiverId,
           content: messageContent,
           conversationId: selectedConversation._id,
