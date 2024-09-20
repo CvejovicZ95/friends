@@ -10,7 +10,7 @@
     h1 {
         display: flex;
         align-items: center;
-        justify-content: center; // Optional if you want centered text
+        justify-content: center;
         font-family: 'Trebuchet MS', Arial, sans-serif;
         font-size: 2rem;
         margin-bottom: 20px;
@@ -21,8 +21,8 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            margin-left: 10px; // Space between the name and the image
-            object-fit: cover; // Ensures the image is properly fitted inside the circle
+            margin-left: 10px; 
+            object-fit: cover; 
         }
     }
 }
@@ -45,7 +45,7 @@
     padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 15px; // Adds space between messages
+    gap: 15px; 
 
     .message {
         display: flex;
@@ -145,7 +145,7 @@
 
     .message-form {
         padding: 10px;
-        border-top: none; // Ukloni granicu na manjim ekranima
+        border-top: none; 
 
         input {
             padding: 10px;
@@ -162,7 +162,7 @@
         }
     }
 
-    // Sakrij .user-photo na ekranima širine do 768px
+
     .messages .message .user-photo {
         display: none;
     }

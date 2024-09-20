@@ -32,7 +32,6 @@ export const RegisteredUsers = () => {
         return <p>Loading...</p>;
     }
 
-    // Filter out the current user from the list
     const filteredUsers = users.filter(user => user.username !== authUser?.username);
 
     const handleChatClick = async (receiverId, username) => {

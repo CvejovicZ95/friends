@@ -31,9 +31,21 @@ export const getUnreadNotificationsCountByUserId = async (userId) => {
         if (!user) {
             throw new Error("User not found");
         }
-        // Return the count of unread notifications
         return user.unreadNotifications.length;
     } catch (error) {
         throw new Error(error.message);
+    }
+};
+
+export const getUserByUsername = async (username) => {
+    try {
+        const user = await User.findOne({ username });
+        if (!user) {
+            throw new Error('User not found');
+        }
+        return user;
+    } catch (error) {
+        logger.error('Error fetching user by username', error.message);
+        throw new Error('Error fetching user by username');
     }
 };

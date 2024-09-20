@@ -40,18 +40,15 @@ export const createMessage = async (sender, receiver, content, conversationId) =
       { new: true }
     );
 
-    // Provera da li već postoji notifikacija za ovog pošiljaoca
     const receiverUser = await User.findById(receiver);
     const existingNotification = receiverUser.unreadNotifications.find(notification => notification.senderId.toString() === sender.toString());
 
     if (existingNotification) {
-      // Ako notifikacija postoji, povećavamo count
       await User.updateOne(
         { _id: receiver, 'unreadNotifications.senderId': sender },
         { $inc: { 'unreadNotifications.$.count': 1 } }
       );
     } else {
-      // Ako notifikacija ne postoji, dodajemo novu
       await User.findByIdAndUpdate(
         receiver,
         {
@@ -100,7 +97,6 @@ export const clearSenderNotifications = async (userId, senderId) => {
       throw new Error('User not found');
     }
 
-    // Clear notifications only from specific sender
     user.unreadNotifications = user.unreadNotifications.filter(
       notification => notification.senderId.toString() !== senderId
     );

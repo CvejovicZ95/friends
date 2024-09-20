@@ -5,6 +5,7 @@ import { FeedPage } from "./components/feedPage/FeedPage";
 import { UserProfile } from "./components/feedPage/userProfile/UserProfile"
 import { OtherUserProfile } from "./components/feedPage/otherUserProfile/OtherUserProfile";
 import { Conversation } from "./components/conversationsPage/Converstaion";
+import { ChatRequest } from "./components/requestChat/ChatRequest";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuthContext } from "./context/authContext";
 import { useGlobalMessageListener } from "./hooks/useGlobalMessageListener";
@@ -38,11 +39,15 @@ function App() {
         element={!authUser ? <Navigate to={"/"}></Navigate> : <FeedPage/>}
       />
 
-<Route 
-    path="/conversation/:username" 
-    element={!authUser ? <Navigate to={"/"} /> : <Conversation />} 
-/>
+      <Route 
+          path="/conversation/:username" 
+          element={!authUser ? <Navigate to={"/"} /> : <Conversation />} 
+      />
 
+      <Route 
+          path="/chatRequests" 
+          element={!authUser ? <Navigate to={"/"} /> : <ChatRequest />} 
+      />
 
     </Routes>
   );
