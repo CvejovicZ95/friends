@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./RegisteredUsers.scss";
 import { FaUserCircle } from "react-icons/fa";
 import { CiChat1 } from "react-icons/ci";
+import { FaUserPlus } from "react-icons/fa"; 
 import { useGetUsers } from "../../../hooks/useUsers";
 import { useAuthContext } from "../../../context/authContext";
 import { useUserConversations } from "../../../hooks/useConversations";
+import { useFriendRequests } from "../../../hooks/useFriendRequest";
 import { useNavigate, Link } from "react-router-dom";
 
 export const RegisteredUsers = () => {
@@ -13,6 +15,9 @@ export const RegisteredUsers = () => {
     const { handleCreateConversation } = useUserConversations(authUser?.id);
     const navigate = useNavigate();
     const [notificationCounts, setNotificationCounts] = useState({});
+    const { handleSendFriendRequest } = useFriendRequests(authUser ? authUser.id : null);
+
+    const [sentRequests, setSentRequests] = useState([]);
 
     useEffect(() => {
         if (authUser && authUser.unreadNotifications) {
@@ -43,6 +48,21 @@ export const RegisteredUsers = () => {
         }
     };
 
+    const handleChatRequestClick = async (receiverUsername) => {
+        if (authUser) {
+            try {
+                await handleSendFriendRequest(authUser.id, receiverUsername);
+                setSentRequests(prev => [...prev, receiverUsername]);
+            } catch (error) {
+                console.error("Error sending chat request:", error);
+            }
+        }
+    };
+
+    const hasSentRequest = (username) => {
+        return sentRequests.includes(username);
+    };
+
     return (
         <div className="registered-users">
             <h2>Users</h2>
@@ -62,10 +82,15 @@ export const RegisteredUsers = () => {
                         )}
                         <p>{user.username}</p>
                         <div className="chat-button-container">
+                            <button 
+                                onClick={() => handleChatRequestClick(user.username)} 
+                                disabled={hasSentRequest(user.username)}
+                            >
+                                <FaUserPlus className="user-request-icon"/>
+                            </button>
                             <button onClick={() => handleChatClick(user._id, user.username)}>
                                 <CiChat1 className="user-chat-icon"/>
                             </button>
-                            {/* Display unread notifications count for each user */}
                             <span className="notification-count">
                                 {getUnreadNotificationCount(user._id)}
                             </span>

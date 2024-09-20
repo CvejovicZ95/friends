@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const chatRequestSchema = new mongoose.Schema({
+const friendRequestSchema = new mongoose.Schema({
     senderId: 
         { type: mongoose.Schema.Types.ObjectId, 
         ref: 'User', 
@@ -18,6 +18,6 @@ const chatRequestSchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 
-const ChatRequest = mongoose.model('ChatRequest', chatRequestSchema);
+const FriendRequest = mongoose.model('FriendRequest', friendRequestSchema);
 
-export { ChatRequest };
+export { FriendRequest };

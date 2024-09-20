@@ -1,8 +1,8 @@
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
-export const sendChatRequest = async (senderId, receiverUsername) => {
+export const sendFriendRequest = async (senderId, receiverUsername) => {
     try {
-        const res = await fetch(`${apiUrl}/api/send-chat-request`, {
+        const res = await fetch(`${apiUrl}/api/send-friend-request`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -13,7 +13,7 @@ export const sendChatRequest = async (senderId, receiverUsername) => {
 
         if (!res.ok) {
             const errorData = await res.json();
-            throw new Error(errorData.error || 'Failed to send chat request');
+            throw new Error(errorData.error || 'Failed to send friend request');
         }
 
         const data = await res.json();
@@ -23,9 +23,9 @@ export const sendChatRequest = async (senderId, receiverUsername) => {
     }
 };
 
-export const getChatRequests = async (userId) => {
+export const getFriendRequests = async (userId) => {
     try {
-        const res = await fetch(`${apiUrl}/api/chat-requests/${userId}`);
+        const res = await fetch(`${apiUrl}/api/friend-requests/${userId}`);
         const data = await res.json();
 
         if (data.error) {
@@ -38,9 +38,9 @@ export const getChatRequests = async (userId) => {
     }
 };
 
-export const manageChatRequest = async (requestId, action) => {
+export const manageFriendRequest = async (requestId, action) => {
     try {
-        const res = await fetch(`${apiUrl}/api/manage-chat-request`, {
+        const res = await fetch(`${apiUrl}/api/manage-friend-request`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -51,7 +51,7 @@ export const manageChatRequest = async (requestId, action) => {
 
         if (!res.ok) {
             const errorData = await res.json();
-            throw new Error(errorData.error || 'Failed to manage chat request');
+            throw new Error(errorData.error || 'Failed to manage friend request');
         }
 
         const data = await res.json();

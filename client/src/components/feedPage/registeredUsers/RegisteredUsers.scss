@@ -15,9 +15,30 @@
         border-bottom: 2px solid #007bff; 
     }
 
-    button{
+    button {
         border: none;
         background-color: transparent;
+
+        // Stil za onemogućeno dugme
+        &:disabled {
+            .user-chat-icon {
+                color: red; // Crvena boja kada je disabled
+                cursor: not-allowed; // Menja kursor kada je onemogućeno
+            }
+        }
+
+        // Stil za aktivno dugme
+        &:not(:disabled) {
+            .user-chat-icon,
+            .user-request-icon {
+                color: #007bff; // Plava boja kada nije disabled
+                transition: color 0.3s ease;
+
+                &:hover {
+                    color: #0056b3; // Tamnija plava pri hover-u
+                }
+            }
+        }
     }
 
     ul {
@@ -54,15 +75,13 @@
                 flex-grow: 1;
             }
 
-            .user-chat-icon {
-                color: #007bff;
+            .user-chat-icon,
+            .user-request-icon {
                 font-size: 24px;
                 cursor: pointer;
                 transition: color 0.3s ease;
 
-                &:hover {
-                    color: #0056b3;
-                }
+                // Boja se postavlja u okviru button stilova
             }
         }
     }

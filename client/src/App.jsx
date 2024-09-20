@@ -5,7 +5,7 @@ import { FeedPage } from "./components/feedPage/FeedPage";
 import { UserProfile } from "./components/feedPage/userProfile/UserProfile"
 import { OtherUserProfile } from "./components/feedPage/otherUserProfile/OtherUserProfile";
 import { Conversation } from "./components/conversationsPage/Converstaion";
-import { ChatRequest } from "./components/requestChat/ChatRequest";
+import { FriendRequest } from "./components/friendRequest/FriendRequest";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuthContext } from "./context/authContext";
 import { useGlobalMessageListener } from "./hooks/useGlobalMessageListener";
@@ -46,7 +46,7 @@ function App() {
 
       <Route 
           path="/chatRequests" 
-          element={!authUser ? <Navigate to={"/"} /> : <ChatRequest />} 
+          element={!authUser ? <Navigate to={"/"} /> : <FriendRequest />} 
       />
 
     </Routes>
