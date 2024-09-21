@@ -1,7 +1,6 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-
   email: {
     type: String,
     required: true
@@ -32,14 +31,18 @@ const userSchema = new mongoose.Schema({
       senderId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
       count: { type: Number, default: 0 }
     }
-  ]
+  ],
+  friends: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 }, {
   timestamps: {
     createdAt: 'created_at',
     updatedAt: 'updated_at'
   }
-})
+});
 
-const User = mongoose.model('User', userSchema)
+const User = mongoose.model('User', userSchema);
 
-export { User }
+export { User };

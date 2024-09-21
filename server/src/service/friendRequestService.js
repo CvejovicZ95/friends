@@ -1,5 +1,6 @@
 import { FriendRequest } from "../models/friendRequestSchema.js";
 import { logger } from "../../logger.js";
+import { User } from "../models/userSchema.js";
 
 export const createFriendRequest = async (senderId, receiverId) => {
     try {
@@ -24,22 +25,53 @@ export const getFriendRequestsByUserId = async (userId) => {
 };
 
 export const manageFriendRequest = async (requestId, action) => {
+    let request; // Definišemo request ovde
     try {
-        const request = await FriendRequest.findById(requestId);
+        request = await FriendRequest.findById(requestId);
         if (!request) {
             throw new Error('Friend request not found');
         }
+
         if (action === 'accept') {
             request.status = 'accepted';
+
+            // Pronađi oba korisnika
+            const sender = await User.findById(request.senderId);
+            const receiver = await User.findById(request.receiverId);
+
+            if (!sender || !receiver) {
+                throw new Error('Sender or receiver not found');
+            }
+
+            // Proveri da li su već prijatelji
+            const alreadyFriends = sender.friends.includes(receiver._id) || receiver.friends.includes(sender._id);
+
+            if (alreadyFriends) {
+                throw new Error('Users are already friends');
+            }
+
+            // Dodaj oba korisnika jedan drugom u friends listu
+            sender.friends.push(receiver._id);
+            receiver.friends.push(sender._id);
+            await sender.save();
+            await receiver.save();
         } else if (action === 'decline') {
             request.status = 'declined';
         } else {
             throw new Error('Invalid action');
         }
+
         await request.save();
         return request;
     } catch (error) {
-        logger.error('Error managing friend request', error.message);
+        logger.error('Error managing friend request', {
+            message: error.message,
+            requestId,
+            action,
+            senderId: request ? request.senderId : null, // Proveri da li je request definisan
+            receiverId: request ? request.receiverId : null
+        });
         throw new Error('Error managing friend request');
     }
 };
+

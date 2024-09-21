@@ -16,7 +16,6 @@ export const RegisteredUsers = () => {
     const navigate = useNavigate();
     const [notificationCounts, setNotificationCounts] = useState({});
     const { handleSendFriendRequest } = useFriendRequests(authUser ? authUser.id : null);
-
     const [sentRequests, setSentRequests] = useState([]);
 
     useEffect(() => {
@@ -38,6 +37,8 @@ export const RegisteredUsers = () => {
     }
 
     const filteredUsers = users.filter(user => user.username !== authUser?.username);
+    const friendUsers = users.filter(user => authUser.friends.includes(user._id));
+    const nonFriendUsers = filteredUsers.filter(user => !authUser.friends.includes(user._id));
 
     const handleChatClick = async (receiverId, username) => {
         try {
@@ -65,9 +66,37 @@ export const RegisteredUsers = () => {
 
     return (
         <div className="registered-users">
+            <h2>Friends</h2>
+                <ul>
+                    {friendUsers.map(friend => (
+                        <li className="user-item" key={friend._id}>
+                            {friend.profilePhotoImagePath ? (
+                                <Link to={`/profile/${friend.username}`}>
+                                    <img
+                                        src={`${process.env.REACT_APP_API_BASE_URL}/images/${friend.profilePhotoImagePath}`}
+                                        alt={friend.username}
+                                        className="user-photo"
+                                    />
+                                </Link>
+                            ) : (
+                                <FaUserCircle className="user-icon" />
+                            )}
+                            <p>{friend.username}</p>
+                            <div className="chat-button-container">
+                                <button onClick={() => handleChatClick(friend._id, friend.username)}>
+                                    <CiChat1 className="user-chat-icon"/>
+                                </button>
+                                <span className="notification-count">
+                                    {getUnreadNotificationCount(friend._id) > 0 ? getUnreadNotificationCount(friend._id) : null}
+                                </span>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+
             <h2>Users</h2>
             <ul>
-                {filteredUsers.map(user => (
+                {nonFriendUsers.map(user => (
                     <li className="user-item" key={user._id}>
                         {user.profilePhotoImagePath ? (
                             <Link to={`/profile/${user.username}`}>
@@ -88,12 +117,6 @@ export const RegisteredUsers = () => {
                             >
                                 <FaUserPlus className="user-request-icon"/>
                             </button>
-                            <button onClick={() => handleChatClick(user._id, user.username)}>
-                                <CiChat1 className="user-chat-icon"/>
-                            </button>
-                            <span className="notification-count">
-                                {getUnreadNotificationCount(user._id)}
-                            </span>
                         </div>
                     </li>
                 ))}
