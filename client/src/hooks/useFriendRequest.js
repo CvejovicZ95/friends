@@ -29,7 +29,11 @@ export const useFriendRequests = (userId) => {
             setFriendRequests((prevRequests) => [...prevRequests, newRequest]);
             toast.success('Friend request sent successfully!');
         } catch (error) {
-            toast.error(`Failed to send friend request: ${error.message}`);
+            if (error.message.includes('Friend request already sent')) {
+                toast.info(`You have already sent a friend request to ${receiverUsername}`);
+            } else {
+                toast.error(`Failed to send friend request: ${error.message}`);
+            }
             console.error(error);
         }
     };

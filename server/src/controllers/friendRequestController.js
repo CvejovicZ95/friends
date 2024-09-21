@@ -1,11 +1,27 @@
 import { createFriendRequest, getFriendRequestsByUserId, manageFriendRequest } from "../service/friendRequestService.js";
 import { getUserByUsername, getUserById } from "../service/usersService.js";
+import { FriendRequest } from "../models/friendRequestSchema.js";
 
 
 export const createFriendRequestController = async (req, res) => {
     const { senderId, receiverUsername } = req.body; 
     try {
         const receiver = await getUserByUsername(receiverUsername); 
+        if (!receiver) {
+            return res.status(404).json({ error: 'Receiver not found' });
+        }
+
+        // Proveri da li već postoji aktivan zahtev
+        const existingRequest = await FriendRequest.findOne({
+            senderId: senderId,
+            receiverId: receiver._id,
+            status: 'pending' // ili 'accepted' ako želiš da provereš da li su već prijatelji
+        });
+
+        if (existingRequest) {
+            return res.status(400).json({ error: 'Friend request already sent' });
+        }
+
         const request = await createFriendRequest(senderId, receiver._id); 
         res.status(201).json(request);
     } catch (error) {

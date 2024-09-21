@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
 import { useAuthContext } from '../../context/authContext';
-import { sendFriendRequest } from '../../api/friendRequestApi';
-import { toast } from 'react-toastify';
+import { useFriendRequests } from '../../hooks/useFriendRequest';
 
 export const SendFriendRequestForm = () => {
     const { authUser } = useAuthContext();
     const [receiverUsername, setReceiverUsername] = useState('');
+    const { handleSendFriendRequest } = useFriendRequests(authUser ? authUser.id : null); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (authUser && receiverUsername) {
-            try {
-                await sendFriendRequest(authUser.id, receiverUsername);
-                setReceiverUsername('');
-                toast.success('Friend request sent successfully!');
-            } catch (error) {
-                toast.error(`Failed to send friend request: ${error.message}`);
-            }
+            await handleSendFriendRequest(authUser.id, receiverUsername); 
+            setReceiverUsername('');
         }
     };
 
