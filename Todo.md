@@ -1,0 +1,3 @@
+- fix friend request count to show on reciver profile, now its not sender
+- fix unread messages, to clear number of unread messages after user join conversation
+- render things immediately, fix infinite loops

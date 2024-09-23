@@ -21,6 +21,7 @@ export const useGetUsers = () => {
 
         fetchUsers();
     }, [/*users*/]);
+    //infinite loop
 
     return { users, loading };
 };

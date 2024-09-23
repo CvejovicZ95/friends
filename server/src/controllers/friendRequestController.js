@@ -11,11 +11,10 @@ export const createFriendRequestController = async (req, res) => {
             return res.status(404).json({ error: 'Receiver not found' });
         }
 
-        // Proveri da li već postoji aktivan zahtev
         const existingRequest = await FriendRequest.findOne({
             senderId: senderId,
             receiverId: receiver._id,
-            status: 'pending' // ili 'accepted' ako želiš da provereš da li su već prijatelji
+            status: 'pending'
         });
 
         if (existingRequest) {

@@ -57,7 +57,5 @@ export const useFriendRequests = (userId) => {
         }
     };
     
-    
-
     return { friendRequests, loading, handleSendFriendRequest, handleManageFriendRequest };
 };

@@ -25,7 +25,7 @@ export const getFriendRequestsByUserId = async (userId) => {
 };
 
 export const manageFriendRequest = async (requestId, action) => {
-    let request; // Definišemo request ovde
+    let request;
     try {
         request = await FriendRequest.findById(requestId);
         if (!request) {
@@ -35,7 +35,6 @@ export const manageFriendRequest = async (requestId, action) => {
         if (action === 'accept') {
             request.status = 'accepted';
 
-            // Pronađi oba korisnika
             const sender = await User.findById(request.senderId);
             const receiver = await User.findById(request.receiverId);
 
@@ -43,14 +42,12 @@ export const manageFriendRequest = async (requestId, action) => {
                 throw new Error('Sender or receiver not found');
             }
 
-            // Proveri da li su već prijatelji
             const alreadyFriends = sender.friends.includes(receiver._id) || receiver.friends.includes(sender._id);
 
             if (alreadyFriends) {
                 throw new Error('Users are already friends');
             }
 
-            // Dodaj oba korisnika jedan drugom u friends listu
             sender.friends.push(receiver._id);
             receiver.friends.push(sender._id);
             await sender.save();
@@ -68,7 +65,7 @@ export const manageFriendRequest = async (requestId, action) => {
             message: error.message,
             requestId,
             action,
-            senderId: request ? request.senderId : null, // Proveri da li je request definisan
+            senderId: request ? request.senderId : null,
             receiverId: request ? request.receiverId : null
         });
         throw new Error('Error managing friend request');

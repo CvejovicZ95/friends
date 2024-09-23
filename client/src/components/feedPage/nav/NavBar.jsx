@@ -16,7 +16,6 @@ export const NavBar = () => {
     const { authUser } = useContext(AuthContext);
     const { handleSendFriendRequest } = useFriendRequests(authUser?.id, authUser?.friends);
 
-    // Count pending friend requests
     const pendingRequestsCount = authUser?.friendRequests?.filter(request => request.status === 'pending').length || 0;
 
     return (

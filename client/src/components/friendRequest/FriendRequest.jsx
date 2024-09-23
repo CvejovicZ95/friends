@@ -14,7 +14,7 @@ import "./FriendRequest.scss";
 export const FriendRequest = () => {
     const { authUser } = useAuthContext();
     const { friendRequests, handleManageFriendRequest } = useFriendRequests(authUser ? authUser.id : null);
-    const { users, loading } = useGetUsers(); // Učitaj korisnike
+    const { users, loading } = useGetUsers(); 
     const [friends, setFriends] = useState([]);
     const { handleCreateConversation } = useUserConversations(authUser?.id);
     const navigate = useNavigate();
@@ -22,7 +22,6 @@ export const FriendRequest = () => {
 
     useEffect(() => {
         if (users && authUser) {
-            // Filtriraj prijatelje na osnovu korisničkih ID-jeva
             const filteredFriends = users.filter(user => authUser.friends.includes(user._id));
             setFriends(filteredFriends);
         }
@@ -76,7 +75,6 @@ export const FriendRequest = () => {
                         )}
                     </ul>
                 </div>
-                {/* Prikaz prijatelja */}
                 <div className="friends-list">
                     <h2>Your Friends</h2>
                     <ul>

@@ -10,7 +10,6 @@ export const useAuthContext = () => {
 export const AuthProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(null);
 
-  // In AuthContext, modify updateFriendRequests to consider receiver updates
   const updateFriendRequests = (newRequest) => {
     setAuthUser((prevUser) => ({
       ...prevUser,

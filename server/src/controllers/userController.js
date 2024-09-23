@@ -41,6 +41,8 @@ export const registerUser = async (req, res) => {
                     return res.status(400).json({ error: 'Email is already taken' });
                 }*/
 
+                //remove after final tests, now commented bcs mailgun, so can register few users to same e-mail adress    
+
                 const existingUsername = await User.findOne({ username });
                 if (existingUsername) {
                     return res.status(400).json({ error: 'Username is already taken' });
