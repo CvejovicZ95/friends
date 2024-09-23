@@ -30,7 +30,6 @@ export const UpdatePostForm = ({ post, onClose }) => {
         }
         try {
             await handleUpdatePost(post._id, formData);
-            toast.success('Post updated successfully');
             onClose();
         } catch (error) {
             toast.error(`Failed to update post: ${error.message}`);

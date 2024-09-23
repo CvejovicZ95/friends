@@ -32,7 +32,6 @@ export const UserProfile = () => {
         if (confirmed) {
             try {
                 await handleDeletePost(id);
-                toast.success('Post deleted');
             } catch (error) {
                 toast.error(error.message);
             }

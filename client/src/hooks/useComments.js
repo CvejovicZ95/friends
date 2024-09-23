@@ -35,7 +35,6 @@ export const useGetAllComments = (postId) => {
     
             const newComment = await addComment(formattedCommentData);
             setComments((prevComments) => [...prevComments, newComment]);
-            toast.success('Comment added successfully!');
         } catch (error) {
             toast.error(`Failed to add comment: ${error.message}`);
             console.error(error);
@@ -46,7 +45,6 @@ export const useGetAllComments = (postId) => {
         try {
             await deleteComment(id)
             setComments((prevComments)=>prevComments.filter((comment)=> comment._id !== id))
-            toast.success('Comment deleted')
         } catch (error) {
             toast.error(`Failed to delete comment: ${error.message}`)
             console.error(error)
@@ -61,7 +59,6 @@ export const useGetAllComments = (postId) => {
                     comment._id === id ? { ...comment, content: { text: newText } } : comment
                 )
             );
-            toast.success('Comment updated successfully!');
         } catch (error) {
             toast.error(`Failed to update comment: ${error.message}`);
             console.error(error);
