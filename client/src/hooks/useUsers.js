@@ -20,7 +20,7 @@ export const useGetUsers = () => {
         };
 
         fetchUsers();
-    }, []);
+    }, [/*users*/]);
 
     return { users, loading };
 };

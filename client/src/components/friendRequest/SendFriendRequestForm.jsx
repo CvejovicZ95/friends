@@ -1,30 +1,41 @@
 import React, { useState } from 'react';
 import { useAuthContext } from '../../context/authContext';
 import { useFriendRequests } from '../../hooks/useFriendRequest';
+import { useGetUsers } from '../../hooks/useUsers';
+import "./SendFriendRequestForm.scss";
 
 export const SendFriendRequestForm = () => {
     const { authUser } = useAuthContext();
-    const [receiverUsername, setReceiverUsername] = useState('');
+    const { users } = useGetUsers(); 
     const { handleSendFriendRequest } = useFriendRequests(authUser ? authUser.id : null); 
+    const [selectedUser, setSelectedUser] = useState('');
+
+    const nonFriendUsers = users.filter(user => !authUser.friends.includes(user._id) && user.username !== authUser.username);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (authUser && receiverUsername) {
-            await handleSendFriendRequest(authUser.id, receiverUsername); 
-            setReceiverUsername('');
+        if (authUser && selectedUser) {
+            await handleSendFriendRequest(authUser.id, selectedUser); 
+            setSelectedUser('');
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input 
-                type="text" 
-                placeholder="Enter username" 
-                value={receiverUsername}
-                onChange={(e) => setReceiverUsername(e.target.value)}
-                required 
-            />
-            <button type="submit">Send Friend Request</button>
+        <form className="friend-request-form" onSubmit={handleSubmit}>
+            <select 
+                className="friend-request-select"
+                value={selectedUser}
+                onChange={(e) => setSelectedUser(e.target.value)}
+                required
+            >
+                <option value="" disabled>Select a user</option>
+                {nonFriendUsers.map(user => (
+                    <option key={user._id} value={user.username}>
+                        {user.username}
+                    </option>
+                ))}
+            </select>
+            <button className="friend-request-button" type="submit">Send Friend Request</button>
         </form>
     );
 };

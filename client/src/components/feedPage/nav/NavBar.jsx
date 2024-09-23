@@ -7,11 +7,14 @@ import { FaHourglassEnd } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useLogoutUser } from "../../../hooks/useUserRegisterLoginLogout";
+import { SendFriendRequestForm } from "../../friendRequest/SendFriendRequestForm";
 import { AuthContext } from "../../../context/authContext";
+import { useFriendRequests } from '../../../hooks/useFriendRequest';
 
 export const NavBar = () => {
     const { logoutHandler } = useLogoutUser();
     const { authUser } = useContext(AuthContext);
+    const { handleSendFriendRequest } = useFriendRequests(authUser?.id, authUser?.friends);
     
     return (
         <div className="nav">
@@ -19,19 +22,22 @@ export const NavBar = () => {
                 <div className="nav-left">
                     <Logo />
                 </div>
+                <SendFriendRequestForm handleSendFriendRequest={handleSendFriendRequest}/>
                 <div className="nav-right">
-                <Link to={'/profile'}><div className="user-info">
-                        {authUser?.profilePhotoImagePath ? (
-                            <img
-                                src={`${process.env.REACT_APP_API_BASE_URL}/images/${authUser.profilePhotoImagePath}`}
-                                alt="Profile"
-                                className="user-photo"
-                            />
-                        ) : (
-                            <FaUserCircle className="user-icon" />
-                        )}
-                        <p>{authUser?.username}</p>
-                    </div></Link>
+                    <Link to={'/profile'}>
+                        <div className="user-info">
+                            {authUser?.profilePhotoImagePath ? (
+                                <img
+                                    src={`${process.env.REACT_APP_API_BASE_URL}/images/${authUser.profilePhotoImagePath}`}
+                                    alt="Profile"
+                                    className="user-photo"
+                                />
+                            ) : (
+                                <FaUserCircle className="user-icon" />
+                            )}
+                            <p>{authUser?.username}</p>
+                        </div>
+                    </Link>
                     <MdLogout className="nav-icon logout-icon" onClick={logoutHandler} title="Logout" />
                 </div>
             </div>

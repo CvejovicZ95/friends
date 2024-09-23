@@ -1,0 +1,49 @@
+.friend-request-form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+
+    .friend-request-select {
+        flex: 1; 
+        padding: 10px;
+        margin-right: 10px;  
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        appearance: none; 
+        background-color: #fff; 
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none"><path fill="%23007bff" d="M1.5 4l7 7 7-7H1.5z"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 10px center; 
+        background-size: 12px; 
+        transition: border-color 0.2s;
+
+        &:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+    }
+
+    .friend-request-button {
+        flex-shrink: 0;  
+        padding: 10px 20px; 
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background-color: #0056b3;
+        }
+
+        &:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    }
+}

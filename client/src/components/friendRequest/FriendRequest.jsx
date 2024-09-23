@@ -1,6 +1,5 @@
 import React from "react";
 import { NavBar } from "../feedPage/nav/NavBar";
-import { SendFriendRequestForm } from "./SendFriendRequestForm";
 import { RegisteredUsers } from "../feedPage/registeredUsers/RegisteredUsers";
 import { useFriendRequests } from "../../hooks/useFriendRequest";
 import { useAuthContext } from "../../context/authContext";
@@ -15,7 +14,6 @@ export const FriendRequest = () => {
     return (
         <div>
             <NavBar />
-            <SendFriendRequestForm />
             <div className="friend-request-container">
                 <div className="friend-requests">
                     <ul>
