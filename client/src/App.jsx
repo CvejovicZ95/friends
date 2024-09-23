@@ -45,7 +45,7 @@ function App() {
       />
 
       <Route 
-          path="/chatRequests" 
+          path="/friendRequests" 
           element={!authUser ? <Navigate to={"/"} /> : <FriendRequest />} 
       />
 

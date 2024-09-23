@@ -19,24 +19,13 @@
         border: none;
         background-color: transparent;
 
-        // Stil za onemogućeno dugme
-        &:disabled {
-            .user-chat-icon {
-                color: red; // Crvena boja kada je disabled
-                cursor: not-allowed; // Menja kursor kada je onemogućeno
-            }
-        }
+        .user-chat-icon,
+        .user-request-icon {
+            color: #007bff;
+            transition: color 0.3s ease;
 
-        // Stil za aktivno dugme
-        &:not(:disabled) {
-            .user-chat-icon,
-            .user-request-icon {
-                color: #007bff; // Plava boja kada nije disabled
-                transition: color 0.3s ease;
-
-                &:hover {
-                    color: #0056b3; // Tamnija plava pri hover-u
-                }
+            &:hover {
+                color: #0056b3;
             }
         }
     }
@@ -51,7 +40,7 @@
             align-items: center;
             padding: 8px 0;
             border-bottom: 1px solid #ddd;
-
+        
             .user-photo,
             .user-icon {
                 width: 40px;
@@ -62,28 +51,37 @@
                 cursor: pointer;
                 border: 1px solid #333;
             }
-
+        
             .user-icon {
                 font-size: 40px;
                 color: #ccc;
             }
-
+        
             p {
                 margin: 0;
                 font-size: 16px;
                 color: black;
                 flex-grow: 1;
             }
-
+        
+            .chat-button-container {
+                display: flex; 
+                align-items: center; 
+                margin-left: auto;
+            }
+        
             .user-chat-icon,
             .user-request-icon {
                 font-size: 24px;
                 cursor: pointer;
                 transition: color 0.3s ease;
-
-                // Boja se postavlja u okviru button stilova
             }
-        }
+        
+            .notification-count {
+                color: #007bff;
+                margin-left: 8px; 
+            }
+        }        
     }
 }
 

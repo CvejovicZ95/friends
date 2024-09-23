@@ -1,5 +1,6 @@
 import { User } from '../models/userSchema.js'
 import { Post } from "../models/postsSchema.js"
+import { FriendRequest } from '../models/friendRequestSchema.js';
 import { logger } from '../../logger.js'
 import { generateToken } from '../utils/generateToken.js'
 import { sendOrderConfirmation } from '../../mailgun.js'
@@ -104,6 +105,13 @@ export const loginUser = async (req, res) => {
             return res.status(400).json({ error: 'Incorrect username or password' });
         }
 
+        const friendRequests = await FriendRequest.find({
+            $or: [
+                { senderId: user._id },
+                { receiverId: user._id }
+            ]
+        });
+
         const token = generateToken(user._id, res);
 
         logger.info(`${username} logged in successfully`);
@@ -113,7 +121,8 @@ export const loginUser = async (req, res) => {
             profilePhotoImagePath: user.profilePhotoImagePath, 
             id: user._id, 
             unreadNotifications: user.unreadNotifications, 
-            friends: user.friends 
+            friends: user.friends,
+            friendRequests
         });
         
     } catch (error) {

@@ -1,12 +1,14 @@
 .friend-request-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
     margin-top: 16px;
-    
+
     .friend-requests {
-        width: 600px;
-        padding: 50px;
+        width: 100%; 
+        max-width: 400px; 
+        margin: auto;
+        padding: 20px; 
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         border: 2px solid #007bff;
         background-color: #f9f9f9;
@@ -15,13 +17,13 @@
         form {
             margin-bottom: 16px;
             display: flex;
+            flex-direction: column; 
 
             input {
-                flex: 1;
                 padding: 8px;
                 border: 1px solid #ccc;
                 border-radius: 4px;
-                margin-right: 8px;
+                margin-bottom: 8px; 
 
                 &:focus {
                     border-color: #007bff;
@@ -90,16 +92,89 @@
             margin-top: 16px;
         }
     }
+
+    .friends-list {
+        width: 100%; 
+        max-width: 400px; 
+        margin: 20px auto 0; 
+
+        h2 {
+            text-align: center;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            button {
+                border: none;
+                background-color: transparent;
+            }
+
+            .user-item {
+                display: flex;
+                align-items: center;
+                padding: 10px 0;
+                border-bottom: 1px solid #ddd;
+
+                .user-photo {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%; 
+                    margin-right: 10px;
+                }
+
+                p {
+                    margin: 0;
+                    font-size: 16px;
+                    color: #333;
+                    font-weight: 700;
+                    flex-grow: 1;
+                }
+
+                .user-chat-icon {
+                    font-size: 30px;
+                    cursor: pointer;
+                    transition: color 0.3s ease;
+                    color: #007bff;
+
+                    &:hover {
+                        color: #0056b3; 
+                    }
+                }
+
+                .notification-count {
+                    color: #007bff;
+                }
+            }
+        }
+
+        .no-friends {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            margin-top: 16px;
+        }
+    }
 }
 
 @media (max-width: 991px) {
-    .friend-requests {
-        width: 250px;
+    .friend-request-container .friend-requests {
+        width: 70%; 
+    }
+    .friend-request-container .friends-list ul .user-item {
+        width: 90%;
+        margin: auto;
     }
 }
 
 @media (max-width: 575px) {
-    .friend-requests {
-        display: none;
+    .friend-request-container .friend-requests {
+        width: 70%;
+    }
+    .friend-request-container .friends-list ul .user-item {
+        width: 90%;
+        margin: auto;
     }
 }
