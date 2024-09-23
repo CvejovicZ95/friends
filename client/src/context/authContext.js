@@ -10,6 +10,14 @@ export const useAuthContext = () => {
 export const AuthProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(null);
 
+  // In AuthContext, modify updateFriendRequests to consider receiver updates
+  const updateFriendRequests = (newRequest) => {
+    setAuthUser((prevUser) => ({
+      ...prevUser,
+      friendRequests: [...prevUser.friendRequests, newRequest],
+    }));
+  };
+
   const login = (userData) => {
     setAuthUser(userData);
     document.cookie = `token=${userData.token}; path=/; secure; HttpOnly`;
@@ -41,7 +49,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ authUser, login, logout, setAuthUser }}>
+    <AuthContext.Provider value={{ authUser, login, logout, setAuthUser, updateFriendRequests }}>
       {children}
     </AuthContext.Provider>
   );

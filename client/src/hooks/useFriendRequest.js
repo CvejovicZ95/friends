@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { sendFriendRequest, getFriendRequests, manageFriendRequest } from '../api/friendRequestApi';
+import { AuthContext } from '../context/authContext';
 
 export const useFriendRequests = (userId) => {
     const [friendRequests, setFriendRequests] = useState([]);
     const [loading, setLoading] = useState(false);
+    const { updateFriendRequests } = useContext(AuthContext);
 
     useEffect(() => {
         const fetchFriendRequests = async () => {
@@ -19,14 +21,16 @@ export const useFriendRequests = (userId) => {
                 setLoading(false);
             }
         };
-
+    
         fetchFriendRequests();
     }, [userId]);
+    
 
     const handleSendFriendRequest = async (senderId, receiverUsername) => {
         try {
             const newRequest = await sendFriendRequest(senderId, receiverUsername);
             setFriendRequests((prevRequests) => [...prevRequests, newRequest]);
+            updateFriendRequests({ ...newRequest, receiverUsername });
             toast.success('Friend request sent successfully!');
         } catch (error) {
             if (error.message.includes('Friend request already sent')) {
@@ -53,5 +57,7 @@ export const useFriendRequests = (userId) => {
         }
     };
     
+    
+
     return { friendRequests, loading, handleSendFriendRequest, handleManageFriendRequest };
 };
