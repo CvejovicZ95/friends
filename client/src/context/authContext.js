@@ -22,6 +22,18 @@ export const AuthProvider = ({ children }) => {
     document.cookie = `token=${userData.token}; path=/; secure; HttpOnly`;
   };
 
+  const resetUnreadNotifications = (senderId) => {
+    setAuthUser((prevUser) => ({
+        ...prevUser,
+        unreadNotifications: prevUser.unreadNotifications.map(notification => {
+            if (notification.senderId === senderId) {
+                return { ...notification, count: 0 }; // postavi count na 0 za ovu notifikaciju
+            }
+            return notification; // ostale notifikacije ostavi netaknute
+        })
+    }));
+};
+
   const logout = () => {
     setAuthUser(null);
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure; HttpOnly";
@@ -48,7 +60,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ authUser, login, logout, setAuthUser, updateFriendRequests }}>
+    <AuthContext.Provider value={{ authUser, login, logout, setAuthUser, updateFriendRequests, resetUnreadNotifications }}>
       {children}
     </AuthContext.Provider>
   );

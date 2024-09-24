@@ -11,7 +11,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 export const RegisteredUsers = () => {
     const { users, loading } = useGetUsers();
-    const { authUser } = useAuthContext();
+    const { authUser, resetUnreadNotifications } = useAuthContext();
     const { handleCreateConversation } = useUserConversations(authUser?.id);
     const navigate = useNavigate();
     const [notificationCounts, setNotificationCounts] = useState({});
@@ -43,6 +43,7 @@ export const RegisteredUsers = () => {
     const handleChatClick = async (receiverId, username) => {
         try {
             await handleCreateConversation(receiverId);
+            resetUnreadNotifications(receiverId); // pozovi reset funkciju sa ID-em korisnika
             navigate(`/conversation/${username}`);
         } catch (error) {
             console.error("Error creating conversation:", error);
