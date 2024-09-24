@@ -108,21 +108,3 @@ export const clearSenderNotifications = async (userId, senderId) => {
   }
 };
 
-
-export const clearAllNotifications = async (userId) => {
-  try {
-    const user = await User.findById(userId);
-
-    if (!user) {
-      throw new Error('User not found');
-    }
-
-    user.unreadNotifications = [];
-    await user.save();
-
-    return { success: true };
-  } catch (error) {
-    console.error("Error clearing notifications:", error);
-    throw new Error('Error clearing notifications');
-  }
-};
