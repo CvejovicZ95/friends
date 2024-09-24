@@ -66,9 +66,6 @@ export const createMessage = async (sender, receiver, content, conversationId) =
   }
 };
 
-
-
-
 export const getMessages = async (conversationId) => {
   try {
     const conversation = await Conversation.findById(conversationId).populate('messages');
@@ -97,17 +94,20 @@ export const clearSenderNotifications = async (userId, senderId) => {
       throw new Error('User not found');
     }
 
-    user.unreadNotifications = user.unreadNotifications.filter(
-      notification => notification.senderId.toString() !== senderId
-    );
+    const notification = user.unreadNotifications.find(notification => notification.senderId.toString() === senderId.toString());
 
-    await user.save();
+    if (notification) {
+      notification.count = 0;
+      await user.save();
+    }
+
     return { success: true };
   } catch (error) {
     console.error("Error clearing sender notifications:", error);
     throw new Error('Error clearing sender notifications');
   }
 };
+
 
 export const clearAllNotifications = async (userId) => {
   try {

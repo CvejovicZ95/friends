@@ -27,9 +27,9 @@ export const AuthProvider = ({ children }) => {
         ...prevUser,
         unreadNotifications: prevUser.unreadNotifications.map(notification => {
             if (notification.senderId === senderId) {
-                return { ...notification, count: 0 }; // postavi count na 0 za ovu notifikaciju
+                return { ...notification, count: 0 }; 
             }
-            return notification; // ostale notifikacije ostavi netaknute
+            return notification; 
         })
     }));
 };
