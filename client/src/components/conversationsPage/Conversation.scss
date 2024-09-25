@@ -7,22 +7,41 @@
     padding: 20px;
     border-radius: 12px;
 
+    .logo {
+        margin: auto;
+        width: 120px; /* Standardna širina logoa */
+    }
+
     h1 {
         display: flex;
         align-items: center;
         justify-content: center;
         font-family: 'Trebuchet MS', Arial, sans-serif;
-        font-size: 2rem;
+        font-size: 2.1rem; /* Standardna veličina za h1 */
         margin-bottom: 20px;
         color: #333;
         font-weight: bold;
-    
+
         .profile-photo {
-            width: 40px;
-            height: 40px;
+            width: 80px; /* Standardna veličina profilne slike */
+            height: 80px;
             border-radius: 50%;
-            margin-left: 10px; 
-            object-fit: cover; 
+            margin-left: 10px;
+            object-fit: cover;  
+        }
+
+        .leave-chat-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            color: #007bff; // Adjust color as needed
+            font-size: 3.4rem; // Standardna veličina ikone
+            transition: color 0.2s;
+
+            &:hover {
+                color: #0056b3; // Promena boje na hover
+            }
         }
     }
 }
@@ -56,6 +75,7 @@
         &.sent {
             justify-content: flex-end;
             align-self: flex-end;
+
             .message-content {
                 background-color: #007bff;
                 color: white;
@@ -65,6 +85,7 @@
         &.received {
             justify-content: flex-start;
             align-self: flex-start;
+
             .message-content {
                 background-color: #f1f1f1;
                 color: #333;
@@ -133,6 +154,27 @@
 }
 
 @media (max-width: 768px) {
+    .conversation-container {
+        padding: 10px; /* Manje padding za manje ekrane */
+
+        .logo {
+            width: 100px; /* Manja širina logoa */
+        }
+
+        h1 {
+            font-size: 1.8rem; /* Manja veličina za h1 */
+            
+            .profile-photo {
+                width: 60px; /* Manja veličina profilne slike */
+                height: 60px;
+            }
+
+            .leave-chat-icon {
+                font-size: 2.5rem; /* Manja veličina ikone */
+            }
+        }
+    }
+
     .messages .message.sent .message-content {
         padding: 6px 10px;
         font-size: 0.8rem;
@@ -161,9 +203,30 @@
             }
         }
     }
-
-
-    .messages .message .user-photo {
+    .messages .message .user-photo{
         display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .conversation-container {
+        padding: 5px; /* Dodatno smanjenje padding-a */
+
+        .logo {
+            width: 80px; /* Još manja širina logoa */
+        }
+
+        h1 {
+            font-size: 1.5rem; /* Manja veličina za h1 */
+            
+            .profile-photo {
+                width: 50px; /* Manja veličina profilne slike */
+                height: 50px;
+            }
+
+            .leave-chat-icon {
+                font-size: 2rem; /* Manja veličina ikone */
+            }
+        }
     }
 }

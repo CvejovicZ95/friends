@@ -1,27 +1,31 @@
 import React, { useState, useEffect, useRef } from "react";
-import { NavBar } from "../feedPage/nav/NavBar";
 import { useGetUsers } from "../../hooks/useUsers";
 import { useAuthContext } from "../../context/authContext";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom"; 
 import { useUserConversations } from "../../hooks/useConversations";
 import { useSendMessage } from "../../hooks/useSendMessages";
+import { useClearNotifications } from "../../hooks/useClearMessageNotifications";
 import { useConversation } from "../../zustand/useConversation";
 import { IoSend } from "react-icons/io5";
+import { IoClose } from "react-icons/io5"; 
 import { socket } from "../../socket";
 import "./Conversation.scss";
 
 export const Conversation = () => {
   const { username } = useParams(); 
   const { users, loading: usersLoading } = useGetUsers();  
-  const { authUser } = useAuthContext();
+  const { authUser, resetUnreadNotifications } = useAuthContext();
+  const location = useLocation();
+  const { senderId } = location.state || {};
+  const { clearNotifications } = useClearNotifications(authUser?.id);
   const { conversations, loading: conversationsLoading } = useUserConversations(authUser?.id);
+  const navigate = useNavigate();
 
   const [currentConversationId, setCurrentConversationId] = useState(null);
   const { messages, setSelectedConversation } = useConversation(); 
   const { handleSendMessage } = useSendMessage();
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef(null);
-
 
   useEffect(() => {
     if (currentConversationId) {
@@ -64,9 +68,8 @@ export const Conversation = () => {
 
   const handleSubmitMessage = (e) => {
     e.preventDefault();
-  
     if (newMessage.trim() === "") return;
-  
+
     try {
       handleSendMessage(newMessage, authUser.id);
       setNewMessage("");
@@ -74,15 +77,26 @@ export const Conversation = () => {
       console.error('Error sending message:', error);
     }
   };
-  
+
+  const handleLeaveChat = async() => {
+    resetUnreadNotifications(selectedUser._id); 
+    if(senderId) {
+      await clearNotifications(senderId)
+    }
+    navigate("/feed");
+  };
+
   return (
     <>
-      <NavBar />
       <div className="conversation-container">
+        <img src="/friends.png" alt="logo" className="logo"/>
         <h1>
-          Chat with <img src={`${process.env.REACT_APP_API_BASE_URL}/images/${selectedUser.profilePhotoImagePath}`} alt={selectedUser.username} className="profile-photo" />
+          <img src={`${process.env.REACT_APP_API_BASE_URL}/images/${selectedUser.profilePhotoImagePath}`} alt={selectedUser.username} className="profile-photo" />
+          Chat with {selectedUser.username}
+          <button onClick={handleLeaveChat} className="leave-chat-icon">
+            <IoClose />
+          </button>
         </h1>
-
         <div className="chat-window">
           <div className="messages">
             {Array.isArray(messages) && messages.length > 0 ? (
@@ -116,7 +130,7 @@ export const Conversation = () => {
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder="Type your message here..."
             />
-            <button type="submit"><IoSend/></button>
+            <button type="submit"><IoSend /></button>
           </form>
         </div>
       </div>

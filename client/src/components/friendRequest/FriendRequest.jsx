@@ -54,25 +54,23 @@ export const FriendRequest = () => {
         }
     };
 
+    const filteredRequests = friendRequests.filter(request => request.receiverId === authUser.id);
+
     return (
         <div>
             <NavBar />
             <div className="friend-request-container">
                 <div className="friend-requests">
                     <ul>
-                        {friendRequests.filter(request => request.receiverId === authUser.id).length === 0 ? (
-                            <p className="no-requests">No friend requests at the moment.</p>
-                        ) : (
-                            friendRequests.filter(request => request.receiverId === authUser.id).map(request => (
-                                <li key={request._id} className="request-item">
-                                    <p>Friend request from {request.senderId.username}</p>
-                                    <div className="actions">
-                                        <button onClick={() => handleManageFriendRequest(request._id, 'accept')}>Accept</button>
-                                        <button onClick={() => handleManageFriendRequest(request._id, 'decline')}>Decline</button>
-                                    </div>
-                                </li>
-                            ))
-                        )}
+                        {filteredRequests.map(request => (
+                            <li key={request._id} className="request-item">
+                                <p>Friend request from {request.senderId.username}</p>
+                                <div className="actions">
+                                    <button onClick={() => handleManageFriendRequest(request._id, 'accept')}>Accept</button>
+                                    <button onClick={() => handleManageFriendRequest(request._id, 'decline')}>Decline</button>
+                                </div>
+                            </li>
+                        ))}
                     </ul>
                 </div>
                 <div className="friends-list">
@@ -100,8 +98,8 @@ export const FriendRequest = () => {
                                         <CiChat1 className="user-chat-icon"/>
                                     </button>
                                     <span className="notification-count">
-                                    {getUnreadNotificationCount(friend._id) > 0 ? getUnreadNotificationCount(friend._id) : null}
-                                </span>
+                                        {getUnreadNotificationCount(friend._id) > 0 ? getUnreadNotificationCount(friend._id) : null}
+                                    </span>
                                 </li>
                             ))
                         )}

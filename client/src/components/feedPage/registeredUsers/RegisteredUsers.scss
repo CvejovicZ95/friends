@@ -109,8 +109,8 @@
 
 @media (max-width: 767px) {
     .registered-users {
-        width: 200px;
-
+        display: none;
+        
         .user-item {
             .user-photo,
             .user-icon {

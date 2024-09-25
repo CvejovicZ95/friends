@@ -47,7 +47,7 @@ export const RegisteredUsers = () => {
             await clearNotifications(senderId);
             await handleCreateConversation(receiverId);
             resetUnreadNotifications(senderId); 
-            navigate(`/conversation/${username}`);
+            navigate(`/conversation/${username}`, { state: { senderId } });
         } catch (error) {
             console.error("Error creating conversation:", error);
         }
