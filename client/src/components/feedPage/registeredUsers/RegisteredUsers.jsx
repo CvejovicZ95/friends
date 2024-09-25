@@ -20,6 +20,7 @@ export const RegisteredUsers = () => {
     const { handleSendFriendRequest } = useFriendRequests(authUser ? authUser.id : null);
     const [sentRequests, setSentRequests] = useState([]);
 
+
     useEffect(() => {
         if (authUser && authUser.unreadNotifications) {
             const counts = {};

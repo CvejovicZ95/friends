@@ -16,7 +16,9 @@ export const NavBar = () => {
     const { authUser } = useContext(AuthContext);
     const { handleSendFriendRequest } = useFriendRequests(authUser?.id, authUser?.friends);
 
-    const pendingRequestsCount = authUser?.friendRequests?.filter(request => request.status === 'pending').length || 0;
+    const pendingRequestsCount = authUser?.friendRequests?.filter(request => 
+        request.receiverId === authUser.id && request.status === 'pending'
+    ).length || 0;
 
     return (
         <div className="nav">
@@ -24,7 +26,7 @@ export const NavBar = () => {
                 <div className="nav-left">
                     <Logo />
                 </div>
-                <SendFriendRequestForm handleSendFriendRequest={handleSendFriendRequest}/>
+                <SendFriendRequestForm handleSendFriendRequest={handleSendFriendRequest} />
                 <div className="nav-right">
                     <Link to={'/profile'}>
                         <div className="user-info">
@@ -44,14 +46,18 @@ export const NavBar = () => {
                 </div>
             </div>
             <div className="nav-section-two">
-                <Link to={"/feed"}><MdFeed className="nav-icon" title="Feed" /></Link>
+                <Link to={"/feed"}>
+                    <MdFeed className="nav-icon" title="Feed" />
+                </Link>
                 <Link to={"/friendRequests"} className="nav-icon">
                     <FaUserFriends />
                     {pendingRequestsCount > 0 && (
                         <span className="request-count">{pendingRequestsCount}</span>
                     )}
                 </Link>
-                <Link to={"/profile"}><CgProfile className="nav-icon" title="Profile" /></Link>
+                <Link to={"/profile"}>
+                    <CgProfile className="nav-icon" title="Profile" />
+                </Link>
             </div>
         </div>
     );
