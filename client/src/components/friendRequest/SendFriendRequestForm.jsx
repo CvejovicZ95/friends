@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuthContext } from '../../context/authContext';
 import { useFriendRequests } from '../../hooks/useFriendRequest';
 import { useGetUsers } from '../../hooks/useUsers';
+import { IoPersonAddSharp } from "react-icons/io5";
 import "./SendFriendRequestForm.scss";
 
 export const SendFriendRequestForm = () => {
@@ -28,14 +29,14 @@ export const SendFriendRequestForm = () => {
                 onChange={(e) => setSelectedUser(e.target.value)}
                 required
             >
-                <option value="" disabled>Select a user</option>
+                <option value="" disabled>Send friend request to</option>
                 {nonFriendUsers.map(user => (
                     <option key={user._id} value={user.username}>
                         {user.username}
                     </option>
                 ))}
             </select>
-            <button className="friend-request-button" type="submit">Send Friend Request</button>
+            <button className="friend-request-button" type="submit"><IoPersonAddSharp/></button>
         </form>
     );
 };

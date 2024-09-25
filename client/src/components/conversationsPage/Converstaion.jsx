@@ -7,7 +7,7 @@ import { useSendMessage } from "../../hooks/useSendMessages";
 import { useClearNotifications } from "../../hooks/useClearMessageNotifications";
 import { useConversation } from "../../zustand/useConversation";
 import { IoSend } from "react-icons/io5";
-import { IoClose } from "react-icons/io5"; 
+import { CiCircleChevLeft } from "react-icons/ci";
 import { socket } from "../../socket";
 import "./Conversation.scss";
 
@@ -90,14 +90,16 @@ export const Conversation = () => {
     <>
       <div className="conversation-container">
         <img src="/friends.png" alt="logo" className="logo"/>
-        <h1>
-          <img src={`${process.env.REACT_APP_API_BASE_URL}/images/${selectedUser.profilePhotoImagePath}`} alt={selectedUser.username} className="profile-photo" />
-          Chat with {selectedUser.username}
-          <button onClick={handleLeaveChat} className="leave-chat-icon">
-            <IoClose />
-          </button>
-        </h1>
         <div className="chat-window">
+          <div className="chat-top">
+            <button onClick={handleLeaveChat} className="leave-chat-icon">
+              <CiCircleChevLeft />
+            </button>
+            <h1>
+              <img src={`${process.env.REACT_APP_API_BASE_URL}/images/${selectedUser.profilePhotoImagePath}`} alt={selectedUser.username} className="profile-photo" />
+              <p>{selectedUser.username}</p>
+          </h1>
+        </div>
           <div className="messages">
             {Array.isArray(messages) && messages.length > 0 ? (
               messages.map((msg) => {
