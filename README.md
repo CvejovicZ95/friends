@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Friends is an application designed to enable users to connect with and follow their friends. The application will allow users to create and manage posts, interact with others through comments and likes, and view profiles.Also include real-time chat functionality for seamless communication between users.
+Friends is an application designed to enable users to connect with and follow their friends. The application allow users to create and manage posts, interact with others through comments and likes, and view profiles.Also include real-time chat functionality for seamless communication between users.
 
 ## Features
 
