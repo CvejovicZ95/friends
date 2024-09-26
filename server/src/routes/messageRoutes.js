@@ -3,6 +3,6 @@ import { createMessageController, getMessagesController, clearSenderNotification
 
 export const messageRouter = express.Router()
 
-messageRouter.get("/:id", getMessagesController)
-messageRouter.post('/send/:conversationId', createMessageController);
-messageRouter.post('/users/:userId/clear-notifications/sender/:senderId', clearSenderNotificationsController);
+messageRouter.get('/:id', getMessagesController)
+messageRouter.post('/send/:conversationId', createMessageController)
+messageRouter.post('/users/:userId/clear-notifications/sender/:senderId', clearSenderNotificationsController)

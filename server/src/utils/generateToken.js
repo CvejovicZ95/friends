@@ -12,13 +12,13 @@ const config = JSON.parse(configData)
 export const generateToken = (user, res) => {
   const token = jwt.sign({ _id: user._id }, config.secret_key, {
     expiresIn: '30m'
-  });
+  })
 
   res.cookie('token', token, {
     maxAge: 30 * 60 * 1000,
     httpOnly: true,
     sameSite: 'none'
-  });
+  })
 
-  return token;
-};
+  return token
+}

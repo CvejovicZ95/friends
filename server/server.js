@@ -21,28 +21,28 @@ import { initializeSocket } from './src/socket/socket.js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const app=express()
+const app = express()
 dotenv.config()
 
 const PORT = process.env.PORT || 5000
 
 const corsOptions = {
-    origin: ['http://localhost:3000', 'http://192.168.1.8:3000'],
-    optionsSuccessStatus: 200,
-    credentials: true
+  origin: ['http://localhost:3000', 'http://192.168.1.8:3000'],
+  optionsSuccessStatus: 200,
+  credentials: true
 }
 
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(cors(corsOptions))
 
 app.use('/images', express.static(path.join(__dirname, '../server/images')))
 
 app.use((req, res, next) => {
-    req.io = io;
-    next();
-  })
+  req.io = io
+  next()
+})
 
 app.use('/api', userRouter)
 app.use('/api', tokenRouter)
@@ -56,6 +56,6 @@ const server = http.createServer(app)
 const io = initializeSocket(server)
 
 server.listen(PORT, () => {
-    connect()
-    console.log(`Server is listening on port ${PORT}`)
-  })
+  connect()
+  console.log(`Server is listening on port ${PORT}`)
+})

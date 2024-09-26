@@ -1,18 +1,18 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 const postSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',              
+    ref: 'User',
     required: true
   },
   content: {
     text: {
       type: String,
-      required: true         
+      required: true
     },
     imageUrl: {
-      type: String,          
+      type: String,
       required: false
     }
   },
@@ -20,36 +20,36 @@ const postSchema = new mongoose.Schema({
     likes: {
       count: {
         type: Number,
-        default: 0           
+        default: 0
       },
       users: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'         
+        ref: 'User'
       }]
     },
     comments: {
       count: {
         type: Number,
-        default: 0          
+        default: 0
       },
       commentIds: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment'       
+        ref: 'Comment'
       }]
     }
   },
   timestamp: {
     type: Date,
-    default: Date.now         
+    default: Date.now
   },
   menuOptions: {
     canEdit: {
       type: Boolean,
-      default: false          
+      default: false
     },
     canDelete: {
       type: Boolean,
-      default: false          
+      default: false
     }
   }
 }, {
@@ -57,8 +57,8 @@ const postSchema = new mongoose.Schema({
     createdAt: 'created_at',
     updatedAt: 'updated_at'
   }
-});
+})
 
-const Post = mongoose.model('Post', postSchema);
+const Post = mongoose.model('Post', postSchema)
 
-export { Post };
+export { Post }

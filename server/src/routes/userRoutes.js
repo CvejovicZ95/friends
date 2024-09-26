@@ -5,8 +5,8 @@ export const userRouter = express.Router()
 
 userRouter.get('/users', getAllUsersController)
 userRouter.get('/user/:id', getUserByIdController)
-userRouter.get('/userProfile/:username', getUserProfileWithPosts);
-userRouter.get('/unread-notifications-count/:id', getUnreadNotificationsCount); 
+userRouter.get('/userProfile/:username', getUserProfileWithPosts)
+userRouter.get('/unread-notifications-count/:id', getUnreadNotificationsCount)
 userRouter.post('/registerUser', registerUser)
 userRouter.post('/loginUser', loginUser)
 userRouter.post('/logoutUser', logoutUser)
