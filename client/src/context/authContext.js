@@ -17,19 +17,20 @@ export const AuthProvider = ({ children }) => {
 
   const resetUnreadNotifications = (senderId) => {
     setAuthUser((prevUser) => ({
-        ...prevUser,
-        unreadNotifications: prevUser.unreadNotifications.map(notification => {
-            if (notification.senderId === senderId) {
-                return { ...notification, count: 0 }; 
-            }
-            return notification; 
-        })
+      ...prevUser,
+      unreadNotifications: prevUser.unreadNotifications.map((notification) => {
+        if (notification.senderId === senderId) {
+          return { ...notification, count: 0 };
+        }
+        return notification;
+      }),
     }));
-};
+  };
 
   const logout = () => {
     setAuthUser(null);
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure; HttpOnly";
+    document.cookie =
+      "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure; HttpOnly";
   };
 
   useEffect(() => {
@@ -53,7 +54,9 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ authUser, login, logout, setAuthUser, resetUnreadNotifications }}>
+    <AuthContext.Provider
+      value={{ authUser, login, logout, setAuthUser, resetUnreadNotifications }}
+    >
       {children}
     </AuthContext.Provider>
   );

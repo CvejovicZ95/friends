@@ -6,10 +6,6 @@ export const socket = io(SOCKET_URL, {
   transports: ["websocket"],
 });
 
-socket.on('connect', () => {
-  
-});
+socket.on("connect", () => {});
 
-socket.on('disconnect', () => {
-  
-});
+socket.on("disconnect", () => {});

@@ -3,25 +3,30 @@ import { toast } from "react-toastify";
 import { getAllUsers } from "../api/userApi";
 
 export const useGetUsers = () => {
-    const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        const fetchUsers = async () => {
-            setLoading(true);
-            try {
-                const data = await getAllUsers();
-                setUsers(data);
-            } catch (error) {
-                toast.error(error.message);
-            } finally {
-                setLoading(false);
-            }
-        };
+  useEffect(
+    () => {
+      const fetchUsers = async () => {
+        setLoading(true);
+        try {
+          const data = await getAllUsers();
+          setUsers(data);
+        } catch (error) {
+          toast.error(error.message);
+        } finally {
+          setLoading(false);
+        }
+      };
 
-        fetchUsers();
-    }, [/*users*/]);
-    //infinite loop
+      fetchUsers();
+    },
+    [
+      /*users*/
+    ],
+  );
+  //infinite loop
 
-    return { users, loading };
+  return { users, loading };
 };

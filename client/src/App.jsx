@@ -2,7 +2,7 @@ import React from "react";
 import { LoginPage } from "./components/loginPage/LoginPage";
 import { RegisterPage } from "./components/registerPage/RegisterPage";
 import { FeedPage } from "./components/feedPage/FeedPage";
-import { UserProfile } from "./components/feedPage/userProfile/UserProfile"
+import { UserProfile } from "./components/feedPage/userProfile/UserProfile";
 import { OtherUserProfile } from "./components/feedPage/otherUserProfile/OtherUserProfile";
 import { Conversation } from "./components/conversationsPage/Converstaion";
 import { FriendRequest } from "./components/friendRequest/FriendRequest";
@@ -13,42 +13,40 @@ import { useGlobalMessageListener } from "./hooks/useGlobalMessageListener";
 function App() {
   const { authUser } = useAuthContext();
   useGlobalMessageListener();
-  
+
   return (
     <Routes>
-      <Route 
+      <Route
         path="/"
-        element={authUser ? <Navigate to={"/feed"} /> : <LoginPage/>}
-      />
-      
-      <Route 
-        path="/profile"  
-        element={!authUser ? <Navigate to={"/"} /> : <UserProfile/>} 
+        element={authUser ? <Navigate to={"/feed"} /> : <LoginPage />}
       />
 
-      <Route 
-        path="/profile/:username" 
-        element={!authUser ? <Navigate to={"/"} /> : <OtherUserProfile />} 
+      <Route
+        path="/profile"
+        element={!authUser ? <Navigate to={"/"} /> : <UserProfile />}
       />
 
+      <Route
+        path="/profile/:username"
+        element={!authUser ? <Navigate to={"/"} /> : <OtherUserProfile />}
+      />
 
-      <Route path="/register" element={<RegisterPage/>}/>
-      
-      <Route 
+      <Route path="/register" element={<RegisterPage />} />
+
+      <Route
         path="/feed"
-        element={!authUser ? <Navigate to={"/"}></Navigate> : <FeedPage/>}
+        element={!authUser ? <Navigate to={"/"}></Navigate> : <FeedPage />}
       />
 
-      <Route 
-          path="/conversation/:username" 
-          element={!authUser ? <Navigate to={"/"} /> : <Conversation />} 
+      <Route
+        path="/conversation/:username"
+        element={!authUser ? <Navigate to={"/"} /> : <Conversation />}
       />
 
-      <Route 
-          path="/friendRequests" 
-          element={!authUser ? <Navigate to={"/"} /> : <FriendRequest />} 
+      <Route
+        path="/friendRequests"
+        element={!authUser ? <Navigate to={"/"} /> : <FriendRequest />}
       />
-
     </Routes>
   );
 }

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { getMessagesFromConversation } from '../api/messagesApi';
+import { useState, useEffect } from "react";
+import { getMessagesFromConversation } from "../api/messagesApi";
 
 export const useMessages = (conversationId) => {
   const [messages, setMessages] = useState([]);
@@ -8,21 +8,20 @@ export const useMessages = (conversationId) => {
 
   useEffect(() => {
     const fetchMessages = async () => {
-        try {
-            if (conversationId) {
-                const data = await getMessagesFromConversation(conversationId);
-                setMessages(data);
-            }
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
+      try {
+        if (conversationId) {
+          const data = await getMessagesFromConversation(conversationId);
+          setMessages(data);
         }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchMessages();
-}, [conversationId]);
+  }, [conversationId]);
 
   return { messages, loading, error };
 };
-
