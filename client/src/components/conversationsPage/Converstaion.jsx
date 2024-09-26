@@ -94,7 +94,7 @@ export const Conversation = () => {
   return (
     <>
       <div className="conversation-container">
-        <img src="/friends.png" alt="logo" className="logo" />
+        <img src="/images/friends.png" alt="logo" className="logo" />
         <div className="chat-window">
           <div className="chat-top">
             <button onClick={handleLeaveChat} className="leave-chat-icon">

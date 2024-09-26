@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const Logo = () => {
   return (
     <Link to={"/feed"}>
-      <img src="/friends.png" alt="logo" width={"80px"} />
+      <img src="/images/friends.png" alt="logo" width={"80px"} />
     </Link>
   );
 };
