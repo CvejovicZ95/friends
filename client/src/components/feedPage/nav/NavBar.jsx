@@ -17,7 +17,7 @@ export const NavBar = () => {
     const { handleSendFriendRequest } = useFriendRequests(authUser?.id, authUser?.friends);
 
     const pendingRequestsCount = authUser?.friendRequests?.filter(request => 
-        request.receiverId === authUser.id && request.status === 'pending'
+    request.receiverId === authUser.id && request.status === 'pending'
     ).length || 0;
 
     return (

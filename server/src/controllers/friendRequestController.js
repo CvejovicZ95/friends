@@ -2,7 +2,6 @@ import { createFriendRequest, getFriendRequestsByUserId, manageFriendRequest } f
 import { getUserByUsername, getUserById } from "../service/usersService.js";
 import { FriendRequest } from "../models/friendRequestSchema.js";
 
-
 export const createFriendRequestController = async (req, res) => {
     const { senderId, receiverUsername } = req.body; 
     try {

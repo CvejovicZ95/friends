@@ -2,7 +2,6 @@ import { useConversation } from "../zustand/useConversation";
 import { sendMessageToConversation } from "../api/messagesApi";
 import { socket } from "../socket";
 
-
 export const useSendMessage = () => {
   const { selectedConversation } = useConversation();
 
@@ -15,7 +14,6 @@ export const useSendMessage = () => {
 
         await sendMessageToConversation(selectedConversation._id, senderId, receiverId, messageContent);
 
-      
         socket.emit("sendMessage", {
           senderId: senderId,
           receiver: receiverId,

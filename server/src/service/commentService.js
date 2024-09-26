@@ -14,7 +14,6 @@ export const getCommentsByPostId = async (postId) => {
     }
 };;
 
-
 export const addComment = async (userId, postId, text) => {
     try {
         const user = await User.findById(userId);
@@ -51,9 +50,6 @@ export const addComment = async (userId, postId, text) => {
         throw new Error('Error adding new comment');
     }
 };
-
-
-
 
 export const deleteCommentById = async (commentId) => {
     try {

@@ -18,10 +18,8 @@ import { friendRequestRouter } from './src/routes/friendRequestRoutes.js'
 
 import { initializeSocket } from './src/socket/socket.js'
 
-
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-
 
 const app=express()
 dotenv.config()
@@ -56,9 +54,6 @@ app.use('/api', friendRequestRouter)
 
 const server = http.createServer(app)
 const io = initializeSocket(server)
-
-
-
 
 server.listen(PORT, () => {
     connect()

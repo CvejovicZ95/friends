@@ -1,5 +1,4 @@
 import express from 'express'
-//import { authenticateToken } from '../middleware/authToken'
 import { createMessageController, getMessagesController, clearSenderNotificationsController } from '../controllers/messageController.js'
 
 export const messageRouter = express.Router()

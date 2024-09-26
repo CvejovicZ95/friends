@@ -36,12 +36,10 @@ export const registerUser = async (req, res) => {
 
                 const profilePhotoImagePath = req.file.filename;
 
-                /*const existingUser = await User.findOne({ email });
+                const existingUser = await User.findOne({ email });
                 if (existingUser) {
                     return res.status(400).json({ error: 'Email is already taken' });
-                }*/
-
-                //remove after final tests, now commented bcs mailgun, so can register few users to same e-mail adress    
+                } 
 
                 const existingUsername = await User.findOne({ username });
                 if (existingUsername) {
@@ -143,7 +141,6 @@ export const logoutUser = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
-
 
 export const getAllUsersController = async (req, res) => {
     try {

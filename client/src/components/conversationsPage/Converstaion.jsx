@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { RenderMessage } from "./RenderMessage";
 import { useGetUsers } from "../../hooks/useUsers";
 import { useAuthContext } from "../../context/authContext";
 import { useParams, useNavigate, useLocation } from "react-router-dom"; 
@@ -102,29 +103,14 @@ export const Conversation = () => {
         </div>
           <div className="messages">
             {Array.isArray(messages) && messages.length > 0 ? (
-              messages.map((msg) => {
-                const isSentByAuthUser = msg.sender === authUser.id;
-                const senderUser = users.find(user => user._id === msg.sender);
-
-                return (
-                  <div key={msg._id} className={`message ${isSentByAuthUser ? "sent" : "received"}`}>
-                    <img
-                      src={`${process.env.REACT_APP_API_BASE_URL}/images/${senderUser?.profilePhotoImagePath}`}
-                      alt={senderUser?.username}
-                      className="user-photo"
-                    />
-                    <div className="message-content">
-                      <p>{msg.content}</p>
-                    </div>
-                  </div>
-                );
-              })
+              messages.map((msg) => (
+                <RenderMessage key={msg._id} msg={msg} authUser={authUser} users={users} />
+              ))
             ) : (
               <p>No messages available.</p>
             )}
             <div ref={messagesEndRef} />
           </div>
-
           <form onSubmit={handleSubmitMessage} className="message-form">
             <input
               type="text"

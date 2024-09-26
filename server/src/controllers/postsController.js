@@ -14,7 +14,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage }).single('image');
 
-
 export const getAllPostsController = async (req, res) => {
     try {
         const allPosts = await getAllPosts()
@@ -74,7 +73,6 @@ export const updatePostController = async (req, res) => {
                     return res.status(404).json({ message: 'Post not found' });
                 }
 
-        
                 let imageUrl = existingPost.content.imageUrl;
                 if (req.file) {
                     imageUrl = req.file.filename;
@@ -102,7 +100,6 @@ export const updatePostController = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 }
-
 
 export const deletePostController = async (req, res) => {
     try {
@@ -139,7 +136,6 @@ export const getPostsByUserController = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
-
 
 export const toggleLikeController = async (req,res) => {
     try {

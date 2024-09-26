@@ -8,7 +8,6 @@ export const sendFriendRequest = async (senderId, receiverUsername) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ senderId, receiverUsername }),
-            //credentials: 'include'
         });
 
         if (!res.ok) {
@@ -46,7 +45,6 @@ export const manageFriendRequest = async (requestId, action) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ requestId, action }),
-            //credentials: 'include',
         });
 
         if (!res.ok) {

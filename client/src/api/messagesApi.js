@@ -19,7 +19,6 @@ export const sendMessageToConversation = async (conversationId, sender, receiver
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        //credentials: "include",
       },
       body: JSON.stringify({ sender, receiver, content })
     });

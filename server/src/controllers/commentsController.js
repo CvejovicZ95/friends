@@ -15,7 +15,6 @@ export const getAllCommentsInPostController = async (req, res) => {
     }
 };
 
-
 export const addCommentController = async (req, res) => {
     try {
         const { content, postId } = req.body;
@@ -37,8 +36,6 @@ export const addCommentController = async (req, res) => {
         res.status(500).json({ error: 'Error adding new comment' });
     }
 };
-
-
 
 export const deleteCommentController = async (req, res) => {
     try {

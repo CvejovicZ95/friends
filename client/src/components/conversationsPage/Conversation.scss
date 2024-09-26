@@ -169,7 +169,6 @@ $border-radius: 12px;
     }
 }
 
-// Medijski upiti
 @media (max-width: 768px) {
     .conversation-container {
         padding: 1rem;
@@ -218,7 +217,7 @@ $border-radius: 12px;
     }
 
     .messages .message .user-photo {
-        display: none; // Sakrivanje fotografije korisnika na manjim ekranima
+        display: none;
     }
 }
 

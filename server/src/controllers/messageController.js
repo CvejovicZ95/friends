@@ -1,4 +1,4 @@
-import { createMessage, getMessages, clearSenderNotifications, /*clearAllNotifications*/ } from "../service/messageService.js";
+import { createMessage, getMessages, clearSenderNotifications } from "../service/messageService.js";
 import { logger } from "../../logger.js";
 
 export const createMessageController = async (req, res) => {

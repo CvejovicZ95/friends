@@ -13,7 +13,6 @@ export const OtherUserProfile = () => {
     if (error) return <p>Error: {error}</p>;
     if (!user) return <p>No user found</p>;
 
-
     return (
         <>
             <NavBar />
