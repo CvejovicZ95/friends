@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Friends is an application designed to enable users to connect with and follow their friends. The application will allow users to create and manage posts, interact with others through comments and likes, and view profiles. It will also include real-time chat functionality for seamless communication between users.
+Friends is an application designed to enable users to connect with and follow their friends. The application will allow users to create and manage posts, interact with others through comments and likes, and view profiles.Also include real-time chat functionality for seamless communication between users.
 
 ## Features
 
@@ -25,13 +25,12 @@ Friends is an application designed to enable users to connect with and follow th
   - Comment on Posts: Users can leave comments on posts.
   - Edit/Delete Comments: Users can edit or delete their own comments.
   - View Profiles: Users can view their own profile and posts, as well as the profiles and posts of other users.
-  - Users can add other users for friends if they wanna chat.
 
 - **Real-Time Chat:**
 
-- Real-time chat communication between users via Socket.io.
-- Notifications for undread messages.
-- Sound for new message
+  - Real-time chat communication between users via Socket.io.
+  - Notifications for unread messages.
+  - Sound for new message
 
 ## Technologies Used
 
