@@ -73,4 +73,5 @@ Friends is an application designed to enable users to connect with and follow th
 - **Server**:
   - `nodemon server`
 - **Client:**
+  - `npm run build:dev`
   - `npm start`
