@@ -50,10 +50,10 @@ Friends is an application designed to enable users to connect with and follow th
 
 ## Installation and Setup
 
-- git clone <https://github.com/CvejovicZ95/friends-app.git>
+- git clone <https://github.com/CvejovicZ95/friends.git>
 - Install dependencies for both client and server:
 - cd server && npm install
-- cd ../client && npm install
+- cd client && npm install
 
 ## Environment Variables (Server Folder)
 
