@@ -14,7 +14,7 @@ Friends is an application designed to enable users to connect with and follow th
 
   - Registration: Users can create accounts, with confirmation emails sent via Mailgun.
   - Login: Users can sign in to their accounts.
-  - Friend Request:Users can send freind request to other users if they wanna chat with them
+  - Friend Request:Users can send friend request to other users if they wanna chat with them
   - Logout: Users can sign out of their accounts.
 
 - **Post Management:**
@@ -41,7 +41,23 @@ Friends is an application designed to enable users to connect with and follow th
 - MongoDB
 - SCSS
 
+## Prerequisites / Dependencies
+
+- Node v20.11.1
+- npm 10.2.0
+- MongoDB: You need a running instance of MongoDB.
+
+
+## Installation and Setup
+
+- git clone <https://github.com/CvejovicZ95/friends-app.git>
+- Install dependencies for both client and server:
+- cd server && npm install
+- cd ../client && npm install
+
 ## Environment Variables (Server Folder)
+
+- Make sure to create a .env file with the following variables:
 
 - `DATABASE_URL`: MongoDB connection string  
 - `PORT`: Port (e.g., 4500)
